@@ -1,0 +1,27 @@
+.recipeContainer{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  
+    
+   .recipeCard{
+    position: relative;
+    width: 350px;
+    aspect-ratio: 1/1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+
+   }
+ 
+ .cardBtn{
+    position: absolute;
+    top: 10px;
+    right: 10px; 
+    padding: 2px 5px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+ }
+}

@@ -1,0 +1,19 @@
+.isActive{
+ background: #000;
+ color: aqua;
+}
+.isPending{
+    background: white;
+    color: red;
+}
+.navbar{
+    width:100%;
+    display: flex;
+    
+    justify-content: center;
+    padding: .5rem;
+    a{
+        padding:2px .5rem;
+        border-radius: 3px;
+    }
+}
