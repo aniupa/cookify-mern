@@ -6,9 +6,7 @@ const Navbar = () => {
       <nav>
         <NavLink
           to="/"
-          className={({ isActive }) =>
-            isActive ? styles.isActive : ""
-          }
+          className={({ isActive }) => (isActive ? styles.isActive : "")}
         >
           Home
         </NavLink>
@@ -24,6 +22,10 @@ const Navbar = () => {
         >
           Recipes
         </NavLink>
+        <NavLink
+          to="/AddRecipe"
+          className={({ isActive }) => (isActive ? styles.isActive : "")}
+        >Create Recipe</NavLink>
       </nav>
     </div>
   );

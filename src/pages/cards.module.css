@@ -3,10 +3,12 @@
     flex-wrap: wrap;
     gap: 1rem;
     justify-content: center;
+    margin-bottom: 1rem;
   
     
    .recipeCard{
     position: relative;
+    /* border: 1px solid red; */
     width: 350px;
     aspect-ratio: 1/1;
     background-size: cover;
@@ -23,5 +25,9 @@
     padding: 2px 5px;
     border-radius: 10px;
     border: 1px solid #ccc;
+ }
+ .title{
+   padding: 1rem;
+   color: black;
  }
 }
