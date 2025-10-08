@@ -4,9 +4,11 @@
   box-sizing: border-box;
 }
 body,html{
+  background: #33425B;
   height: 100%;
   width: 100%;
-  background: transparent;
+  color: white;
+  /* background: transparent; */
 }
 #root{
   display: flex;

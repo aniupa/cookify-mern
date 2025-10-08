@@ -5,10 +5,10 @@ const Recipes = () => {
   const { addRecipe, recipe } = useContext(AppContent);
   return (
     <div className={styles.recipeContainer}>
-      {recipe.map((item, i) => {
+      {recipe.map((item) => {
         return (
           <div
-            key={i}
+            key={item.id}
             className={styles.recipeCard}
             style={{ backgroundImage: `url(${item.image})` ,opacity:`.8` }}
           >

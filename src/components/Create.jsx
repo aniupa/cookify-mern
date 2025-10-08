@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import styles from "./CreateRecipe.module.css";
 import { AppContent } from "../context/recipeContext";
 import { useContext } from "react";
+import {nanoid} from "nanoid";
 const Create = () => {
   const {
     register,
@@ -12,8 +13,10 @@ const Create = () => {
   const { addRecipe } = useContext(AppContent);
 
   const submitHandler = (data) => {
-    // console.log(data);
+    data.id = nanoid();
     addRecipe(data);
+    console.log(data);
+    
   };
   return (
     <form className={styles.recipeForm} onSubmit={handleSubmit(submitHandler)}>
