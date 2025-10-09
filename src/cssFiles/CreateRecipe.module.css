@@ -1,0 +1,13 @@
+.recipeForm {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+.recipeForm input, .recipeForm textarea {
+  padding: 2px;
+  border-radius: 5px;
+  font-size: small;
+}/*# sourceMappingURL=CreateRecipe.module.css.map */

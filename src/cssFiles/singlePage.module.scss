@@ -1,0 +1,28 @@
+
+.recipeCard {
+  // border: 1px solid blue;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 15px;
+  img {
+    width: 100%;
+    max-width: 350px;
+  }
+  .btnContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    button{
+        padding: 2px;
+        border-radius: 5px;
+    }
+    .del{
+        background: red;
+        color: white;
+    }
+  }
+}

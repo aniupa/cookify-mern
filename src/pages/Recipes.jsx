@@ -1,24 +1,16 @@
 import React, { useContext } from "react";
-import styles from "./cards.module.css";
+import styles from "../cssFiles/cards.module.css";
 import { AppContent } from "../context/recipeContext";
+import { NavLink } from "react-router-dom";
+import RecipeCard from "../components/RecipeCard";
 const Recipes = () => {
   const { addRecipe, recipe } = useContext(AppContent);
-  return (
-    <div className={styles.recipeContainer}>
-      {recipe.map((item) => {
-        return (
-          <div
-            key={item.id}
-            className={styles.recipeCard}
-            style={{ backgroundImage: `url(${item.image})` ,opacity:`.8` }}
-          >
-            <h2 className={styles.title}>{item.title}</h2>
-            <button className={styles.cardBtn}>see all</button>
-          </div>
-        );
-      })}
-    </div>
-  );
+  const renderRecipe = recipe.map((item) => (
+    <RecipeCard key={item.id} item={item} />
+  ));
+  return <div className={styles.recipeContainer}>
+    {recipe.length>0 ? renderRecipe:'No recipes found !'}
+  </div>;
 };
 
 export default Recipes;

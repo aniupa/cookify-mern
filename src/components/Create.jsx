@@ -1,22 +1,30 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import styles from "./CreateRecipe.module.css";
+import styles from "../cssFiles/CreateRecipe.module.css";
 import { AppContent } from "../context/recipeContext";
 import { useContext } from "react";
-import {nanoid} from "nanoid";
+import { nanoid } from "nanoid";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 const Create = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
   const { addRecipe } = useContext(AppContent);
 
   const submitHandler = (data) => {
     data.id = nanoid();
+
     addRecipe(data);
-    console.log(data);
-    
+    toast.success("recipe added successfully!!");
+    reset();
+    navigate("/recipes");
+
+    // console.log(data);
   };
   return (
     <form className={styles.recipeForm} onSubmit={handleSubmit(submitHandler)}>

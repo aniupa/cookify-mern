@@ -5,6 +5,8 @@ import Home from "./pages/Home";
 import Recipes from "./pages/Recipes";
 import Navbar from "./components/Navbar";
 import CreateRecipe from "./pages/CreateRecipe";
+import SingleRecipe from "./pages/SingleRecipe";
+import RecipeCard from "./components/RecipeCard";
 const App = () => {
   return (
     <BrowserRouter>
@@ -13,6 +15,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/recipes" element={<Recipes />} />
+        <Route path="/recipes/details/:id" element={<SingleRecipe/>}/>
         <Route path="/AddRecipe" element={<CreateRecipe />} />
             
       </Routes>
