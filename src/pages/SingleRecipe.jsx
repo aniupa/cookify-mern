@@ -17,23 +17,29 @@ const SingleRecipe = () => {
 
     setrecipe(newItems);
     navigate("/recipes");
-    toast.success(`${title} deleted successfully  !!`)
+    toast.success(`${title} deleted successfully  !!`);
   };
   return (
-   recipe ?  <div className={styles.recipeCard}>
-      
-      <img src={image} alt={title} />
-      <h1>Title:{title}</h1>
-      <p>Description:{description}</p>
-      <h3>Instruction:{instruction}</h3>
-      <h5>Ingredients:{ingredients}</h5>
-      <div className={styles.btnContainer}>
-        <button onClick={navigate(-1)}>Go Back</button>
-        <button className={styles.del} onClick={delItem}>
-          Delete Recipe
-        </button>
-      </div>
-    </div> : 'loading...'
+    <div className={styles.recipeContainer}>
+      {recipe ? (
+        <div className={styles.recipeCard}>
+          <img src={image} alt={title} />
+
+          <h1>Title:{title}</h1>
+          <p>Description:{description}</p>
+          <h3>Instruction:{instruction}</h3>
+          <h5>Ingredients:{ingredients}</h5>
+          <div className={styles.btnContainer}>
+            <button onClick={navigate(-1)}>Go Back</button>
+            <button className={styles.del} onClick={delItem}>
+              Delete Recipe
+            </button>
+          </div>
+        </div>
+      ) : (
+        <h5>loading...</h5>
+      )}
+    </div>
   );
 };
 
