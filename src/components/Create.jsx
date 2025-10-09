@@ -27,6 +27,8 @@ const Create = () => {
     // console.log(data);
   };
   return (
+    <div className={styles.recipeContainer}>
+      
     <form className={styles.recipeForm} onSubmit={handleSubmit(submitHandler)}>
       <input type="url" {...register("image")} placeholder="enter image url" />
       {/* <small>{errors}</small> */}
@@ -48,6 +50,7 @@ const Create = () => {
       ></textarea>
       <button type="submit">save recipe</button>
     </form>
+    </div>
   );
 };
 

@@ -29,4 +29,13 @@
 .recipeContainer .recipeCard .btnContainer .del {
   background: red;
   color: white;
+}
+
+.updatebutton {
+  display: block;
+  padding: 2px;
+  text-decoration: none;
+  border-radius: 5px;
+  color: white;
+  background: #526ED0;
 }/*# sourceMappingURL=singlePage.module.css.map */

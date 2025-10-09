@@ -15,7 +15,6 @@ const RecipeCard = ({ item }) => {
       <div className={styles.recipeCard}>
         <img src={image} alt={title} />
         <h1>{title}</h1>
-        {/* <small>more</small> */}
         <p>
           {description}... <small>more</small>
         </p>
