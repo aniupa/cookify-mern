@@ -24,14 +24,13 @@ const Create = () => {
     reset();
     navigate("/recipes");
 
-    // console.log(data);
   };
   return (
     <div className={styles.recipeContainer}>
       
     <form className={styles.recipeForm} onSubmit={handleSubmit(submitHandler)}>
       <input type="url" {...register("image")} placeholder="enter image url" />
-      {/* <small>{errors}</small> */}
+     
       <input type="text" placeholder="recipe title" {...register("title")} />
       <textarea
         name="description"

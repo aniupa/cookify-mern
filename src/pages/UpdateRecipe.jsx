@@ -27,7 +27,7 @@ const UpdateRecipe = () => {
   });
  
 
-  const submitHandler = (data) => {
+  const updateHandler = (data) => {
     const index = recipe.findIndex((i) => i.id == params.id);
     const copyData = [...recipe];
     copyData[index] = { ...copyData[index], ...data };
@@ -40,7 +40,7 @@ const UpdateRecipe = () => {
     <div className={styles.recipeContainer}>
       <form
         className={styles.recipeForm}
-        onSubmit={handleSubmit(submitHandler)}
+        onSubmit={handleSubmit(updateHandler)}
       >
         <input
           type="url"

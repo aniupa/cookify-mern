@@ -1,0 +1,49 @@
+import { useEffect } from "react"
+
+to local data mei data dalne ke liye
+const submitHandler=(data)=>{
+    data.id=nanoid();
+    const copyData=['...main useState wala data spread kia '];
+    copyData.push(data)
+    setrecipe(copyData)
+    //copy data abhi ke liye json hai and json store nhi hota localstorage mei hame string hi bhejna padega so mai copydata ko localstorage mei set karte time stringify karunga
+
+    localStorage.setItem('recipes',JSON.stringify(copyData))
+
+}
+
+and if i want to load the data from local storage then 
+const recipeContext =(props)=>{
+    const [recipe,setrecipe]=useState([])
+    //useeffect isliye use kar rha hoon kyuki i want ki page load hote hi component data mount ho jaye and page se hatte hi component data unmount ho jaye and dependency array bhi laga dia hoon to avoid rerendering
+    useEffect(()=>{
+        JSON.parse(localStorage.getItem('recipes')) || [];
+    },[])
+}
+
+
+
+error aa skta hai uss point pe jab single page data reload kar rhe ho recipe wala default data but issue aisa hai ki page localstorage se leke aa rha hai data joki ki render hone se pehle toh leke ayega nhi so deafult values mei recpe ke aage ? laga do so if data nhi rahega vo kuch err ya output nhi throw karega uske jagah dta milne ke baad data show karega nhi toh kuch bhi nhi ...
+
+and upadate karte time bhi ye dikkat ka samna karna pad skta hai cause maine sirf create karte time hi ye banaya hoon ki data local storage mei ave ho jaye but update karte time toh nhi lagaya hoon so mujhe samne changes yaha bhi karne hai
+
+same delete karte time bhi yahi changes karne padenge mai vo code ke changes nhi likh rha hu ...ye mai khud solve karunga to sharpen myself
+
+
+##################
+favorite wala feature bhi banana haii
+and page not found wala feature bhi banana hai
+
+toh page not found wale route ke liye 
+we do this => jidhar routes rakhe hai waha: <Route path='*' element={<pagenotfound/>}/>
+isko ham wildcard route bhi bolte hai
+
+
+///////////my tasks
+1. local storage me data save karo ✅
+2. useState ka use karke recipe wala page mei data automatically show karo ✅
+new issue: update and delete hone ke baad updated data localstorage mei save karo
+3. axios use karo and utilits mei uska instance banao and context mei axios se fetch kia hua daata save karo next user jb new recipe create kare then vo fetched data mei bhi vo save hona cahiye ...user pura data localstorage wala recipe mei dekh ske
+4. favoratie add karo and remove karo through like button click karke 
+5. click mei changes visible hone cahiye
+6. favoratie wali field bano where user can see the favoratie added recipes and array dependency ka use karke rerender karna if koi changes ho rhe ho toh 
