@@ -13,11 +13,9 @@ const RecipeCard = ({ item }) => {
       className={({ isActive }) => (isActive ? navStyles.isActive : "")}
     >
       <div className={styles.recipeCard}>
+        
         <img src={image? image:'not image'} alt={title} />
         <h1>{title}</h1>
-        <p>
-          {description}... <small>more</small>
-        </p>
       </div>
     </NavLink>
   );

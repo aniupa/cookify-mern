@@ -5,6 +5,7 @@
   align-items: center;
 }
 .recipeContainer .recipeCard {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -12,9 +13,10 @@
   gap: 1.5rem;
   padding: 15px;
 }
-.recipeContainer .recipeCard img {
+.recipeContainer .recipeCard .recipeImg {
   width: 100%;
   max-width: 350px;
+  border-radius: 10px;
 }
 .recipeContainer .recipeCard .btnContainer {
   width: 100%;
@@ -39,4 +41,25 @@
 .negativebtn {
   background: red;
   color: white;
+}
+
+.like {
+  position: absolute;
+  width: 40px;
+  aspect-ratio: 1/1;
+  -o-object-fit: cover;
+     object-fit: cover;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
+}
+
+.like:hover {
+  transform: scale(1.1);
+}
+
+@media (max-width: 600px) {
+  .like {
+    width: 30px;
+  }
 }/*# sourceMappingURL=singlePage.module.css.map */

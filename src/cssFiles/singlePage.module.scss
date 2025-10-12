@@ -6,15 +6,18 @@
   align-items: center;
   .recipeCard {
     // border: 1px solid blue;
+    
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     gap: 1.5rem;
     padding: 15px;
-    img {
+    .recipeImg {
       width: 100%;
       max-width: 350px;
+      border-radius: 10px;
     }
     .btnContainer {
       width: 100%;
@@ -39,4 +42,28 @@
 .negativebtn {
   background: red;
   color: white;
+}
+.like{
+  position: absolute;
+
+  width: 40px;
+  aspect-ratio: 1/1;
+ object-fit: cover;
+  top: 10px;
+ right: 15px;
+ cursor:pointer;
+}
+
+
+.like:hover{
+  transform:scale(1.1) ;
+}
+
+@media (max-width:600px) {
+  .like{
+    // font-size: 1.2rem;
+    width: 30px;
+    // aspect-ratio: ;
+    
+  }
 }
