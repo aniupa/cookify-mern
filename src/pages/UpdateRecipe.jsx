@@ -32,7 +32,7 @@ const UpdateRecipe = () => {
     const copyData = [...recipe];
     copyData[index] = { ...copyData[index], ...data };
     setrecipe(copyData);
-    localStorage.setItem('recipes',JSON.stringify(copyData))
+    
     toast.success("recipe data updated successfully!!");
     navigate('/recipes')
 

@@ -42,7 +42,7 @@ isko ham wildcard route bhi bolte hai
 ///////////my tasks
 1. local storage me data save karo ✅
 2. useState ka use karke recipe wala page mei data automatically show karo ✅
-new issue: update and delete hone ke baad updated data localstorage mei save karo
+new issue: update and delete hone ke baad updated data localstorage mei save karo ✅
 3. axios use karo and utilits mei uska instance banao and context mei axios se fetch kia hua daata save karo next user jb new recipe create kare then vo fetched data mei bhi vo save hona cahiye ...user pura data localstorage wala recipe mei dekh ske
 4. favoratie add karo and remove karo through like button click karke 
 5. click mei changes visible hone cahiye

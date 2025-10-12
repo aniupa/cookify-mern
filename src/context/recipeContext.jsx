@@ -12,11 +12,15 @@ export const Wrapper = ({ children }) => {
       setrecipe([]);
     }
   }, []);
+  useEffect(() => {
+    localStorage.setItem("recipes", JSON.stringify(recipe));
+  }, [recipe]);
+
   const addRecipe = (newRecipe) => {
     const data = [...recipe, newRecipe];
     setrecipe([...recipe, newRecipe]);
 
-    localStorage.setItem("recipes", JSON.stringify(data));
+    // localStorage.setItem("recipes", JSON.stringify(data));
   };
   return (
     <AppContent.Provider value={{ recipe, addRecipe, setrecipe }}>

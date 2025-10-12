@@ -16,7 +16,7 @@ const SingleRecipe = () => {
     const newItems = recipe.filter((f) => f.id !== params.id);
 
     setrecipe(newItems);
-    localStorage.setItem("recipes", newItems);
+    
     navigate("/recipes");
   };
   
