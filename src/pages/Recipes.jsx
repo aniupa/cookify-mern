@@ -6,7 +6,7 @@ import RecipeCard from "../components/RecipeCard";
 const Recipes = () => {
   const { addRecipe, recipe } = useContext(AppContent);
   const renderRecipe = recipe?.map((item) => {
-    // if (!item || item.id ) return null;
+   
     
     return <RecipeCard key={item.id } item={item} />
 });

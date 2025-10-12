@@ -1,42 +1,42 @@
-.recipeContainer{
-    width: 100%;
-    // border: 1px solid red;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-.recipeCard {
-  // border: 1px solid blue;
+.recipeContainer {
+  width: 100%;
+  // border: 1px solid red;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  gap: 1.5rem;
-  padding: 15px;
-  img {
-    width: 100%;
-    max-width: 350px;
-  }
-  .btnContainer{
-    width: 100%;
+  .recipeCard {
+    // border: 1px solid blue;
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    button{
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 15px;
+    img {
+      width: 100%;
+      max-width: 350px;
+    }
+    .btnContainer {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      button {
         padding: 2px;
         border-radius: 5px;
-    }
-    .del{
-        background: red;
-        color: white;
+      }
     }
   }
 }
-}
-.updatebutton{
+.positivebtn {
   display: block;
   padding: 2px;
   text-decoration: none;
   border-radius: 5px;
   color: white;
-  background: #526ED0;
+  background: #526ed0;
+}
+.negativebtn {
+  background: red;
+  color: white;
 }

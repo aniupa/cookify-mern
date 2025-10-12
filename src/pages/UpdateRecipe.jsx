@@ -18,11 +18,11 @@ const UpdateRecipe = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      title: defaultRecipe.title,
-      image: defaultRecipe.image,
-      description: defaultRecipe.description,
-      instruction: defaultRecipe.instruction,
-      ingredients: defaultRecipe.ingredients,
+      title: defaultRecipe?.title,
+      image: defaultRecipe?.image,
+      description: defaultRecipe?.description,
+      instruction: defaultRecipe?.instruction,
+      ingredients: defaultRecipe?.ingredients,
     },
   });
  
@@ -32,6 +32,7 @@ const UpdateRecipe = () => {
     const copyData = [...recipe];
     copyData[index] = { ...copyData[index], ...data };
     setrecipe(copyData);
+    localStorage.setItem('recipes',JSON.stringify(copyData))
     toast.success("recipe data updated successfully!!");
     navigate('/recipes')
 

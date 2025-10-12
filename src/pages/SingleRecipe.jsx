@@ -10,44 +10,39 @@ const SingleRecipe = () => {
   const params = useParams();
   let { recipe, addRecipe, setrecipe } = useContext(AppContent);
   const filteredData = recipe.find((f) => f.id == params.id);
-  // const { image, title, description, ingredients, instruction } = filteredData;
+ 
   const delItem = () => {
     toast.success(`recipe deleted successfully  !!`);
     const newItems = recipe.filter((f) => f.id !== params.id);
 
     setrecipe(newItems);
+    localStorage.setItem("recipes", newItems);
     navigate("/recipes");
   };
-  const update = (data) => {
-    const id = params.id;
-    const index = recipe.findIndex((i) => i.id == id);
-    const copyRecipe = [...recipe];
-    copyRecipe[index] = { ...copyRecipe[index], ...data };
-    setrecipe(copyRecipe);
-  };
+  
   return (
     <div className={styles.recipeContainer}>
       {recipe ? (
         <div className={styles.recipeCard}>
-          <img src={filteredData.image} alt={filteredData.title} />
+          <img src={filteredData?.image} alt={filteredData?.title} />
 
-          <h1>Title:{filteredData.title}</h1>
-          <p>Description:{filteredData.description}</p>
-          <h3>Instruction:{filteredData.instruction}</h3>
-          <h5>Ingredients:{filteredData.ingredients}</h5>
+          <h1>Title:{filteredData?.title}</h1>
+          <p>Description:{filteredData?.description}</p>
+          <h3>Instruction:{filteredData?.instruction}</h3>
+          <h5>Ingredients:{filteredData?.ingredients}</h5>
           <div className={styles.btnContainer}>
             <button
-              className={styles.updatebutton}
+              className={styles.positivebtn}
               onClick={() => navigate(-1)}
             >
               Go Back
             </button>
-            <button className={styles.del} onClick={delItem}>
+            <button className={styles.negativebtn} onClick={delItem}>
               Delete Recipe
             </button>
             <NavLink
               to={`/recipe/update/${params.id}`}
-              className={styles.updatebutton}
+              className={styles.positivebtn}
             >
               Update
             </NavLink>

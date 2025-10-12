@@ -26,16 +26,17 @@
   padding: 2px;
   border-radius: 5px;
 }
-.recipeContainer .recipeCard .btnContainer .del {
-  background: red;
-  color: white;
-}
 
-.updatebutton {
+.positivebtn {
   display: block;
   padding: 2px;
   text-decoration: none;
   border-radius: 5px;
   color: white;
-  background: #526ED0;
+  background: #526ed0;
+}
+
+.negativebtn {
+  background: red;
+  color: white;
 }/*# sourceMappingURL=singlePage.module.css.map */
