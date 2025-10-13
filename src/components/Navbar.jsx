@@ -25,7 +25,16 @@ const Navbar = () => {
         <NavLink
           to="/AddRecipe"
           className={({ isActive }) => (isActive ? styles.isActive : "")}
-        >Create Recipe</NavLink>
+        >
+          Create Recipe
+        </NavLink>
+
+        <NavLink
+          to="/Favorites"
+          className={({ isActive }) => (isActive ? styles.isActive : "")}
+        >
+          Favorites
+        </NavLink>
       </nav>
     </div>
   );

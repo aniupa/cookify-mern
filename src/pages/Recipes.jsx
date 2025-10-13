@@ -12,7 +12,7 @@ const Recipes = () => {
 });
   return (
     <div className={styles.recipeContainer}>
-      {recipe.length > 0 ? renderRecipe : "No recipes found !"}
+      {recipe.length > 0 ? renderRecipe  : "No recipes found !"}
     </div>
   );
 };

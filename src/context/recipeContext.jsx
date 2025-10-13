@@ -1,5 +1,4 @@
 import React, { createContext, useEffect, useState } from "react";
-// import { children } from "react";
 
 export const AppContent = createContext();
 export const Wrapper = ({ children }) => {
@@ -20,7 +19,6 @@ export const Wrapper = ({ children }) => {
     const data = [...recipe, newRecipe];
     setrecipe([...recipe, newRecipe]);
 
-    // localStorage.setItem("recipes", JSON.stringify(data));
   };
   return (
     <AppContent.Provider value={{ recipe, addRecipe, setrecipe }}>

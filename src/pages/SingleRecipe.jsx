@@ -4,18 +4,28 @@ import { AppContent } from "../context/recipeContext";
 import { useNavigate } from "react-router-dom";
 import styles from "../cssFiles/singlePage.module.css";
 import { toast } from "react-toastify";
-import likeImg from '../assets/like-removebg-preview.png'
-import unlikeImg from '../assets/unlike-removebg-preview.png'
+import likeImg from "../assets/like-removebg-preview.png";
+import unlikeImg from "../assets/unlike-removebg-preview.png";
 
 const SingleRecipe = () => {
-  const [like, setlike] = useState(false);
+  // const [like, setlike] = useState();
   const navigate = useNavigate();
   const params = useParams();
   let { recipe, addRecipe, setrecipe } = useContext(AppContent);
   const filteredData = recipe.find((f) => f.id == params.id);
-  useEffect(() => {
-    console.log(like);
-  }, [like]);
+  const favorite = () => {
+    const index = recipe.findIndex((i) => i.id == filteredData.id);
+    if (index === -1) return;
+    // recipe[index].fav ? toast.success('added to favorite successfully'): toast.error('removed from favorites')
+
+    const updatedRecipe = { ...recipe[index], fav: !recipe[index].fav };
+    const copyData = [...recipe];
+    copyData[index] = updatedRecipe;
+    setrecipe(copyData);
+    updatedRecipe.fav
+      ? toast.success("added to favorites!!")
+      : toast.error("removed from favorites !!");
+  };
 
   const delItem = () => {
     toast.success(`recipe deleted successfully  !!`);
@@ -25,23 +35,28 @@ const SingleRecipe = () => {
 
     navigate("/recipes");
   };
+  if (!filteredData) return <h1>Loading recipe...</h1>;
 
   return (
     <div className={styles.recipeContainer}>
       {recipe ? (
         <div className={styles.recipeCard}>
-          <img className={styles.recipeImg} src={filteredData?.image} alt={filteredData?.title} />
+          {filteredData ? (
+            <img
+              className={styles.recipeImg}
+              src={filteredData?.image}
+              alt={filteredData?.title}
+            />
+          ) : (
+            <h1>Loading...</h1>
+          )}
 
           <img
-            src={
-              like
-                ? likeImg
-                : unlikeImg
-            }
+            src={filteredData?.fav ? likeImg : unlikeImg}
             alt="like img"
             className={styles.like}
             onClick={() => {
-              setlike(!like);
+              favorite();
             }}
           />
 

@@ -18,6 +18,7 @@ const Create = () => {
 
   const submitHandler = (data) => {
     data.id = nanoid();
+    data.fav=false;
 
     addRecipe(data);
     toast.success("recipe added successfully!!");

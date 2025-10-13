@@ -8,6 +8,7 @@ import CreateRecipe from "./pages/CreateRecipe";
 import SingleRecipe from "./pages/SingleRecipe";
 import RecipeCard from "./components/RecipeCard";
 import UpdateRecipe from "./pages/UpdateRecipe";
+import Favorites from "./pages/favorites";
 const App = () => {
   return (
     <BrowserRouter>
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/recipes/details/:id" element={<SingleRecipe />} />
         <Route path="/AddRecipe" element={<CreateRecipe />} />
         <Route path="/recipe/update/:id" element={<UpdateRecipe />} />
+        <Route path="/favorites/" element={<Favorites/>}/>
       </Routes>
     </BrowserRouter>
   );
