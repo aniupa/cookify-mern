@@ -1,0 +1,25 @@
+.isActive{
+ background: #526ED0;
+ /* border-radius: 10px; */
+ color: aqua;
+}
+.isPending{
+    background: white;
+    color: red;
+}
+.navbar{
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    // border: 1px solid red;
+    justify-content: center;
+    padding: .5rem;
+    a{
+        // border: 1px solid red;
+        color: white;
+        text-decoration: none;
+        padding:2px .5rem;
+        border-radius: 3px;
+        // display: block;
+    }
+}

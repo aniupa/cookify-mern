@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
 import { nanoid } from "nanoid";
-const recipeSchema =new mongoose.Schema({
-//   recipeId: {
-//     type: String,
-//     default: () => nanoid(),
-//     unique: true,
-//   },
+const recipeSchema = new mongoose.Schema({
+  //   recipeId: {
+  //     type: String,
+  //     default: () => nanoid(),
+  //     unique: true,
+  //   },
+  fav: { type: Boolean, default: false },
   image: {
     type: String,
     required: [true, "image url is required"],
