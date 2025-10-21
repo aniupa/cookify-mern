@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { data: [] };
+const initialState = { data: [{"title":"testing","id":"testid",fav:false},{"title":"testing","id":"testid1",fav:false}] };
 
 const recipeSlice = createSlice({
   name: "recipes",
@@ -19,7 +19,7 @@ const recipeSlice = createSlice({
       localStorage.setItem("recipes", JSON.stringify(state.data));
     },
     // loadRecipe: (state, action) => {
-    //   state.data = action.payload;
+    //   state.data = action.payload; 
     // },
   },
 });

@@ -1,23 +1,25 @@
 import React, { useContext, useState, useEffect } from "react";
 import { NavLink, useParams } from "react-router-dom";
-// import { AppContent } from "../context/recipeContext";
 import { useNavigate } from "react-router-dom";
 import styles from "../cssFiles/singlePage.module.css";
 import { toast } from "react-toastify";
 import likeImg from "../assets/like-removebg-preview.png";
 import unlikeImg from "../assets/unlike-removebg-preview.png";
+import { useSelector } from "react-redux";
 
 const SingleRecipe = () => {
-  // const [like, setlike] = useState();
   const navigate = useNavigate();
   const params = useParams();
-  let { recipe, addRecipe, setrecipe } = useContext(AppContent);
+  const recipe=useSelector((state)=>state.recipes.data)
   const filteredData = recipe.find((f) => f.id == params.id);
   const favorite = () => {
     const index = recipe.findIndex((i) => i.id == filteredData.id);
+    // console.log(index);
+    
     if (index === -1) return;
     // recipe[index].fav ? toast.success('added to favorite successfully'): toast.error('removed from favorites')
-
+    const recipe=useSelector((state)=>state.recipes.data)
+    
     const updatedRecipe = { ...recipe[index], fav: !recipe[index].fav };
     const copyData = [...recipe];
     copyData[index] = updatedRecipe;
