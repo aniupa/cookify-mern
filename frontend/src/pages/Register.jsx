@@ -1,7 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { asyncRegisterUser } from "../store/actions/userAction";
+import styles from '../styles/formStyles.module.css'
 const Register = () => {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
@@ -16,7 +18,7 @@ const Register = () => {
     }
   };
   return (
-    <form onSubmit={handleSubmit(registerUserHandler)}>
+    <form onSubmit={handleSubmit(registerUserHandler)} className={styles.formContainer}>
       <input
         type="text"
         placeholder="UserName"

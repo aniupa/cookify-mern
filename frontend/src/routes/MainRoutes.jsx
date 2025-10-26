@@ -11,6 +11,7 @@ import RecipeCard from "../components/RecipeCard";
 import UpdateRecipe from "../pages/UpdateRecipe";
 import Favorites from "../pages/favorites";
 import Login from '../pages/Login';
+import Register from '../pages/Register';
 
 const MainRoutes = () => {
   return (
@@ -23,6 +24,7 @@ const MainRoutes = () => {
         <Route path="/recipe/update/:id" element={<UpdateRecipe />} />
         <Route path="/favorites/" element={<Favorites/>}/>
         <Route path='/login' element={<Login/>}/>
+        <Route path='/register' element={<Register/>}/>
       </Routes>
   )
 }
