@@ -3,9 +3,9 @@ import { toast } from "react-toastify";
 export const asyncGetRecipeActions = () => async (dispatch, getState) => {
   try {
     const res = await axios.get("/recipes");
-    dispatch(res);
+    // dispatch(res);
     console.log("dispatched :", res);
-    return res;
+    // return res;
   } catch (error) {
     console.log(error);
   }

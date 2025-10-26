@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = { data: [{"title":"testing","id":"testid",fav:false},{"title":"testing","id":"testid1",fav:false}] };
 
-const recipeSlice = createSlice({
+const RecipeSlice = createSlice({
   name: "recipes",
   initialState,
   reducers: {
@@ -24,6 +24,6 @@ const recipeSlice = createSlice({
   },
 });
 
-export default recipeSlice.reducer;
+export default RecipeSlice.reducer;
 export const { loadRecipesFromLocalStorage, addRecipe, deleteRecipe } =
-  recipeSlice.actions;
+  RecipeSlice.actions;

@@ -1,27 +1,24 @@
-import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import About from "./pages/About";
-import Home from "./pages/Home";
-import Recipes from "./pages/Recipes";
-import Navbar from "./components/Navbar";
-import CreateRecipe from "./pages/CreateRecipe";
-import SingleRecipe from "./pages/SingleRecipe";
-import RecipeCard from "./components/RecipeCard";
-import UpdateRecipe from "./pages/UpdateRecipe";
-import Favorites from "./pages/favorites";
+import React, { useEffect } from "react";
+import { BrowserRouter } from "react-router-dom";
+import Navbar from "./components/Navbar.jsx";
+import MainRoutes from "./routes/MainRoutes.jsx";
+import { useDispatch } from "react-redux";
+
+//Actions
+import {asyncCurrentUser} from './store/actions/userAction.jsx'
+
+//App
 const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(asyncCurrentUser());
+    // dispatch(asyncL)
+  }, [dispatch]);
   return (
     <BrowserRouter>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/recipes" element={<Recipes />} />
-        <Route path="/recipes/details/:id" element={<SingleRecipe />} />
-        <Route path="/AddRecipe" element={<CreateRecipe />} />
-        <Route path="/recipe/update/:id" element={<UpdateRecipe />} />
-        <Route path="/favorites/" element={<Favorites/>}/>
-      </Routes>
+      <MainRoutes />
     </BrowserRouter>
   );
 };

@@ -1,4 +1,3 @@
-import React, { useContext, useState, useEffect } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import styles from "../cssFiles/singlePage.module.css";
@@ -14,7 +13,7 @@ const SingleRecipe = () => {
   const filteredData = recipe.find((f) => f.id == params.id);
   const favorite = () => {
     const index = recipe.findIndex((i) => i.id == filteredData.id);
-    // console.log(index);
+    console.log(index);
     
     if (index === -1) return;
     // recipe[index].fav ? toast.success('added to favorite successfully'): toast.error('removed from favorites')
