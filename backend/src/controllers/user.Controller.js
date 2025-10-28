@@ -15,16 +15,23 @@ export const userRegisterController = async (req, res) => {
 };
 
 export const userLoginController = async (req, res) => {
-  const { email, password } = req.body;
-  console.log(req.body);
+  try {
+    const { email, password } = req.body;
+  // console.log(req.body);
   const user = await userModel.findOne({ email });
   if (user) {
     user.password == password
-      ? res.status(200).json({ message: `welcome ${user.userName}`, user })
+      ? res.status(200).json({ message: `welcome `, user })
       : res.status(400).json({ message: "invalid password" });
   } else {
     return res
       .status(500)
       .json({ message: "unauthorized user... pls register!!" });
   }
+  } catch (error) {
+    console.log(error);
+    
+    res.status(500).json({message:'internal server error'})
+  }
+  
 };

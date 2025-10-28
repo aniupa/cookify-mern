@@ -14,7 +14,7 @@ const Login = () => {
     try {
       dispatch(asyncLoginUser(data));
 
-      navigate("/home");
+      navigate("/");
     } catch (error) {
         console.log(error);
         

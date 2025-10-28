@@ -1,9 +1,13 @@
 import { NavLink } from "react-router-dom";
 import styles from "../cssFiles/Navbar.module.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { resetUser } from "../store/reducers/UserSlice";
 const Navbar = () => {
+  const dispatch = useDispatch();
   const isUser = useSelector((state) => state.users.data);
-
+  const logoutHandler = () => {
+    dispatch(resetUser());
+  };
   return (
     <div className={styles.navbar}>
       <nav>
@@ -27,6 +31,7 @@ const Navbar = () => {
               to="/"
               onClick={() => {
                 localStorage.removeItem("token");
+                logoutHandler();
               }}
             >
               Logout

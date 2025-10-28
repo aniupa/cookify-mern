@@ -7,7 +7,7 @@ const RecipeForm = ({submitHandler,recipeBtnName}) => {
     const {
         register,
         handleSubmit,
-        reset,
+        
         formState: { errors },
       } = useForm();
   return (
@@ -41,7 +41,7 @@ const RecipeForm = ({submitHandler,recipeBtnName}) => {
           ></textarea>
           <textarea
             name="instructions"
-            {...register("instruction")}
+            {...register("instructions")}
             placeholder="enter the instructions to make the recipe"
           ></textarea>
           <button type="submit">{recipeBtnName}</button>

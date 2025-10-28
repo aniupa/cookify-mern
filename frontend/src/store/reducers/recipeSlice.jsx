@@ -18,12 +18,12 @@ const RecipeSlice = createSlice({
       state.data = state.data.filter(f, (index) => index !== action.payload); //ye mujhe id pe witch karna hai
       localStorage.setItem("recipes", JSON.stringify(state.data));
     },
-    // loadRecipe: (state, action) => {
-    //   state.data = action.payload; 
-    // },
+    loadRecipe: (state, action) => {
+      state.data = action.payload; 
+    },
   },
 });
 
 export default RecipeSlice.reducer;
-export const { loadRecipesFromLocalStorage, addRecipe, deleteRecipe } =
+export const { loadRecipesFromLocalStorage, addRecipe,loadRecipe, deleteRecipe } =
   RecipeSlice.actions;

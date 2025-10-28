@@ -11,7 +11,7 @@ const Register = () => {
   const registerUserHandler = (data) => {
     try {
       dispatch(asyncRegisterUser(data));
-      navigate("/home");
+      navigate("/");
     } catch (error) {
         console.log(error);
         

@@ -18,6 +18,7 @@ export const asyncLoginUser = (data) => async (dispatch, getState) => {
   try {
     const res = await axios.post("/login", data);
     localStorage.setItem("token", JSON.stringify(res));
+    dispatch(asyncCurrentUser())
     console.log("inside userAction.jsx with asyncLoginUser ::", res);
 
     toast.success("user logged in successfully");

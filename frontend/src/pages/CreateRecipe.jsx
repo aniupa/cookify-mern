@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { asyncAddRecipeActions } from "../store/actions/recipeAction";
 import RecipeForm from "../components/RecipeForm";
+import { addRecipe } from "../store/reducers/recipeSlice";
 const CreateRecipe = () => {
   const navigate = useNavigate();
 
@@ -10,8 +11,9 @@ const CreateRecipe = () => {
 
   const submitHandler = async (data) => {
     dispatch(asyncAddRecipeActions(data));
+    dispatch(addRecipe(data));
 
-    reset();
+    
     navigate("/recipes");
   };
   return (

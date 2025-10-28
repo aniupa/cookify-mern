@@ -3,7 +3,7 @@ import { recipeModel } from "../models/recipe.model.js";
 export async function getRecipesController(req, res) {
   try {
     const recipes = await recipeModel.find();
-    res.status(200).json({ message: "recipes fetched successfully", recipes });
+    res.status(200).json( recipes );
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "internal server error" });
@@ -19,7 +19,7 @@ export async function createRecipeController(req, res) {
       ingredients,
       instructions,
     });
-    res.status(201).json({ message: "recipe created successfully", newRecipe });
+    res.status(201).json( newRecipe );
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "internal server error" });

@@ -10,7 +10,10 @@ const SingleRecipe = () => {
   const navigate = useNavigate();
   const params = useParams();
   const recipe=useSelector((state)=>state.recipes.data)
-  const filteredData = recipe.find((f) => f.id == params.id);
+  const filteredData = recipe?.find((f) => f._id == params.id);
+  
+  
+
   const favorite = () => {
     const index = recipe.findIndex((i) => i.id == filteredData.id);
     console.log(index);
@@ -63,7 +66,7 @@ const SingleRecipe = () => {
 
           <h1>Title:{filteredData?.title}</h1>
           <p>Description:{filteredData?.description}</p>
-          <h3>Instruction:{filteredData?.instruction}</h3>
+          <h3>Instruction:{filteredData?.instructions}</h3>
           <h5>Ingredients:{filteredData?.ingredients}</h5>
           <div className={styles.btnContainer}>
             <button className={styles.positivebtn} onClick={() => navigate(-1)}>
