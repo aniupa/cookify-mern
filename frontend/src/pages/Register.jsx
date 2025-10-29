@@ -10,6 +10,8 @@ const Register = () => {
   const navigate = useNavigate();
   const registerUserHandler = (data) => {
     try {
+      console.log(data);
+      
       dispatch(asyncRegisterUser(data));
       navigate("/");
     } catch (error) {
@@ -22,8 +24,8 @@ const Register = () => {
       <input
         type="text"
         placeholder="UserName"
-        {...register("username")}
-        name="username"
+        {...register("userName")}
+        name="userName"
       />
       <input
         type="email"

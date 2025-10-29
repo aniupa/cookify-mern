@@ -8,12 +8,12 @@ const Favorites = () => {
   // const { recipe } = useContext(AppContent);
   const recipe = useSelector((state) => state.recipes.data);
   const filtered = recipe.filter((f) => f.fav == true);
-  const mapped = filtered.map((item) => (
-    <RecipeCard key={item.id} item={item} />
+  const mapped = filtered.map((item, i) => (
+    <RecipeCard key={item.id ? item.id : i} item={item} />
   ));
   return (
     <div className={styles.recipeContainer}>
-      {filtered.length > 0 ? mapped : "No Favorites found !!"}
+      {filtered?.length > 0 ? mapped : "No Favorites found !!"}
     </div>
   );
 };

@@ -6,8 +6,10 @@ import { loadUser } from "../reducers/UserSlice";
 
 
 export const asyncRegisterUser = (data) => async (dispatch, getState) => {
-  try {
+  try {console.log(data);
     const res = await axios.post("/register", data);
+    
+    
     toast.success("user created successfully");
   } catch (error) {
     console.log(error);
