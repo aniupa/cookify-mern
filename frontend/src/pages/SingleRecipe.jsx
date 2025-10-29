@@ -4,31 +4,24 @@ import styles from "../cssFiles/singlePage.module.css";
 import { toast } from "react-toastify";
 import likeImg from "../assets/like-removebg-preview.png";
 import unlikeImg from "../assets/unlike-removebg-preview.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { asyncAddToFavorite } from "../store/actions/recipeAction";
+
 
 const SingleRecipe = () => {
   const navigate = useNavigate();
-  const params = useParams();
+  const {id} = useParams();
+  const dispatch=useDispatch()
   const recipe=useSelector((state)=>state.recipes.data)
-  const filteredData = recipe?.find((f) => f._id == params.id);
-  
-  
+  const filteredData = recipe?.find((f) => f._id == id);
 
   const favorite = () => {
-    const index = recipe.findIndex((i) => i.id == filteredData.id);
-    console.log(index);
+    //testing logic
+    const favResult=!filteredData.fav;
+    dispatch(asyncAddToFavorite({id,favResult}))
+    //test ends
     
-    if (index === -1) return;
-    // recipe[index].fav ? toast.success('added to favorite successfully'): toast.error('removed from favorites')
-    const recipe=useSelector((state)=>state.recipes.data)
-    
-    const updatedRecipe = { ...recipe[index], fav: !recipe[index].fav };
-    const copyData = [...recipe];
-    copyData[index] = updatedRecipe;
-    setrecipe(copyData);
-    updatedRecipe.fav
-      ? toast.success("added to favorites!!")
-      : toast.error("removed from favorites !!");
   };
 
   const delItem = () => {
@@ -76,7 +69,7 @@ const SingleRecipe = () => {
               Delete Recipe
             </button>
             <NavLink
-              to={`/recipe/update/${params.id}`}
+              to={`/recipe/update/${id}`}
               className={styles.positivebtn}
             >
               Update

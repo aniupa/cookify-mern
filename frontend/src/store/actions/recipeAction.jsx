@@ -1,6 +1,7 @@
 import axios from "../../utils/axios";
 import { toast } from "react-toastify";
 import { loadRecipe } from "../reducers/recipeSlice";
+import { loadFavorites } from "../reducers/FavoriteSlice";
 export const asyncGetRecipeActions = () => async (dispatch, getState) => {
   try {
     const res = await axios.get("/recipes");
@@ -22,3 +23,20 @@ export const asyncAddRecipeActions = (recipe) => async (dispatch, getState) => {
     return console.log("err creating recipe", error);
   }
 };
+
+export const asyncAddToFavorite=({id,favResult})=>async (dispatch,getState)=>{
+ 
+try {
+   console.log(id);
+  console.log(favResult);
+  const res=await axios.patch(`/recipes/${id}`,{fav:favResult});
+  dispatch(asyncGetRecipeActions());
+  console.log('added to fav');
+  
+} catch (error) {
+  console.log(error);
+
+  
+} 
+  
+}
