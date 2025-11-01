@@ -14,6 +14,7 @@ const SingleRecipe = () => {
   const {id} = useParams();
   const dispatch=useDispatch()
   const recipe=useSelector((state)=>state.recipes.data)
+  const user=useSelector((state)=>state.users.data)
   const filteredData = recipe?.find((f) => f._id == id);
 
   const favorite = () => {
@@ -65,9 +66,11 @@ const SingleRecipe = () => {
             <button className={styles.positivebtn} onClick={() => navigate(-1)}>
               Go Back
             </button>
-            <button className={styles.negativebtn} onClick={delItem}>
+            {user?.data?.user?.isAdmin ? <button className={styles.negativebtn} onClick={delItem}>
               Delete Recipe
-            </button>
+            </button>:''}
+            
+            
             <NavLink
               to={`/recipe/update/${id}`}
               className={styles.positivebtn}

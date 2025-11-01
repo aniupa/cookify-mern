@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import styles from "../cssFiles/Navbar.module.css";
+import userStyles from "../cssFiles/userUi.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { resetUser } from "../store/reducers/UserSlice";
 const Navbar = () => {
@@ -14,7 +15,18 @@ const Navbar = () => {
         {/* protected routes */}
         {isUser ? (
           <>
-            {" "}
+          
+          
+            <NavLink
+              to={`/user/${isUser.data.user._id}/profile`}
+              className={({ isActive }) => (isActive ? styles.isActive : "")}
+            >
+              <img
+                src={isUser?.image ? isUser?.image : "../assets/like.png"}
+                alt={isUser?.image}
+                className={userStyles.profile}
+              />
+            </NavLink>
             <NavLink
               to="/AddRecipe"
               className={({ isActive }) => (isActive ? styles.isActive : "")}

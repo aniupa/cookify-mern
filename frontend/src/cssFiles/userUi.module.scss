@@ -1,0 +1,18 @@
+.profile {
+//   width: 30px;
+//   aspect-ratio: 1/1;
+//   border: 1px solid red;
+
+//   object-fit: cover;
+  border-radius: 100%;
+//   overflow: hidden;
+  background-color: transparent;
+  img{
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 100%;
+    // background: transparent;
+    
+  }
+}   

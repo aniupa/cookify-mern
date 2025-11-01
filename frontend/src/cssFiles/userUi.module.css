@@ -1,0 +1,11 @@
+.profile {
+  border-radius: 100%;
+  background-color: transparent;
+}
+.profile img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 100%;
+}/*# sourceMappingURL=userUi.module.css.map */
