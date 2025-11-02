@@ -35,6 +35,24 @@
   color: white;
 }
 
+.search {
+  display: flex;
+  text-align: right;
+  border-radius: 3px;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+.container .veg {
+  background: green;
+}
+.container .nonVeg {
+  background: red;
+}
+
 @media (min-width: 786px) {
   .recipeContainer {
     flex-wrap: wrap;

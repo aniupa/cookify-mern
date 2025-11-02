@@ -40,7 +40,24 @@
     color: white;
   }
 }
-
+.search{
+  display: flex;
+  // justify-content: space-between;
+  text-align: right;
+  border-radius: 3px;
+  // background: #000;
+}
+.container{
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  .veg{
+    background: green;
+  }
+  .nonVeg{
+    background: red;
+  }
+}
 @media (min-width: 786px) {
   .recipeContainer {
     flex-wrap: wrap;
