@@ -1,25 +1,26 @@
+@import "../styles/mixins";
 .recipeContainer {
-  display: flex;
-  flex-wrap: wrap; 
+  @include flex(center,center,row,1rem ,wrap);
+ 
   padding: 1rem;
-  gap: 1rem;
-  justify-content: center;
-//  background: #000;
+ 
   margin-bottom: 1rem;
 
   .recipeCard {
-    max-width: 350px;
-    width: 100%;
+    width: 400px;
     aspect-ratio: 1/1;
+    object-fit: cover;
+    @include flex(center,center,row,1rem ,wrap);
     img {
-      width: 100%;
+
+      width: 250px;
       border-radius: 10px;
+       aspect-ratio: 1/1;
+      //  object-fit: cover;
     }
-    
   }
-  .recipeCard:hover{
-    // transform: scale 0s;
-    scale: .97;
+  .recipeCard:hover {
+    scale: 0.97;
   }
   a {
     text-decoration: none;
@@ -40,32 +41,41 @@
     color: white;
   }
 }
-.search{
-  display: flex;
-  // justify-content: space-between;
+.search {
   text-align: right;
   border-radius: 3px;
-  // background: #000;
 }
-.container{
-  display: flex;
-  flex-direction: row;
+.container {
+  @include flex(center, center, row);
   gap: 1rem;
-  .veg{
+  .veg {
     background: green;
   }
-  .nonVeg{
+  .nonVeg {
     background: red;
   }
 }
-@media (min-width: 786px) {
-  .recipeContainer {
-    flex-wrap: wrap;
-    flex-direction: row;
-    .recipeCard{
-      width: 250px;
-    }
-
+.visibility{
+  opacity: 0;
+  
+}
+.recipeCard:hover{
+  .visibility{opacity: 1;}
     
+  }
+@include responsive(mobile) {
+  .recipeContainer {
+     @include flex(center,center,row,1rem ,wrap);
+    .recipeCard {
+      width: 100%;
+    }
+  }
+}
+@include responsive(tablet) {
+  .recipeContainer {
+    @include flex(center,center,row,1rem ,wrap);
+    .recipeCard {
+      width: 100%;
+    }
   }
 }

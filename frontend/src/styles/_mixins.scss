@@ -1,0 +1,24 @@
+@mixin flex($justify: center, $align: center, $direction: row, $gap: 0,$wrap:nowrap) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+  flex-direction: $direction;
+  gap: $gap;
+  flex-wrap: $wrap;
+}
+
+@mixin responsive($size) {
+  @if $size == mobile {
+    @media (max-width: 400px) {
+      @content;
+    }
+  } @else if $size == tablet {
+    @media (min-width: 401px) and (max-width: 900px) {
+      @content;
+    }
+  } @else if $size == desktop {
+    @media (min-width: 901px) {
+      @content;
+    }
+  }
+}

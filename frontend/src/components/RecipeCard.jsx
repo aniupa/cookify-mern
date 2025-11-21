@@ -14,9 +14,9 @@ const RecipeCard = ({ item }) => {
     >
       <div className={styles.recipeCard}>
         
-        <img src={image? image:'not image'} alt={title} />
-        <h1>{title}</h1>
-        <span>{description}</span>
+        <img src={image? image:'not image'} alt={title} /> <br />
+        <h1>{title?.slice(0,30)}..</h1><br />
+        <span className={styles.visibility}>{description?.slice(0,50)}...</span>
       </div>
     </NavLink>
   );
