@@ -1,10 +1,23 @@
-@mixin flex($justify: center, $align: center, $direction: row, $gap: 0,$wrap:nowrap) {
+@mixin flex(
+  $justify: center,
+  $align: center,
+  $direction: row,
+  $gap: 0,
+  $wrap: nowrap
+) {
   display: flex;
   justify-content: $justify;
   align-items: $align;
   flex-direction: $direction;
   gap: $gap;
   flex-wrap: $wrap;
+}
+
+@mixin button($width:20px,$radius:5px,$bg: var(--primary), $color: var(--white)) {
+  width: $width;
+  background: $bg;
+  color: $color;
+  border-radius: $radius;
 }
 
 @mixin responsive($size) {

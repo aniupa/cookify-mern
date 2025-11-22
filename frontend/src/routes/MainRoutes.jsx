@@ -1,23 +1,40 @@
 import React from "react";
 // import { Route,Routes } from 'react-router-dom'
+import { lazy } from "react";
+import { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
-import About from "../pages/About";
-import Home from "../pages/Home";
-import Recipes from "../pages/Recipes";
+const Home = lazy(() => import("../pages/Home"));
+const Recipes = lazy(() => import("../pages/Recipes"));
+const CreateRecipe = lazy(() => import("../pages/CreateRecipe"));
+const SingleRecipe = lazy(() => import("../pages/SingleRecipe"));
+const RecipeCard = lazy(() => import("../components/RecipeCard"));
+const UpdateRecipe = lazy(() => import("../pages/UpdateRecipe"));
+const Favorites = lazy(() => import("../pages/favorites"));
+const Login = lazy(() => import("../pages/Login"));
+const Register = lazy(() => import("../pages/Register"));
+const NotFound = lazy(() => import("../pages/NotFound"));
+const About = lazy(() => import("../pages/About"));
+
+const UserRoutes = lazy(() => import("./UserRoutes"));
+const AuthWrapper = lazy(() => import("../services/AuthWrapper"));
+//////////
+// import Home from ;
+// import Recipes from ;
 import Navbar from "../components/Navbar";
-import CreateRecipe from "../pages/CreateRecipe";
-import SingleRecipe from "../pages/SingleRecipe";
-import RecipeCard from "../components/RecipeCard";
-import UpdateRecipe from "../pages/UpdateRecipe";
-import Favorites from "../pages/favorites";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import UserRoutes from "./UserRoutes";
-import NotFound from "../pages/NotFound";
-import AuthWrapper from "../services/AuthWrapper";
+// import CreateRecipe from ;
+// import SingleRecipe from ;
+// import RecipeCard from ;
+// import UpdateRecipe from ;
+// import Favorites from ;
+// import Login from ;
+// import Register from ;
+// import UserRoutes from ;
+// import NotFound from ;
+// import  from ;
 
 const MainRoutes = () => {
   return (
+    <Suspense fallback={<div><h1>Loading...</h1></div>}>
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />
@@ -40,6 +57,7 @@ const MainRoutes = () => {
       <Route path="*" element={<NotFound />} />
       {/* auth Routes */}
     </Routes>
+    </Suspense>
   );
 };
 

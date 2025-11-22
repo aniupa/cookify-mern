@@ -73,9 +73,11 @@ const SingleRecipe = () => {
             
             <NavLink
               to={`/recipe/update/${id}`}
-              className={styles.positivebtn}
+              // className={styles.positivebtn}
             >
+             <button className={styles.positivebtn} onClick={() => navigate(-1)}>
               Update
+            </button>
             </NavLink>
           </div>
         </div>

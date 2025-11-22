@@ -24,7 +24,7 @@
   }
   a {
     text-decoration: none;
-    color: white;
+    color: var(--text);
   }
 
   .cardBtn {
@@ -33,17 +33,31 @@
     right: 10px;
     padding: 2px 5px;
     border-radius: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border);
   }
 
   .title {
     padding: 1rem;
-    color: white;
+    color: var(--text);
   }
 }
 .search {
-  text-align: right;
+  @include flex(space-between, center);
+  margin: 2rem auto;
+  max-width: 500px;
+  // text-align: right;
   border-radius: 3px;
+    input {
+    flex: 1;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+
+    &:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+  }
 }
 .container {
   @include flex(center, center, row);

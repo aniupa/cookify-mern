@@ -1,3 +1,15 @@
+@font-face {
+  font-family: light;
+  src: url(../../frontend/font/Montserrat-Light.ttf);
+}
+@font-face {
+  font-family: regular;
+  src: url(../../frontend/font/Montserrat-Regular.ttf);
+}
+@font-face {
+  font-family: bold;
+  src: url(../../frontend/font/Montserrat-SemiBoldItalic.ttf);
+}
 *{
   margin: 0%;
   padding: 0%;
@@ -8,14 +20,42 @@ body,html{
   height: 100%;
   width: 100%;
   color: white;
+  
   /* background: transparent; */
 }
+h1,h2{
+  font-family: bold;
+  font-weight: 900;
+  /* color:; */
+}
+h3,h4{
+  font-family: regular;
+
+}
+h5,h6{
+  font-family: light;
+
+}
 #root{
+  
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+button{
+  background: var(--primary);
+  color: white;
+}
 button:active{
   scale: .9;
+}
+:root {
+  --primary: #2F7F6D;
+  --secondary: #F4A261;
+  --tertiary: #F6F7F9;
+  --text: #222;
+  --muted: #666;
+  --border: #e2e2e2;
+  --white: #fff;
 }

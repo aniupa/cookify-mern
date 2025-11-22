@@ -22,9 +22,9 @@ const Navbar = () => {
               className={({ isActive }) => (isActive ? styles.isActive : "")}
             >
               <img
-                src={isUser?.image ? isUser?.image : "../assets/like.png"}
+                src={isUser?.image ? isUser?.image : "../assets/unlike-removebg-preview.png"}
                 alt={isUser?.image}
-                className={userStyles.profile}
+                className={styles._logo}
               />
             </NavLink>
             <NavLink

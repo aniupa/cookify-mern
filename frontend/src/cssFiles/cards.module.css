@@ -30,7 +30,7 @@
 }
 .recipeContainer a {
   text-decoration: none;
-  color: white;
+  color: var(--text);
 }
 .recipeContainer .cardBtn {
   position: absolute;
@@ -38,16 +38,33 @@
   right: 10px;
   padding: 2px 5px;
   border-radius: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
 }
 .recipeContainer .title {
   padding: 1rem;
-  color: white;
+  color: var(--text);
 }
 
 .search {
-  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  gap: 0;
+  flex-wrap: nowrap;
+  margin: 2rem auto;
+  max-width: 500px;
   border-radius: 3px;
+}
+.search input {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.search input:focus {
+  outline: none;
+  border-color: var(--primary);
 }
 
 .container {

@@ -5,11 +5,13 @@ import RecipeForm from "../components/RecipeForm";
 
 import { useDispatch, useSelector } from "react-redux";
 import { asyncAddRecipeActions } from "../store/actions/recipeAction";
+import { useState } from "react";
 const UpdateRecipe = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const recipeBtnName = "Add Recipe";
+  const recipe=useSelector((state)=>state.recipes.data)
   const params = useParams();
   const defaultRecipe = recipe.find((f) => f.id == params.id);
  
