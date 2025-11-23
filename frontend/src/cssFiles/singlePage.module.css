@@ -3,41 +3,39 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: row;
+  gap: 0;
+  flex-wrap: nowrap;
 }
 .recipeContainer .recipeCard {
   position: relative;
   display: flex;
-  flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  flex-direction: column;
   gap: 1.5rem;
-  padding: 15px;
+  flex-wrap: nowrap;
+  padding: 1.5rem;
 }
 .recipeContainer .recipeCard .recipeImg {
   width: 100%;
   max-width: 350px;
   border-radius: 10px;
 }
-.recipeContainer .recipeCard .btnContainer {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
-.recipeContainer .recipeCard .btnContainer button {
-  padding: 2px;
+
+.positivebtn {
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0.3rem;
+  margin: 1rem;
+  background: var(--primary);
+  color: var(--white);
   border-radius: 5px;
 }
 
-.positivebtn {
-  display: block;
-  padding: 2px;
-  text-decoration: none;
-}
-
 .negativebtn {
-  background: red;
-  color: white;
+  background: tomato;
+  color: var(--white);
 }
 
 .like {
@@ -55,7 +53,12 @@
   transform: scale(1.1);
 }
 
-@media (max-width: 600px) {
+@media (min-width: 400px) {
+  .like {
+    width: 30px;
+  }
+}
+@media (max-width: 401px) and (max-width: 900px) {
   .like {
     width: 30px;
   }

@@ -1,71 +1,45 @@
+@import '../styles/mixins';
+
 .recipeContainer {
   width: 100%;
-  // border: 1px solid red;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex(center);
   .recipeCard {
-    // border: 1px solid blue;
-    
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 1.5rem;
-    padding: 15px;
+    @include flex(flex-start, center, column, 1.5rem);
+    padding: 1.5rem;
     .recipeImg {
       width: 100%;
       max-width: 350px;
       border-radius: 10px;
     }
-    .btnContainer {
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-evenly;
-      button {
-        padding: 2px;
-        border-radius: 5px;
-      }
-    }
   }
 }
 .positivebtn {
-  display: block;
-  padding: 2px;
-  text-decoration: none;
-  // border-radius: 5px;
-  // color: white;
-  // background: var(--button);
   @include button();
-  
 }
 .negativebtn {
-  background: red;
-  color: white;
+  background: tomato;
+  color: var(--white);
 }
-.like{
+.like {
   position: absolute;
-  // color: var(--secondary);
   width: 40px;
   aspect-ratio: 1/1;
- object-fit: cover;
+  object-fit: cover;
   top: 10px;
- right: 15px;
- cursor:pointer;
+  right: 15px;
+  cursor: pointer;
 }
-
-
-.like:hover{
-  transform:scale(1.1) ;
+.like:hover {
+  transform: scale(1.1);
 }
-
-@media (max-width:600px) {
-  .like{
-    // font-size: 1.2rem;
+@include responsive(mobile) {
+  .like {
     width: 30px;
-    // aspect-ratio: ;
-    
+  }
+}
+@include responsive(tablet) {
+  .like {
+    width: 30px;
   }
 }

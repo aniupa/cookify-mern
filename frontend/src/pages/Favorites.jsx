@@ -13,7 +13,7 @@ const Favorites = () => {
   ));
   return (
     <div className={styles.recipeContainer}>
-      {filtered?.length > 0 ? mapped : "No Favorites found !!"}
+      {filtered?.length > 0 ? mapped : <h2>"No Favorites found !!"</h2>}
     </div>
   );
 };

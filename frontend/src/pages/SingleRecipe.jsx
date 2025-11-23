@@ -59,9 +59,9 @@ const SingleRecipe = () => {
           />
 
           <h1>Title:{filteredData?.title}</h1>
-          <p>Description:{filteredData?.description}</p>
+          <h3>Description:{filteredData?.description}</h3>
           <h3>Instruction:{filteredData?.instructions}</h3>
-          <h5>Ingredients:{filteredData?.ingredients}</h5>
+          <h3>Ingredients:{filteredData?.ingredients}</h3>
           <div className={styles.btnContainer}>
             <button className={styles.positivebtn} onClick={() => navigate(-1)}>
               Go Back

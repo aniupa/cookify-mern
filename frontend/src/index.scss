@@ -1,6 +1,9 @@
+@import "./styles/_mixins.scss";
+
 @font-face {
   font-family: "Montserrat";
-  src: url("/fonts/Montserrat-Regular.woff2") format("woff2"), url("../font/Montserrat-Regular.woff2") format("woff");
+  src: url("/fonts/Montserrat-Regular.woff2") format("woff2"),
+       url("../font/Montserrat-Regular.woff2") format("woff");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -24,7 +27,6 @@
   padding: 0%;
   box-sizing: border-box;
 }
-
 body,
 html {
   background: var(--tertiary);
@@ -34,8 +36,8 @@ html {
   height: 100%;
   width: 100%;
   color: var(--text);
-}
 
+}
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
@@ -44,39 +46,14 @@ html {
     scroll-behavior: auto !important;
   }
 }
-h1 {
-  font-size: clamp(1.5rem, 3.6vw, 2.8rem);
-  font-weight: 600;
-  margin: 0 0 0.5rem 0;
-}
-
-h2 {
-  font-size: clamp(1.25rem, 3vw, 2rem);
-  font-weight: 600;
-  margin: 0 0 0.5rem 0;
-}
-
-h3 {
-  font-size: clamp(1.125rem, 2.2vw, 1.5rem);
-  font-weight: 500;
-  margin: 0 0 0.5rem 0;
-}
-
-p, li, label {
-  font-size: 1rem;
-  margin: 0 0 0.75rem 0;
-  color: var(--text);
-}
+h1 { font-size: clamp(1.5rem, 3.6vw, 2.8rem); font-weight: 600; margin: 0 0 0.5rem 0; }
+h2 { font-size: clamp(1.25rem, 3.0vw, 2rem); font-weight: 600; margin: 0 0 0.5rem 0; }
+h3 { font-size: clamp(1.125rem, 2.2vw, 1.5rem); font-weight: 500; margin: 0 0 0.5rem 0; }
+p, li, label { font-size: 1rem; margin: 0 0 0.75rem 0; color: var(--text); }
 
 #root {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 0;
-  flex-wrap: nowrap;
+  @include flex(center, center, column);
 }
-
 :root {
   --primary: #2f7f6d;
   --secondary: #f4a261;
@@ -85,9 +62,11 @@ p, li, label {
   --muted: #666666;
   --border: #e2e2e2;
   --white: #ffffff;
+
   --fw-light: 300;
   --fw-regular: 400;
   --fw-semibold: 600;
+
   --radius-sm: 6px;
   --radius-md: 10px;
-}/*# sourceMappingURL=index.css.map */
+}

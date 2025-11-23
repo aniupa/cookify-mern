@@ -1,6 +1,4 @@
-.formContainer{
-    
-    display: flex;
-    flex-direction: column;
-    
+@import '../styles/mixins';
+.formContainer {
+  @include flex(center, center, column);
 }

@@ -13,8 +13,11 @@
   flex-wrap: $wrap;
 }
 
-@mixin button($width:20px,$radius:5px,$bg: var(--primary), $color: var(--white)) {
+@mixin button($margin:1rem,$width:fit-content,$radius:5px,$bg: var(--primary), $color: var(--white)) {
   width: $width;
+  // width: fit-content;
+  padding: 0.3rem;
+  margin: $margin;
   background: $bg;
   color: $color;
   border-radius: $radius;
@@ -22,15 +25,15 @@
 
 @mixin responsive($size) {
   @if $size == mobile {
-    @media (max-width: 400px) {
+    @media (min-width: 400px) {
       @content;
     }
   } @else if $size == tablet {
-    @media (min-width: 401px) and (max-width: 900px) {
+    @media (max-width: 401px) and (max-width: 900px) {
       @content;
     }
   } @else if $size == desktop {
-    @media (min-width: 901px) {
+    @media (max-width: 901px) {
       @content;
     }
   }

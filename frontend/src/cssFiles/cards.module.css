@@ -91,7 +91,7 @@
   opacity: 1;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 401px) and (max-width: 900px) {
   .recipeContainer {
     display: flex;
     justify-content: center;
@@ -104,7 +104,7 @@
     width: 100%;
   }
 }
-@media (min-width: 401px) and (max-width: 900px) {
+@media (max-width: 401px) and (max-width: 900px) {
   .recipeContainer {
     display: flex;
     justify-content: center;

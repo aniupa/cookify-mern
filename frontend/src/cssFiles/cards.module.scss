@@ -77,7 +77,7 @@
   .visibility{opacity: 1;}
     
   }
-@include responsive(mobile) {
+@include responsive(tablet) {
   .recipeContainer {
      @include flex(center,center,row,1rem ,wrap);
     .recipeCard {

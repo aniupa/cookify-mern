@@ -1,7 +1,5 @@
 @import "../styles/mixins";
 .isActive {
-  //    background: var(--primary);
-  /* border-radius: 10px; */
   color: var(--primary);
   font-weight: 600;
 }
@@ -16,25 +14,16 @@
   padding: 0.8rem 1rem;
 
   &__logo {
-    //   width: 30px;
-    //   aspect-ratio: 1/1;
-    //   border: 1px solid red;
-
-    //   object-fit: cover;
     border-radius: 100%;
-    //   overflow: hidden;
     background-color: transparent;
     img {
       width: 100%;
       aspect-ratio: 1/1;
       object-fit: cover;
       border-radius: 100%;
-      // background: transparent;
     }
   }
   a {
-    // border: 1px solid red;
-    // color: var(--muted);
     text-decoration: none;
     padding: 2px 0.5rem;
     border-radius: 3px;
@@ -42,6 +31,19 @@
     &:hover {
       color: var(--primary);
     }
-    // display: block;
   }
 }
+
+@include responsive(tablet){
+  .navbar{
+    width: 100%;
+    @include flex(center,center,row,.1rem,wrap);
+    font-size: clamp(1rem, 1vw + 0.75rem, .5rem);
+    padding: .1rem;
+    // margin: .1rem;
+  }
+}
+
+// @include responsive(tablet){}
+
+// @include responsive(mobile){}

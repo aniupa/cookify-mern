@@ -1,4 +1,8 @@
 .formContainer {
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
+  gap: 0;
+  flex-wrap: nowrap;
 }/*# sourceMappingURL=formStyles.module.css.map */
