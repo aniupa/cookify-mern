@@ -1,13 +1,16 @@
 @import "../styles/mixins";
 .recipeContainer {
-  @include flex(center,center,row,1rem ,wrap);
- 
+  @include flex(space-evenly,centre,row,1rem,wrap);
+  width: 100%;
+//  border: 1px solid orange;
   padding: 1rem;
  
   margin-bottom: 1rem;
 
   .recipeCard {
     width: 400px;
+    
+//  border: 1px solid orange;
     aspect-ratio: 1/1;
     object-fit: cover;
     @include flex(center,center,row,1rem ,wrap);

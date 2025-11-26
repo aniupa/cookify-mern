@@ -1,16 +1,37 @@
 import React, { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../cssFiles/cards.module.css";
+import axios from "../utils/axios";
+import { useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 import RecipeCard from "../components/RecipeCard";
 import { asyncGetRecipeActions } from "../store/actions/recipeAction";
+import { loadRecipe } from "../store/reducers/recipeSlice";
+import End from "./End";
 const Recipes = () => {
   const dispatch = useDispatch();
-  const recipe = useSelector((state) => state.recipes.data);
+  
+  //---pagination from here
+  const [recipe, setRecipe] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const fetchRecipes = async () => {
+    try {
+      const res = await axios.get(`/recipes?page=${page}&limit=6`);
+      setRecipe((prev) => [...prev, ...res.data.recipes]);
+      setHasMore(res.data.hasMore);
+      // console.log("hasmore", hasMore);
 
+      setPage((prev) => prev + 1);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
-    dispatch(asyncGetRecipeActions());
-  }, [dispatch]);
+    fetchRecipes();
+  }, []);
+  //----end here
 
   const renderRecipe = recipe?.map((item, i) => {
     return <RecipeCard key={item?._id || i} item={item} />;
@@ -26,12 +47,26 @@ const Recipes = () => {
       />
       <div className={styles.container}>
         <p className={styles.veg}>Veg</p>
-        <input id="foodType" type="radio" /> <p className={styles.nonVeg}>Non-Veg</p>
+        <input id="foodType" type="radio" />{" "}
+        <p className={styles.nonVeg}>Non-Veg</p>
         <input id="foodType" type="radio" />
       </div>
-      <div className={styles.recipeContainer}>
-        {recipe && recipe.length > 0 ? renderRecipe : "No recipes found !"}
-      </div>
+      
+        {recipe && recipe.length > 0 ? (
+          <InfiniteScroll
+            dataLength={recipe.length}
+            next={fetchRecipes}
+            hasMore={hasMore}
+            endMessage={<End/>}
+            loader={<h2>Loading...</h2>}
+          >
+            <div className={styles.recipeContainer}>{renderRecipe}</div>
+            
+          </InfiniteScroll>
+        ) : (
+          "No recipes found !"
+        )}
+      {/* </div> */}
     </>
   );
 };

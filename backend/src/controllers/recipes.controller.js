@@ -2,8 +2,15 @@ import { recipeModel } from "../models/recipe.model.js";
 
 export async function getRecipesController(req, res) {
   try {
-    const recipes = await recipeModel.find();
-    res.status(200).json(recipes);
+    //---starts from here
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 6;
+    const skip = (page - 1) * limit;
+    //-- end here upper block of code i dnt know about it that much
+    const recipes = await recipeModel.find().skip(skip).limit(limit);
+
+    const total = await recipeModel.countDocuments(); //dnt'k about countDocuments as well
+    res.status(200).json({ recipes, total, hasMore: page * limit < total });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "internal server error" });
@@ -57,10 +64,10 @@ export async function updateRecipeController(req, res) {
       { $set: data },
       { new: true }
     );
-    if(!recipe){
-      return res.status(404).json({message:'recipe not found !!'})
+    if (!recipe) {
+      return res.status(404).json({ message: "recipe not found !!" });
     }
-    res.status(200).json({message:'recipe updated successfully',recipe})
+    res.status(200).json({ message: "recipe updated successfully", recipe });
   } catch (error) {
     console.log(error);
   }

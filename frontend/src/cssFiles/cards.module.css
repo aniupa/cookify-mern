@@ -1,10 +1,11 @@
 .recipeContainer {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-evenly;
+  align-items: centre;
   flex-direction: row;
   gap: 1rem;
   flex-wrap: wrap;
+  width: 100%;
   padding: 1rem;
   margin-bottom: 1rem;
 }
