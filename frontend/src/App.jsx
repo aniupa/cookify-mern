@@ -15,7 +15,7 @@ const App = () => {
   useEffect(() => {
     dispatch(asyncCurrentUser());
     
-    dispatch(asyncGetRecipeActions());
+    // dispatch(asyncGetRecipeActions());
   }, [dispatch]);
   return (
     <BrowserRouter>

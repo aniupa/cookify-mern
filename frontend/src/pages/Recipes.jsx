@@ -7,21 +7,22 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import RecipeCard from "../components/RecipeCard";
 import { asyncGetRecipeActions } from "../store/actions/recipeAction";
-import { loadRecipe } from "../store/reducers/recipeSlice";
+import { loadRecipe,loadLazyRecipe } from "../store/reducers/recipeSlice";
 import End from "./End";
 const Recipes = () => {
   const dispatch = useDispatch();
   
   //---pagination from here
-  const [recipe, setRecipe] = useState([]);
+  const recipe=useSelector((state)=>state.recipes.data);
+
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const fetchRecipes = async () => {
     try {
       const res = await axios.get(`/recipes?page=${page}&limit=6`);
-      setRecipe((prev) => [...prev, ...res.data.recipes]);
+      
+      dispatch(loadLazyRecipe(res.data.recipes));
       setHasMore(res.data.hasMore);
-      // console.log("hasmore", hasMore);
 
       setPage((prev) => prev + 1);
     } catch (error) {

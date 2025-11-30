@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { data: [{"title":"testing","id":"testid",fav:false},{"title":"testing","id":"testid1",fav:false}] };
+const initialState = {
+  data: [],
+};
 
 const RecipeSlice = createSlice({
   name: "recipes",
@@ -19,11 +21,19 @@ const RecipeSlice = createSlice({
       localStorage.setItem("recipes", JSON.stringify(state.data));
     },
     loadRecipe: (state, action) => {
-      state.data = action.payload; 
+      state.data = action.payload;
+    },
+    loadLazyRecipe: (state, action) => {
+      state.data = [...state.data, ...action.payload];
     },
   },
 });
 
 export default RecipeSlice.reducer;
-export const { loadRecipesFromLocalStorage, addRecipe,loadRecipe, deleteRecipe } =
-  RecipeSlice.actions;
+export const {
+  loadRecipesFromLocalStorage,
+  addRecipe,
+  loadRecipe,
+  loadLazyRecipe,
+  deleteRecipe,
+} = RecipeSlice.actions;
