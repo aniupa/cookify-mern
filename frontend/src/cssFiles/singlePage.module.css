@@ -53,12 +53,12 @@
   transform: scale(1.1);
 }
 
-@media (min-width: 400px) {
+@media (max-width: 480px) {
   .like {
     width: 30px;
   }
 }
-@media (max-width: 401px) and (max-width: 900px) {
+@media (max-width: 920px) {
   .like {
     width: 30px;
   }

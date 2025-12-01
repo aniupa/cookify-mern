@@ -85,9 +85,14 @@ p, li, label {
   --muted: #666666;
   --border: #e2e2e2;
   --white: #ffffff;
+  --bg: #faf7f4;
   --fw-light: 300;
   --fw-regular: 400;
   --fw-semibold: 600;
+  --accent: #ffd4c2;
   --radius-sm: 6px;
+  --radius-md: 10px;
+  --shadow: 0 10px 30px rgba(17,17,17,0.08);
+  --radius-lg: 14px;
   --radius-md: 10px;
 }/*# sourceMappingURL=index.css.map */

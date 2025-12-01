@@ -23,18 +23,21 @@
   border-radius: $radius;
 }
 
+// Responsive Mixin with your breakpoints
 @mixin responsive($size) {
-  @if $size == mobile {
-    @media (min-width: 400px) {
+  @if $size == tablet {
+    @media (max-width: 920px) {
       @content;
     }
-  } @else if $size == tablet {
-    @media (max-width: 401px) and (max-width: 900px) {
+  } @else if $size == mobile {
+    @media (max-width: 480px) {
       @content;
     }
   } @else if $size == desktop {
-    @media (max-width: 901px) {
-      @content;
-    }
+    // Base styles (no media query)
+    @content;
+  } @else {
+    @warn "Unknown responsive size `#{$size}`. Use: desktop | tablet | mobile.";
   }
 }
+
