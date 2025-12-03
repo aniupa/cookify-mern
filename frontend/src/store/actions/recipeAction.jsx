@@ -40,3 +40,18 @@ try {
 } 
   
 }
+
+export const asyncUpdateRecipeHandler=({id,data})=>async (dispatch,getState)=>{
+  try {
+    const res=await axios.patch(`/recipes/${id}`,data);
+    toast.success("recipe updated successfully!!");
+    console.log(" recipe updated successfully", res);
+    // console.log(res);
+    
+  } catch (error) {
+    console.log(error);
+    
+    toast.error("error while updating recipe in asyncUpdateRecipeHandler");
+    
+  }
+}

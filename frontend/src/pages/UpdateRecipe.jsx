@@ -1,37 +1,49 @@
+import useRecipeForm from "../components/useRecipeForm";
+import { useForm } from "react-hook-form";
 
-import { useNavigate, useParams } from "react-router-dom";
-import RecipeForm from "../components/RecipeForm";
+import styles from "../cssFiles/CreateRecipe.module.css";
 
-
-import { useDispatch, useSelector } from "react-redux";
-import { asyncAddRecipeActions } from "../store/actions/recipeAction";
-import { useState } from "react";
 const UpdateRecipe = () => {
-  const navigate = useNavigate();
 
-  const dispatch = useDispatch();
-  const recipeBtnName = "Add Recipe";
-  const recipe=useSelector((state)=>state.recipes.data)
-  const params = useParams();
-  const defaultRecipe = recipe.find((f) => f.id == params.id);
  
  
 
-  const submitHandler = async (data) => {
-    dispatch(asyncAddRecipeActions(data));
+  const { register, handleSubmit, formState: { errors } } = useForm();
+    const {updateRecipeHandler}=useRecipeForm();
 
-    reset();
-    navigate("/recipes");
-    const index = recipe.findIndex((i) => i.id == params.id);
-    const copyData = [...recipe];
-    copyData[index] = { ...copyData[index], ...data };
-    setrecipe(copyData);
-    
-    toast.success("recipe data updated successfully!!");
-    navigate('/recipes')
-  };
+ 
   return (
-    <RecipeForm submitHandler={submitHandler} recipeBtnName={recipeBtnName} />
+    <div className={styles.recipeContainer}>
+      <form
+        className={styles.recipeForm}
+        onSubmit={handleSubmit(updateRecipeHandler)}
+      >
+        <input
+          type="url"
+          {...register("image")}
+          placeholder="enter image url"
+        />
+        <input
+          type="text"
+          {...register("title", { required: true })}
+          placeholder="recipe title"
+        />
+        {errors.title && <p style={{ color: "red" }}>Title is required</p>}
+        <textarea
+          {...register("description")}
+          placeholder="enter the description"
+        ></textarea>
+        <textarea
+          {...register("ingredients")}
+          placeholder="enter the ingredients"
+        ></textarea>
+        <textarea
+          {...register("instructions")}
+          placeholder="enter the instructions to make the recipe"
+        ></textarea>
+        <button type="submit">Update Recipe</button>
+      </form>
+    </div>
   );
 };
 

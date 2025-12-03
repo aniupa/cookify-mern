@@ -17,6 +17,7 @@ const SingleRecipe = () => {
   const user=useSelector((state)=>state.users.data)
   const filteredData = recipe?.find((f) => f._id == id);
 
+ 
   const favorite = () => {
     //testing logic
     const favResult=!filteredData.fav;
