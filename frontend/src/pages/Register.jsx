@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { asyncRegisterUser } from "../store/actions/userAction";
 import styles from "../cssFiles/RegisterForm.module.css";
+import { ToastContainer, toast } from "react-toastify";
 const Register = () => {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
@@ -15,19 +16,23 @@ const Register = () => {
       dispatch(asyncRegisterUser(data));
       navigate("/");
     } catch (error) {
-      console.log(error);
+
+      
+      // console.log(error);
+      console.log(error?.response?.status);
+      
     }
   };
   return (
     <div className={styles.rf_container}>
       <section className={styles.rf_main_sectionContainer}>
-        <header className={styles.rf_header}>here</header>
         <main className={styles.rf_main}>
           <section className={styles.rf_formContainer}>
             <form
               onSubmit={handleSubmit(registerUserHandler)}
               className={styles.formContainer}
             >
+              <h3 style={{ textAlign: "center" }}>REGISTER</h3>
               <input
                 type="text"
                 placeholder="UserName"

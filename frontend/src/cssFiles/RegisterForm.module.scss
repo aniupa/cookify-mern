@@ -1,132 +1,4 @@
 @import "../styles/mixins";
-// // border
-// .rf_container {
-//   background: var(--tertiary);
-//   width: 70%;
-//   height: 70%;
-//   @include flex(center, center, column);
-//   .rf_main_sectionContainer {
-//     width: 100%;
-//     height: 100%;
-//     background-image: url(https://images.unsplash.com/photo-1543352634-a1c51d9f1fa7?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
-//     background-repeat: no-repeat;
-//     background-size: cover;
-//     // background: var(--border);
-//     @include flex(flex-start, center, column);
-//     border-radius: 9px;
-
-//     margin: 1rem;
-
-//     padding: 2rem;
-//     .rf_header {width: 100%;
-//       position: relative;
-
-//       padding: 1rem 0.5rem;
-//       @include flex(flex-start);
-//       background: transparent;
-//       //   border: 1px solid tomato;
-//     }
-//     .rf_main {
-//       // border-radius: px;
-//       width: 100%;
-//       height: 80%;
-//       position: relative;
-
-//       padding: 2rem;
-//       // border: 1px solid red;
-//       background: var(--white);
-
-//       @include flex(space-evenly);
-//       .rf_formContainer {
-//         // position: relative;
-//         width: 50%;
-//         height: 100%;
-//         padding: 2rem;
-//         background: var(--white);
-//         border-radius: 14px;
-//         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
-
-//         @include flex(center, center, column);
-//         form {
-//           //   padding: 0.5rem;
-//           width: 70%;
-//           height: 100%;
-//           margin-top: 2rem;
-
-//           @include flex(flex-start, center, column, 1.2rem);
-//           input {
-//             width: 100%;
-//             padding: 0.7rem 1rem;
-//             border-radius: 9px;
-//             padding: 0.2rem 0.5rem;
-//             background: var(--border);
-//             // border: none;
-//             border: 1.5px solid transparent;
-//             transition: all 0.25s ease;
-//             &:focus {
-//               border-color: var(--primary);
-//               background: var(--white);
-//               box-shadow: 0 0 5px rgba(0, 0, 0, 0.06);
-//             }
-//           }
-//           .rf_submit_btn {
-//             // width: 100%;
-//             padding: 0.7rem 1rem;
-//             border-radius: 10px;
-//             background: var(--primary);
-//             color: var(--white);
-//             font-weight: 600;
-//             cursor: pointer;
-//             transition: all 0.25s ease;
-//             &:hover {
-//               filter: brightness(0.92);
-//               transform: translateY(-1px);
-//             }
-//             &:active {
-//               transform: scale(0.97);
-//             }
-//           }
-//         }
-//       }
-//       .rf_heroContainer {
-//         position: relative;
-//         width: 300px;
-//         background: transparent;
-//         // border: 1px solid green;
-//         padding: 1rem;
-//         @include flex(center, center, column, 2rem);
-//         .rf_intro {
-//           @include flex(center, center, column);
-//           //   border: 1px blue;
-//         }
-//       }
-//     }
-//   }
-// }
-
-// // @include responsive(tablet) {
-// //   .rf_container {
-// //     height: 100%;
-// //     .rf_main_sectionContainer {
-// //       width: 90%;
-// //       height: 100%;
-// //       .rf_header {
-// //         display: none;
-// //       }
-// //       .rf_main {
-// //         width: 100%;
-// //         height: 100%;
-// //         .rf_formContainer {
-// //           height: 100%;
-// //           width: 100%;
-// //         }
-// //         .rf_heroContainer {
-// //           display: none;
-// //         }
-// //       }
-// //     }
-// //   }
-// // }
 
 .rf_container {
   width: 100%;
@@ -148,40 +20,27 @@
     gap: 1rem;
     overflow: hidden;
 
-    .rf_header {
-      width: 100%;
-      padding: 0.6rem 0.5rem;
-      @include flex();
-      //   gap: .5rem;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
     .rf_main {
       width: 100%;
       background: rgba(255, 255, 255, 0.96); /* slightly opaque to show image */
       border-radius: calc(var(--radius-lg) - 4px);
       @include flex(space-between, stretch, row, 2rem);
-      //   display: flex;
-      //   gap: 2rem;
-      //   padding: 2rem;
-      //   align-items: stretch;               /* children stretch vertically */
-      //   justify-content: space-between;
+
       min-height: 480px; /* sensible minimum on desktop */
       .rf_formContainer {
         background: var(--white);
         border-radius: var(--radius-md);
         padding: 1.5rem;
         width: 56%;
-        @include flex(center, stretch, column); /* desktop form width */
-        //   display: flex;
-        //   flex-direction: column;
-        //   align-items: stretch;
-        //   justify-content: center;
+        @include flex(center, stretch, column);
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
-        min-height: 100%; /* stretch to .rf_main height */
+        min-height: 100%;
+        max-width: 640px;
+        margin: 0 auto; /* stretch to .rf_main height */
 
         .formContainer {
           width: 100%;
+          max-width: 560px;
           @include flex(center, stretch, column);
           height: 100%;
 
@@ -233,13 +92,9 @@
       .rf_heroContainer {
         width: 36%; /* desktop hero width */
         @include flex(center, flex-start, column);
-        // display: flex;
-        // flex-direction: column;
-        // gap: 1rem;
+        max-width: 720px;
         padding: 1rem 1.25rem;
-        // align-items: flex-start;
-        // justify-content: center;
-        color: #2f2f2f;
+        color: var(--text);
         ul {
           margin: 0.5rem 0 0 1rem;
           padding: 0;
@@ -294,12 +149,28 @@
     .rf_main {
       padding: 1rem;
       gap: 0.8rem;
+      flex-direction: column;
+      min-height: auto;
+
       .rf_formContainer {
+        // justify-content: flex-end;
+        // flex-wrap: wrap;
+        width: 100%;
+        max-width: 100%;
+        flex: 0 0 100%;
+        box-sizing: border-box;
+        min-height: auto;
+        padding: 1 rem;
         .formContainer {
-            
+          width: 100%;
+          // flex-wrap: wrap;
+
           gap: 0.85rem;
           input {
+            width: 100%;
             padding: 0.75rem;
+            background: var(--white); /* or use white */
+            color: var(--tertiary);
           }
           .rf_submit_btn {
             padding: 0.85rem;
@@ -307,12 +178,12 @@
           }
         }
       }
-      .rf_heroContainer{
+
+      .rf_heroContainer {
         display: none;
       }
     }
   }
-
 }
 
 /* main card that contains the hero + form */
