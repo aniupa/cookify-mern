@@ -13,19 +13,7 @@ const Recipes = () => {
   });
   return (
     <>
-      {" "}
-      {/* recipe search karne ke liye option incomplete */}
-      {/* <input
-        type="search"
-        className={styles.search}
-        placeholder="Search recipe   🔍"
-      /> */}
-      <div className={styles.container}>
-        {/* <p className={styles.veg}>Veg</p> */}
-        {/* <input id="foodType" type="radio" />{" "} */}
-        {/* <p className={styles.nonVeg}>Non-Veg</p> */}
-        {/* <input id="foodType" type="radio" /> */}
-      </div>
+      
       {recipe && recipe.length > 0 ? (
         <InfiniteScroll
           dataLength={recipe.length}
@@ -39,7 +27,6 @@ const Recipes = () => {
       ) : (
         "No recipes found !"
       )}
-      {/* </div> */}
     </>
   );
 };

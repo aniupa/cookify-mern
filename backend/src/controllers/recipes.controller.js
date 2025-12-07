@@ -3,14 +3,26 @@ import { recipeModel } from "../models/recipe.model.js";
 export async function getRecipesController(req, res) {
   try {
     //---starts from here
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 6;
+    // const page = parseInt(req.query.page) || 1;
+    // const limit = parseInt(req.query.limit) || 6;
+    // const skip = (page - 1) * limit;
+    const page = Math.max(1, parseInt(req.query.page) || 1);
+    const limit = Math.max(1, parseInt(req.query.limit) || 6);
     const skip = (page - 1) * limit;
     //-- end here upper block of code i dnt know about it that much
-    const recipes = await recipeModel.find().skip(skip).limit(limit);
+    // const recipes = await recipeModel.find().skip(skip).limit(limit);
 
-    const total = await recipeModel.countDocuments(); //dnt'k about countDocuments as well
-    res.status(200).json({ recipes, total, hasMore: page * limit < total });
+    // const total = await recipeModel.countDocuments(); //dnt'k about countDocuments as well
+    const [recipes, total] = await Promise.all([
+      recipeModel
+        .find()
+        .sort({ createdAt: -1 }) // stable order: newest first
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+      recipeModel.countDocuments(),
+    ]);
+    res.status(200).json({ recipes, total,page, hasMore: page * limit < total });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "internal server error" });

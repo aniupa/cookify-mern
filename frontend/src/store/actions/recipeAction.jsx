@@ -55,3 +55,17 @@ export const asyncUpdateRecipeHandler=({id,data})=>async (dispatch,getState)=>{
     
   }
 }
+
+// export const fetchNextRecipesPage = () => async (dispatch, getState) => {
+//   const { page, limit, loading, hasMore } = getState().recipes;
+//   if (loading || !hasMore) return; // prevent duplicate/extra calls
+
+//   dispatch(fetchNextPagePending());
+//   try {
+//     const nextPage = page + 1;
+//     const res = await axios.get(`/recipes?page=${nextPage}&limit=${limit}`);
+//     dispatch(fetchNextPageFulfilled({ recipes: res.data.recipes, page: nextPage, hasMore: res.data.hasMore }));
+//   } catch (err) {
+//     dispatch(err.message);
+//   }
+// };

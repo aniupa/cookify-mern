@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+// import { fetchNextRecipesPage } from "../actions/recipeAction";
 
 const initialState = {
   data: [],
@@ -26,6 +27,19 @@ const RecipeSlice = createSlice({
     loadLazyRecipe: (state, action) => {
       state.data = [...state.data, ...action.payload];
     },
+    // addCase:
+    //   (fetchNextRecipesPage.fulfilled,
+    //   (state, action) => {
+    //     state.loading = false;
+    //     const merged = [...state.list, ...action.payload.recipes];
+    //     const map = new Map();
+    //     merged.forEach((r) => {
+    //       if (!map.has(r._id)) map.set(r._id, r);
+    //     });
+    //     state.list = Array.from(map.values());
+    //     state.page = action.payload.page;
+    //     state.hasMore = action.payload.hasMore;
+    //   }),
   },
 });
 
