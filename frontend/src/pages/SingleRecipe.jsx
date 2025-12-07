@@ -43,7 +43,7 @@ const SingleRecipe = () => {
           {filteredData ? (
             <img
               className={styles.recipeImg}
-              src={filteredData?.image}
+              src={filteredData?.imageUrl}
               alt={filteredData?.title}
             />
           ) : (

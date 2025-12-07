@@ -6,7 +6,7 @@ import useInfiniteRecipe from "../utils/useInfiniteRecipe.jsx";
 import RecipeCard from "../components/RecipeCard";
 import End from "./End";
 const Recipes = () => {
-  const { recipe, hasMore, fetchRecipes } = useInfiniteRecipe();
+  const { recipe, hasMore, fetchRecipes,isLoading } = useInfiniteRecipe();
 
   const renderRecipe = recipe?.map((item, i) => {
     return <RecipeCard key={item?._id || i} item={item} />;
