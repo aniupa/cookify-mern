@@ -5,25 +5,23 @@ import { toast } from "react-toastify";
 import likeImg from "../assets/like-removebg-preview.png";
 import unlikeImg from "../assets/unlike-removebg-preview.png";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { asyncAddToFavorite } from "../store/actions/recipeAction";
 
+import { asyncAddToFavorite } from "../store/actions/recipeAction";
 
 const SingleRecipe = () => {
   const navigate = useNavigate();
-  const {id} = useParams();
-  const dispatch=useDispatch()
-  const recipe=useSelector((state)=>state.recipes.data)
-  const user=useSelector((state)=>state.users.data)
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const recipe = useSelector((state) => state.recipes.data);
+  const user = useSelector((state) => state.users.data);
   const filteredData = recipe?.find((f) => f._id == id);
 
- 
+
   const favorite = () => {
     //testing logic
-    const favResult=!filteredData.fav;
-    dispatch(asyncAddToFavorite({id,favResult}))
+    const favResult = !filteredData.fav;
+    dispatch(asyncAddToFavorite({ id, favResult }));
     //test ends
-    
   };
 
   const delItem = () => {
@@ -56,6 +54,7 @@ const SingleRecipe = () => {
             className={styles.like}
             onClick={() => {
               favorite();
+             
             }}
           />
 
@@ -67,18 +66,23 @@ const SingleRecipe = () => {
             <button className={styles.positivebtn} onClick={() => navigate(-1)}>
               Go Back
             </button>
-            {user?.data?.user?.isAdmin ? <button className={styles.negativebtn} onClick={delItem}>
-              Delete Recipe
-            </button>:''}
-            
-            
+            {user?.data?.user?.isAdmin ? (
+              <button className={styles.negativebtn} onClick={delItem}>
+                Delete Recipe
+              </button>
+            ) : (
+              ""
+            )}
+
             <NavLink
               to={`/recipe/update/${id}`}
-              // className={styles.positivebtn}
-            >
-             <button className={styles.positivebtn} onClick={() => navigate(-1)}>
-              Update
-            </button>
+                >
+              <button
+                className={styles.positivebtn}
+                onClick={() => navigate(-1)}
+              >
+                Update
+              </button>
             </NavLink>
           </div>
         </div>

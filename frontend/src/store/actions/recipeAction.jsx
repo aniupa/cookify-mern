@@ -5,7 +5,10 @@ import { loadFavorites } from "../reducers/FavoriteSlice";
 export const asyncGetRecipeActions = () => async (dispatch, getState) => {
   try {
     const res = await axios.get("/recipes");
-    dispatch(loadRecipe(res.data));
+   
+    dispatch(loadRecipe(res.data.recipes));
+    
+    
   } catch (error) {
     console.log(error);
   }
@@ -27,11 +30,8 @@ export const asyncAddRecipeActions = (recipe) => async (dispatch, getState) => {
 export const asyncAddToFavorite=({id,favResult})=>async (dispatch,getState)=>{
  
 try {
-   console.log(id);
-  console.log(favResult);
   const res=await axios.patch(`/recipes/${id}`,{fav:favResult});
   dispatch(asyncGetRecipeActions());
-  console.log('added to fav');
   
 } catch (error) {
   console.log(error);
@@ -55,17 +55,3 @@ export const asyncUpdateRecipeHandler=({id,data})=>async (dispatch,getState)=>{
     
   }
 }
-
-// export const fetchNextRecipesPage = () => async (dispatch, getState) => {
-//   const { page, limit, loading, hasMore } = getState().recipes;
-//   if (loading || !hasMore) return; // prevent duplicate/extra calls
-
-//   dispatch(fetchNextPagePending());
-//   try {
-//     const nextPage = page + 1;
-//     const res = await axios.get(`/recipes?page=${nextPage}&limit=${limit}`);
-//     dispatch(fetchNextPageFulfilled({ recipes: res.data.recipes, page: nextPage, hasMore: res.data.hasMore }));
-//   } catch (err) {
-//     dispatch(err.message);
-//   }
-// };

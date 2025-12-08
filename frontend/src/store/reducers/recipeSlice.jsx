@@ -22,10 +22,18 @@ const RecipeSlice = createSlice({
       localStorage.setItem("recipes", JSON.stringify(state.data));
     },
     loadRecipe: (state, action) => {
-      state.data = action.payload;
+      state.data = action.payload ?? [];
     },
     loadLazyRecipe: (state, action) => {
-      state.data = [...state.data, ...action.payload];
+      // state.data = [...state.data, ...action.payload];
+      const existingIds = new Set(state.data.map((d) => d._id ?? d.id));
+      for (const item of action.payload) {
+        const id = item._id ?? item.id;
+        if (!existingIds.has(id)) {
+          state.data.push(item);
+          existingIds.add(id);
+        }
+      }
     },
     // addCase:
     //   (fetchNextRecipesPage.fulfilled,

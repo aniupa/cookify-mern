@@ -1,36 +1,56 @@
+
 import { recipeModel } from "../models/recipe.model.js";
+import mongoose from "mongoose";
 
 export async function getRecipesController(req, res) {
   try {
-    //---starts from here
-    // const page = parseInt(req.query.page) || 1;
-    // const limit = parseInt(req.query.limit) || 6;
-    // const skip = (page - 1) * limit;
-    const page = Math.max(1, parseInt(req.query.page) || 1);
-    const limit = Math.max(1, parseInt(req.query.limit) || 6);
-    const skip = (page - 1) * limit;
-    //-- end here upper block of code i dnt know about it that much
-    // const recipes = await recipeModel.find().skip(skip).limit(limit);
+    const limit = Math.max(1, parseInt(req.query.limit, 10) || 6);
+    const after = req.query.after || null; // last-seen _id (string) or null
 
-    // const total = await recipeModel.countDocuments(); //dnt'k about countDocuments as well
-    const [recipes, total] = await Promise.all([
-      recipeModel
-        .find()
-        .sort({ createdAt: -1 }) // stable order: newest first
-        .skip(skip)
-        .limit(limit)
-        .lean(),
-      recipeModel.countDocuments(),
-    ]);
-    res.status(200).json({ recipes, total,page, hasMore: page * limit < total });
+    // build query
+    const query = {};
+    if (after) {
+      // validate cursor
+      if (!mongoose.isValidObjectId(after)) {
+        return res.status(400).json({ message: "Invalid cursor (after)" });
+      }
+      // descending order: newer -> older, so fetch _id < after
+      query._id = { $lt:new mongoose.Types.ObjectId(after) };
+    }
+
+    // fetch limit+1 to determine hasMore
+    const docs = await recipeModel
+      .find(query)
+      .sort({ _id: -1 }) // newest first (stable)
+      .limit(limit + 1)
+      .lean();
+
+    const hasMore = docs.length > limit;
+    const items = hasMore ? docs.slice(0, limit) : docs;
+
+    return res.json({
+      recipes: items,
+      hasMore,
+      nextCursor: items.length ? String(items[items.length - 1]._id) : null,
+    });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "internal server error" });
+    console.error("getRecipesController error:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 }
+
+/**
+ * POST /api/recipes
+ */
 export async function createRecipeController(req, res) {
   try {
     const { title, image, description, ingredients, instructions } = req.body;
+
+    // Basic validation
+    if (!title || !image || !description || !ingredients || !instructions) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
     const newRecipe = await recipeModel.create({
       title,
       image,
@@ -38,51 +58,60 @@ export async function createRecipeController(req, res) {
       ingredients,
       instructions,
     });
-    res.status(201).json(newRecipe);
+
+    return res.status(201).json(newRecipe);
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "internal server error" });
+    console.error("createRecipeController error:", error);
+    // catch duplicate key or other DB errors if necessary
+    return res.status(500).json({ message: "Internal server error" });
   }
 }
+
+/**
+ * DELETE /api/recipes/:id
+ */
 export async function deleteRecipeController(req, res) {
   try {
     const id = req.params.id;
-    const recipe = await recipeModel.findByIdAndDelete(id);
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(400).json({ message: "Invalid id" });
+    }
 
-    if (!recipe) return res.status(404).json({ message: "recipe not found" });
-    res.status(200).json({ message: "recipes deleted successfully" });
+    const recipe = await recipeModel.findByIdAndDelete(id);
+    if (!recipe) return res.status(404).json({ message: "Recipe not found" });
+    return res.status(200).json({ message: "Recipe deleted successfully" });
   } catch (error) {
-    console.log("error in delete recipeController", error);
-    res.status(500).json({ message: "internal server error" });
+    console.error("deleteRecipeController error:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 }
 
 export async function updateRecipeController(req, res) {
   try {
     const { id } = req.params;
-    const data = req.body;
-    Object.keys(data).forEach((item) => {
-      if (
-        data[item] === "" ||
-        data[item] === null ||
-        data[item] === undefined
-      ) {
-        delete data[item];
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(400).json({ message: "Invalid id" });
+    }
+
+    const data = { ...req.body };
+
+    Object.keys(data).forEach((key) => {
+      if (data[key] === "" || data[key] === null || data[key] === undefined) {
+        delete data[key];
       }
     });
 
-    const recipe = await recipeModel.findByIdAndUpdate(
-      id,
-      { $set: data },
-      { new: true }
-    );
-    if (!recipe) {
-      return res.status(404).json({ message: "recipe not found !!" });
+    if (Object.keys(data).length === 0) {
+      return res.status(400).json({ message: "No valid fields to update" });
     }
-    res.status(200).json({ message: "recipe updated successfully", recipe });
-  } catch (error) {
-    console.log(error);
-  }
 
-  // const recipe=await recipeModel.findByIdAndUpdate(id,{}
+    const recipe = await recipeModel.findByIdAndUpdate(id, { $set: data }, { new: true, runValidators: true });
+    if (!recipe) {
+      return res.status(404).json({ message: "Recipe not found" });
+    }
+    return res.status(200).json({ message: "Recipe updated successfully", recipe });
+  } catch (error) {
+    console.error("updateRecipeController error:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 }
