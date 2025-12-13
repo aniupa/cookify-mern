@@ -1,0 +1,130 @@
+@import "../styles/mixins";
+
+
+.about_container {
+  width: 100%;
+  min-height: 100vh;
+  background-image: url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=80");
+  background-size: cover;
+  background-position: center;
+  @include flex();
+  padding: 4rem 1rem;
+}
+
+.about_wrapper {
+  width: 90%;
+  max-width: 1100px;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 18px;
+  padding: 3rem;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+}
+
+/* HERO SECTION */
+.about_hero {
+  @include flex();
+  gap: 3rem;
+  
+  margin-bottom: 3rem;
+
+  .about_text {
+    flex: 1;
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: var(--text);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .about_image {
+    flex: 1;
+    height: 280px;
+    border-radius: 14px;
+    background-image: url("https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=1200&q=80");
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+/* MISSION */
+.about_section {
+  text-align: center;
+  margin-bottom: 3rem;
+
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  p {
+    max-width: 700px;
+    margin: auto;
+    color: var(--text);
+    line-height: 1.6;
+  }
+}
+
+/* CARDS */
+.about_cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+
+  .card {
+    background: var(--white);
+    padding: 1.8rem;
+    border-radius: 14px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    text-align: center;
+
+    h3 {
+      margin-bottom: 0.7rem;
+    }
+
+    p {
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+  }
+}
+
+/* FOOTER NOTE */
+.about_footer {
+  text-align: center;
+  color: #777;
+  font-size: 0.9rem;
+}
+
+/* TABLET */
+@include responsive(tablet) {
+  .about_hero {
+    flex-direction: column;
+    text-align: center;
+
+    .about_image {
+      width: 100%;
+    }
+  }
+
+  .about_cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* MOBILE */
+@include responsive(mobile) {
+  .about_wrapper {
+    padding: 2rem 1.5rem;
+  }
+
+  .about_hero h1 {
+    font-size: 1.7rem;
+  }
+}

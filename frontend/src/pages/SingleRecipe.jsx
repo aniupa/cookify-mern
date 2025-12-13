@@ -1,6 +1,8 @@
+
+import React from "react";
+import styles from "../cssFiles/SingleRecipe.module.scss";
 import { NavLink, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import styles from "../cssFiles/singlePage.module.css";
 import { toast } from "react-toastify";
 import likeImg from "../assets/like-removebg-preview.png";
 import unlikeImg from "../assets/unlike-removebg-preview.png";
@@ -8,7 +10,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { asyncAddToFavorite } from "../store/actions/recipeAction";
 
+
+
 const SingleRecipe = () => {
+
+  
   const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -35,60 +41,44 @@ const SingleRecipe = () => {
   if (!filteredData) return <h1>Loading recipe...</h1>;
 
   return (
-    <div className={styles.recipeContainer}>
-      {recipe ? (
-        <div className={styles.recipeCard}>
-          {filteredData ? (
-            <img
-              className={styles.recipeImg}
-              src={filteredData?.imageUrl}
-              alt={filteredData?.title}
-            />
-          ) : (
-            <h1>Loading...</h1>
-          )}
-
-          <img
-            src={filteredData?.fav ? likeImg : unlikeImg}
-            alt="like img"
-            className={styles.like}
-            onClick={() => {
-              favorite();
-             
-            }}
-          />
-
-          <h1>Title:{filteredData?.title}</h1>
-          <h3>Description:{filteredData?.description}</h3>
-          <h3>Instruction:{filteredData?.instructions}</h3>
-          <h3>Ingredients:{filteredData?.ingredients}</h3>
-          <div className={styles.btnContainer}>
-            <button className={styles.positivebtn} onClick={() => navigate(-1)}>
-              Go Back
-            </button>
-            {user?.data?.user?.isAdmin ? (
-              <button className={styles.negativebtn} onClick={delItem}>
-                Delete Recipe
-              </button>
-            ) : (
-              ""
-            )}
-
-            <NavLink
-              to={`/recipe/update/${id}`}
-                >
-              <button
-                className={styles.positivebtn}
-                onClick={() => navigate(-1)}
-              >
-                Update
-              </button>
-            </NavLink>
+    <div className={styles.page}>
+      <div className={styles.card}>
+        
+        <header className={styles.header}>
+          <div>
+            
+            <h1>{filteredData?.title}</h1>
+            
+             <p className={styles.subtitle}>
+              {filteredData?.description}</p>
           </div>
+
+        </header>
+
+        {/* Image */}
+        <div className={styles.imageWrapper}>
+           <img
+            src={filteredData?.imageUrl} alt={filteredData?.title}
+          />
         </div>
-      ) : (
-        <h5>loading...</h5>
-      )}
+
+        {/* Content */}
+        <section className={styles.content}>
+          {/* Ingredients */}
+          <div className={styles.ingredients}>
+            {filteredData?.ingredients}
+          </div>
+
+          {/* Divider */}
+          <div className={styles.divider}></div>
+
+          {/* Directions */}
+          <div className={styles.directions}>
+            {filteredData?.instructions}
+          </div>
+        </section>
+
+      </div>
     </div>
   );
 };

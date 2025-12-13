@@ -1,20 +1,20 @@
 @font-face {
   font-family: "Montserrat";
-  src: url('../font/Montserrat-Regular.ttf') format(".ttf"); 
+  src: url("/fonts/Montserrat-Regular.woff2") format("woff2"), url("../font/Montserrat-Regular.woff2") format("woff");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Montserrat";
-  src: url("../font/Montserrat-Medium.ttf") format(".ttf");
+  src: url("../font/Montserrat-Medium.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Montserrat";
-  src: url("../font/Montserrat-Bold.ttf") format(".ttf");
+  src: url("../font/Montserrat-Bold.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -95,5 +95,4 @@ p, li, label {
   --shadow: 0 10px 30px rgba(17,17,17,0.08);
   --radius-lg: 14px;
   --radius-md: 10px;
-   --card-bg: rgba(255,255,255,0.98);
 }/*# sourceMappingURL=index.css.map */
