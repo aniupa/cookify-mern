@@ -1,0 +1,147 @@
+@import '../styles/mixins';
+
+.heroWrapper {
+  background: radial-gradient(circle at top, var(--secondary), var(--primary));
+  padding: 2rem;
+  border-radius: 22px;
+  color: var(--white);
+}
+
+/* NAVBAR */
+.navbar {
+  background: var(--white);
+  color: var(--text);
+  padding: 1rem 2rem;
+  border-radius: 14px;
+  @include flex(space-between);
+  margin-bottom: 2rem;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--primary);
+}
+
+.navLinks {
+  display: flex;
+  gap: 1.5rem;
+
+  a {
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.95rem;
+  }
+}
+
+.contactBtn {
+  background: var(--primary);
+  color: var(--white);
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+/* HERO CONTENT */
+.heroContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+.heroImage img {
+  width: 100%;
+  border-radius: 18px;
+  object-fit: cover;
+}
+
+.heroText {
+  h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  p {
+    color: var(--white);
+    font-size: 0.95rem;
+    max-width: 480px;
+  }
+}
+
+.heroActions {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.primaryBtn {
+  background: var(--primary);
+  border: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: 30px;
+  color: var(--white);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.videoBtn {
+  background: transparent;
+  border: 1px solid var(--white);
+  color: var(--white);
+  padding: 0.8rem 1.4rem;
+  border-radius: 30px;
+  @include flex();
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+/* CATEGORY SLIDER */
+.categorySlider {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+}
+
+.card {
+  background: var(--primary);
+  border-radius: 16px;
+ @include flex();
+  gap: 1rem;
+  padding: 0.8rem;
+
+  img {
+    width: 70px;
+    height: 70px;
+    border-radius: 12px;
+    object-fit: cover;
+  }
+
+  h4 {
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  p {
+    font-size: 0.75rem;
+    color: var(--white);
+  }
+}
+
+/* RESPONSIVE */
+@include responsive(tablet) {
+  .heroContent {
+    grid-template-columns: 1fr;
+  }
+
+  .categorySlider {
+    grid-template-columns: 1fr;
+  }
+
+  .navLinks {
+    display: none;
+  }
+}
