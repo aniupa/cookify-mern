@@ -8,8 +8,12 @@
   width: 100%;
   @include flex(space-between, center, row);
 
-  background: var(--white);
+  // background: radial-gradient(var(--primary),var(--secondary),var(--tertiary));
+  background: var(--primary);
   border-bottom: 1px solid var(--border);
+  
+  // color: var(--white);
+
 
   padding: 0.8rem 1rem;
 
@@ -28,8 +32,10 @@
     padding: 2px 0.5rem;
     border-radius: 3px;
     transition: 0.2s;
+    color: var(--tertiary);
     &:hover {
-      color: var(--primary);
+      // color: var(--text);
+      text-decoration:underline;
     }
   }
 }

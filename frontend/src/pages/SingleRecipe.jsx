@@ -23,10 +23,11 @@ const SingleRecipe = () => {
   const filteredData = recipe?.find((f) => f._id == id);
 
 
-  const favorite = () => {
+  const favorite = (title) => {
     //testing logic
     const favResult = !filteredData.fav;
     dispatch(asyncAddToFavorite({ id, favResult }));
+    toast.success(`${title} added to favorites!!!`)
     //test ends
   };
 
@@ -45,13 +46,14 @@ const SingleRecipe = () => {
       <div className={styles.card}>
         
         <header className={styles.header}>
-          <div>
+          {/* <div> */}
+            <div className={styles.likeContainer}><h1>{filteredData?.title}</h1>
+            <h1 className={filteredData.fav? styles.like:styles.unlike} onClick={()=>favorite(filteredData.title)}>💗</h1></div>
             
-            <h1>{filteredData?.title}</h1>
             
              <p className={styles.subtitle}>
               {filteredData?.description}</p>
-          </div>
+          {/* </div> */}
 
         </header>
 

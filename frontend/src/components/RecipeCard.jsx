@@ -15,8 +15,8 @@ const RecipeCard = ({ item }) => {
     >
       <div className={styles.recipeCard}>
         <img src={imageUrl ? imageUrl : "not image"} alt={title} /> <br />
-        <h1>
-          {title?.slice(0, 30)}...
+        <h1 className={styles.title}>
+          {title?.slice(0, 10)}...
         </h1>
         <br />
         <span className={styles.visibility}>

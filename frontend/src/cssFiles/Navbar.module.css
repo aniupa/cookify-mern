@@ -11,7 +11,7 @@
   flex-direction: row;
   gap: 0;
   flex-wrap: nowrap;
-  background: var(--white);
+  background: var(--primary);
   border-bottom: 1px solid var(--border);
   padding: 0.8rem 1rem;
 }
@@ -31,9 +31,10 @@
   padding: 2px 0.5rem;
   border-radius: 3px;
   transition: 0.2s;
+  color: var(--tertiary);
 }
 .navbar a:hover {
-  color: var(--primary);
+  text-decoration: underline;
 }
 
 @media (max-width: 920px) {

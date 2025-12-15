@@ -1,26 +1,20 @@
 @font-face {
   font-family: "Montserrat";
-  /* src: url("/fonts/Montserrat-Regular.woff2") format("woff2"), url("../font/Montserrat-Regular.woff2") format("woff"); */
-  
- src: url("../font/Montserrat-Regular.ttf") ;
+  src: url("/fonts/Montserrat-Regular.woff2") format("woff2"), url("../font/Montserrat-Regular.woff2") format("woff");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Montserrat";
-  /* src: url("../font/Montserrat-Medium.woff2") format("woff2"); */
-  
- src: url("../font/Montserrat-Medium.ttf") ;
+  src: url("../font/Montserrat-Medium.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Montserrat";
-  /* src: url("../font/Montserrat-Bold.woff2") format("woff2"); */
- src: url("../font/Montserrat-Bold.ttf") ;
-  
+  src: url("../font/Montserrat-Bold.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -43,7 +37,9 @@ html {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
@@ -68,7 +64,9 @@ h3 {
   margin: 0 0 0.5rem 0;
 }
 
-p, li, label {
+p,
+li,
+label {
   font-size: 1rem;
   margin: 0 0 0.75rem 0;
   color: var(--text);
@@ -98,7 +96,6 @@ p, li, label {
   --accent: #ffd4c2;
   --radius-sm: 6px;
   --radius-md: 10px;
-  --shadow: 0 10px 30px rgba(17,17,17,0.08);
+  --shadow: 0 10px 30px rgba(17, 17, 17, 0.08);
   --radius-lg: 14px;
-  --radius-md: 10px;
 }/*# sourceMappingURL=index.css.map */

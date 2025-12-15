@@ -3,7 +3,7 @@
 @font-face {
   font-family: "Montserrat";
   src: url("/fonts/Montserrat-Regular.woff2") format("woff2"),
-       url("../font/Montserrat-Regular.woff2") format("woff");
+    url("../font/Montserrat-Regular.woff2") format("woff");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -30,26 +30,46 @@
 body,
 html {
   background: var(--tertiary);
-  font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial;
   font-size: 100%; /* 16px baseline. Use rems everywhere. */
   line-height: 1.45;
   height: 100%;
   width: 100%;
   color: var(--text);
-
 }
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
 }
-h1 { font-size: clamp(1.5rem, 3.6vw, 2.8rem); font-weight: 600; margin: 0 0 0.5rem 0; }
-h2 { font-size: clamp(1.25rem, 3.0vw, 2rem); font-weight: 600; margin: 0 0 0.5rem 0; }
-h3 { font-size: clamp(1.125rem, 2.2vw, 1.5rem); font-weight: 500; margin: 0 0 0.5rem 0; }
-p, li, label { font-size: 1rem; margin: 0 0 0.75rem 0; color: var(--text); }
+h1 {
+  font-size: clamp(1.5rem, 3.6vw, 2.8rem);
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+}
+h2 {
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+}
+h3 {
+  font-size: clamp(1.125rem, 2.2vw, 1.5rem);
+  font-weight: 500;
+  margin: 0 0 0.5rem 0;
+}
+p,
+li,
+label {
+  font-size: 1rem;
+  margin: 0 0 0.75rem 0;
+  color: var(--text);
+}
 
 #root {
   @include flex(center, center, column);
@@ -68,8 +88,9 @@ p, li, label { font-size: 1rem; margin: 0 0 0.75rem 0; color: var(--text); }
   --fw-semibold: 600;
   --accent: #ffd4c2;
   --radius-sm: 6px;
-  --radius-md: 10px;  --shadow: 0 10px 30px rgba(17,17,17,0.08);
-    --radius-lg: 14px;
   --radius-md: 10px;
+  --shadow: 0 10px 30px rgba(17, 17, 17, 0.08);
+  --radius-lg: 14px;
+  
 }
 //g
