@@ -5,7 +5,7 @@ import { loadFavorites } from "../reducers/FavoriteSlice";
 export const asyncGetRecipeActions = () => async (dispatch, getState) => {
   try {
     const res = await axios.get("/recipes");
-   
+    
     dispatch(loadRecipe(res.data.recipes));
     
     
@@ -27,10 +27,10 @@ export const asyncAddRecipeActions = (recipe) => async (dispatch, getState) => {
   }
 };
 
-export const asyncAddToFavorite=({id,favResult})=>async (dispatch,getState)=>{
+export const asyncAddToFavorite=({_id,favResult})=>async (dispatch,getState)=>{
  
 try {
-  const res=await axios.patch(`/recipes/${id}`,{fav:favResult});
+  const res=await axios.patch(`/recipes/${_id}`,{fav:favResult});
   dispatch(asyncGetRecipeActions());
   
 } catch (error) {

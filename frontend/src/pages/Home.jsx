@@ -2,16 +2,25 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import styles from "../cssFiles/Home.module.css";
 import { useNavigate } from "react-router-dom";
+import InfiniteScroll from "react-infinite-scroll-component";
+import useInfiniteRecipe from "../utils/useInfiniteRecipe.jsx";
 
+import HomeRecipeCard from "../components/HomeRecipeCard";
+import End from "./End";
 const Home = () => {
   const navigate = useNavigate();
+  const { recipe, fetchRecipes,isLoading } = useInfiniteRecipe();
+
+  const renderRecipe = recipe?.map((item, i) => {
+    return <HomeRecipeCard key={item?._id || i} item={item} />;
+  });
   const exploreRecipes = () => {
     navigate("/recipes");
   };
   return (
     <section className={styles.heroWrapper}>
       <header className={styles.navbar}>
-        <div className={styles.logo}>Dishcovery</div>
+        <div className={styles.logo}>Cookify</div>
 
         {/* {Navbar} */}
 
@@ -51,19 +60,26 @@ const Home = () => {
       </div>
 
       {/* Bottom Cards */}
-      <div className={styles.categorySlider}>
-        <div className={styles.card}>
-          <img
-            src="https://images.unsplash.com/photo-1548365328-5b849e6b0b09?auto=format&fit=crop&w=400&q=80"
-            alt="Pizza"
-          />
-          <div>
-            <h4>Margherita Pizza</h4>
-            <p>Simple. Delicious. Perfectly Italian.</p>
-          </div>
-        </div>
+      {/* <div className={styles.categorySlider}> */}
+       
+        {recipe && recipe.length > 0 ? (
+        <InfiniteScroll
+          dataLength={6}
+          next={fetchRecipes}
+          // hasMore={hasMore}
+          endMessage={<End />}
+          loader={<h2>Loading...</h2>}
+        >
+          <div className={styles.recipeContainer}>{renderRecipe}</div>
+        </InfiniteScroll>
+      ) : (
+        "No recipes found !"
+      )}
+      
 
-        <div className={styles.card}>
+         
+
+        {/* <div className={styles.card}>
           <img
             src="https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=400&q=80"
             alt="Sushi"
@@ -83,8 +99,8 @@ const Home = () => {
             <h4>Chocolate Cookies</h4>
             <p>Sweet. Crunchy. An all-time favorite.</p>
           </div>
-        </div>
-      </div>
+        </div> */}
+      {/* </div> */}
     </section>
   );
 };
