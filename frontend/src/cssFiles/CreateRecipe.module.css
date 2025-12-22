@@ -1,32 +1,110 @@
-.recipeForm {
+.page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e7efe9, #f6f5f2);
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  width: 90%;
-  max-width: 400px;
-  gap: 1.5rem;
-}
-.recipeForm input, .recipeForm textarea {
-  width: 100%;
-  padding: 8px;
-  border-radius: 5px;
-  font-family: bold;
-  border: none;
-  outline: none;
+  justify-content: center;
+  padding: 3rem 1rem;
 }
 
-.recipeContainer {
-  min-height: 100vh;
+.container {
   width: 100%;
-  height: 100%;
+  max-width: 1100px;
   display: flex;
   justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  gap: 0;
-  flex-wrap: nowrap;
-  background: url("https://plus.unsplash.com/premium_photo-1673108852141-e8c3c22a4a22?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Zm9vZHxlbnwwfHwwfHx8MA%3D%3D");
-  background-repeat: no-repeat;
-  background-size: cover;
+}
+
+.card {
+  background: white;
+  width: 100%;
+  max-width: 520px;
+  border-radius: 20px;
+  padding: 2.5rem 2.5rem;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.header h1 {
+  font-size: 1.9rem;
+  color: #222;
+}
+.header p {
+  margin-top: 0.4rem;
+  font-size: 0.95rem;
+  color: #666;
+}
+
+/* Form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #222;
+}
+.field input,
+.field textarea {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border-radius: 12px;
+  border: 1.5px solid #e1e1e1;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: #2f7f6d;
+  box-shadow: 0 0 0 3px rgba(47, 127, 109, 0.15);
+}
+
+/* Button */
+.submitBtn {
+  margin-top: 1rem;
+  background: #2f7f6d;
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 0.9rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.submitBtn:hover {
+  transform: translateY(-2px);
+  filter: brightness(0.95);
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .card {
+    padding: 2rem;
+  }
+}
+/* Mobile */
+@media (max-width: 480px) {
+  .page {
+    padding: 2rem 0.8rem;
+  }
+  .card {
+    border-radius: 16px;
+    padding: 1.8rem 1.4rem;
+  }
+  .header h1 {
+    font-size: 1.6rem;
+  }
 }/*# sourceMappingURL=CreateRecipe.module.css.map */

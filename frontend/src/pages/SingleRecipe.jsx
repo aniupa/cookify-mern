@@ -1,6 +1,6 @@
 
 import React from "react";
-import styles from "../cssFiles/SingleRecipe.module.scss";
+import styles from "../cssFiles/SingleRecipe.module.css";
 import { NavLink, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";

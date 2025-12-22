@@ -23,7 +23,7 @@ export const asyncAddRecipeActions = (recipe) => async (dispatch, getState) => {
     console.log("new recipe added successfully", res);
   } catch (error) {
     toast.error("error while creating recipe in create.jsx");
-    return console.log("err creating recipe", error);
+    return console.log("err creating recipe", "recipe:",recipe,error);
   }
 };
 

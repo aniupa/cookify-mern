@@ -75,9 +75,12 @@ label {
   @include flex(center, center, column);
 }
 :root {
+  // --primary: #2f7f6d;
+  //   --secondary: #f4a261;
+  // --tertiary: #EBE1D1;
   --primary: #2f7f6d;
-  --secondary: #f4a261;
-  --tertiary: #f6f7f9;
+  --secondary: #F5C8BD;
+  --tertiary: #F2EEE5;
   --text: #222222;
   --muted: #666666;
   --border: #e2e2e2;

@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const recipeSchema = new mongoose.Schema({
 
   fav: { type: Boolean, default: false },
-  image: {
+  imageUrl: {
     type: String,
     required: [true, "image url is required"],
     trim: true,

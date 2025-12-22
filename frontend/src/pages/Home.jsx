@@ -1,10 +1,10 @@
 import React from "react";
+// import { lazy } from "react";
 import Navbar from "../components/Navbar";
 import styles from "../cssFiles/Home.module.css";
 import { useNavigate } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import useInfiniteRecipe from "../utils/useInfiniteRecipe.jsx";
-
 import HomeRecipeCard from "../components/HomeRecipeCard";
 import End from "./End";
 const Home = () => {

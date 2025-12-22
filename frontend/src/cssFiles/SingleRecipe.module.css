@@ -147,6 +147,15 @@
   .content {
     grid-template-columns: 1fr;
   }
+  .likeContainer {
+    justify-content: flex-end;
+    align-items: flex-start;
+  }
+  .likeContainer .like, .likeContainer .unlike {
+    position: relative;
+    transform: translateX(5%);
+    transform: translateY(-90%);
+  }
   .divider {
     display: none;
   }

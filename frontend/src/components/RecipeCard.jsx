@@ -1,19 +1,15 @@
-import React, { useContext } from "react";
-import { NavLink } from "react-router-dom";
-import { Link } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import styles from "../cssFiles/cards.module.css";
 import { useDispatch } from "react-redux";
-import {asyncAddToFavorite} from '../store/actions/recipeAction';
+import { asyncAddToFavorite } from "../store/actions/recipeAction";
 import { toast } from "react-toastify";
 
-import navStyles from "../cssFiles/Navbar.module.css";
-
 const RecipeCard = ({ item }) => {
-  // const { _id, imageUrl, title, description, instructions,difficulty,time, ingredients ,fav} = item;
-  
+  const nav = useNavigate();
 
-  const {_id,
+  const {
+    _id,
     imageUrl,
     title,
     description,
@@ -23,38 +19,24 @@ const RecipeCard = ({ item }) => {
     onView,
     onToggleFavorite,
   } = item;
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const recipe = useSelector((state) => state.recipes.data);
   const filteredData = recipe?.find((f) => f._id == _id);
   const favorite = () => {
     //testing logic
     const favResult = !filteredData.fav;
     // console.log(item);
-    
+
     dispatch(asyncAddToFavorite({ _id, favResult }));
     toast.success(`${title} added to favorites!!!`);
     //test ends
   };
-  //  const onView=()=>{console.log('clicked');
-  //  }
-  return (
-    // <NavLink
-    //   to={`/recipes/details/${_id}`}
-    //   className={({ isActive }) => (isActive ? navStyles.isActive : "")}
-    // >
-    //   <div className={styles.recipeCard}>
-    //     <img src={imageUrl ? imageUrl : "not image"} alt={title} /> <br />
-    //     <h1 className={styles.title}>
-    //       {title?.slice(0, 10)}...
-    //     </h1>
-    //     <br />
-    //     <span className={styles.visibility}>
-    //       {description?.slice(0, 50)}...
-    //     </span>
-    //   </div>
-    // </NavLink>
 
-    ///////////////////////
+  const viewRecipe = () => {
+    nav(`/recipes/details/${_id}`);
+    
+  };
+  return (
     <div className={styles.card}>
       {/* Image Section */}
       <div className={styles.imageWrapper}>
@@ -82,17 +64,12 @@ const RecipeCard = ({ item }) => {
         </div>
 
         {/* CTA */}
-        <button
-          className={styles.viewBtn}
-          onClick={onView ? onView : () => console.log("clicked")}
-        >
+        <button className={styles.viewBtn} onClick={viewRecipe}>
           View Recipe
         </button>
       </div>
     </div>
   );
 };
-//   );
-// };
 
 export default RecipeCard;
