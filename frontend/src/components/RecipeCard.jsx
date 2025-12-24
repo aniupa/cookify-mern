@@ -26,9 +26,19 @@ const RecipeCard = ({ item }) => {
     //testing logic
     const favResult = !filteredData.fav;
     // console.log(item);
-
+    console.log('id',_id);
+    
     dispatch(asyncAddToFavorite({ _id, favResult }));
+    if (favResult==true) {
+      
+      console.log(favResult);
     toast.success(`${title} added to favorites!!!`);
+    }
+    if (favResult==false) {
+      console.log(favResult);
+      
+    toast.success(`${title} removed from favorites!!!`);
+    }
     //test ends
   };
 

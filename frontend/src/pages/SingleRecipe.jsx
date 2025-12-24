@@ -9,6 +9,7 @@ import unlikeImg from "../assets/unlike-removebg-preview.png";
 import { useDispatch, useSelector } from "react-redux";
 
 import { asyncAddToFavorite } from "../store/actions/recipeAction";
+import { useEffect } from "react";
 
 
 
@@ -23,11 +24,19 @@ const SingleRecipe = () => {
   const filteredData = recipe?.find((f) => f._id == id);
 
 
+
   const favorite = (title) => {
     //testing logic
     const favResult = !filteredData.fav;
     dispatch(asyncAddToFavorite({ id, favResult }));
+    if (favResult==true) {
+      
     toast.success(`${title} added to favorites!!!`)
+    }
+    if (favResult==false) {
+      
+    toast.success(`${title} Removed from favorites!!!`)
+    }
     //test ends
   };
 
