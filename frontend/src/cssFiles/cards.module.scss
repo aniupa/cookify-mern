@@ -1,149 +1,5 @@
 @import "../styles/mixins";
-// .recipeContainer {
-//   @include flex(space-evenly, centre, row, 1rem, wrap);
-//   width: 100%;
-//   //  border: 1px solid orange;
-//   padding: 1rem;
 
-//   margin-bottom: 1rem;
-
-//   .recipeCard {
-//     width: 400px;
-//     aspect-ratio: 1/1;
-//     padding: 1rem;
-//     aspect-ratio: 1/1;
-//     object-fit: cover;
-//     @include flex(center, center, row, 1rem, wrap);
-//     text-align: center;
-//     border-radius: var(--radius-lg);
-
-//     img {
-//       width: 250px;
-//       border-radius: var(--radius-lg);
-//       aspect-ratio: 4/3;
-//       object-fit: cover;
-//       transition: ease-in-out;
-//     }
-//     span {
-//       color: var(--muted);
-//     }
-//   }
-//   .recipeCard:hover {
-//     // box-shadow: var(--shadow);
-//     cursor: pointer;
-//     img {
-//       scale: 1.05;
-//     }
-//     transform: translateY(-6px);
-//   }
-//   a {
-//     text-decoration: none;
-//     color: var(--text);
-//   }
-
-//   .cardBtn {
-//     position: absolute;
-//     top: 10px;
-//     right: 10px;
-//     padding: 2px 5px;
-//     border-radius: 10px;
-//     border: 1px solid var(--border);
-//   }
-
-//   .title {
-//     padding: 1rem;
-//     color: var(--text);
-
-//   }
-// }
-// .search {
-//   @include flex(space-between, center);
-//   margin: 2rem auto;
-//   max-width: 500px;
-//   // text-align: right;
-//   border-radius: 3px;
-//   input {
-//     flex: 1;
-//     padding: 0.6rem 1rem;
-//     border-radius: 8px;
-//     border: 1px solid var(--border);
-
-//     &:focus {
-//       outline: none;
-//       // border-color: var(--primary);
-//     }
-//   }
-// }
-// .container {
-//   @include flex(center, center, row);
-//   gap: 1rem;
-//   .veg {
-//     background: green;
-//   }
-//   .nonVeg {
-//     background: red;
-//   }
-// }
-// .visibility {
-//   opacity: 0;
-// }
-// .recipeCard:hover {
-//   .visibility {
-//     opacity: 1;
-//   }
-// }
-
-// @include responsive(tablet) {
-//   .recipeContainer {
-//     @include flex(space-evenly, center, row, 2rem, wrap);
-//     background: var(--tertiary);
-//   //  .title {
-//   //       opacity: 1;
-//   //       font-size: 100;
-        
-//   //     }
-//     .recipeCard {
-//       margin-top: 1rem;
-//       width: 250px;
-//       height: 250px;
-//       margin-bottom: 1rem;
-     
-//     }
-//     .recipeCard:hover{
-//       .visibility{
-//         opacity: 0;
-//       }
-//     }
-    
-//   }
-// }
-// @include responsive(mobile) {
-//   .recipeContainer {
-//     @include flex(center, center, row, 1rem, wrap);
-//     .recipeCard {
-//       width: 100%;
-      
-//     }
-//     .recipeCard:hover{
-//       .visibility{
-//         opacity: 1;
-//       }
-//     }
-//   }
-  
-// }
-
-
-//////////////////////////
-//  var(--white): #ffffff;
-// var(--primary): #2f7f6d; // match your hero green
-// var(--muted): #777;
-// var(--shadow): 0 10px 30px rgba(0, 0, 0, 0.08);
-// var(--radius-lg): 16px;
-
-// .recipeContainer{
-//   background: #000;
-// }
 .card {
   margin-top: 1rem;
   padding: 1rem;
@@ -219,7 +75,10 @@
   
   color: var(--fav);
 }
-
+.unActive {
+  
+  color: var(--muted);
+}
 /* CONTENT */
 .content {
   padding: 1rem 1.1rem 1.3rem;

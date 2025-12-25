@@ -71,6 +71,10 @@
   color: var(--fav);
 }
 
+.unActive {
+  color: var(--muted);
+}
+
 /* CONTENT */
 .content {
   padding: 1rem 1.1rem 1.3rem;

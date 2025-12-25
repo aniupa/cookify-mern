@@ -1,9 +1,10 @@
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import styles from "../cssFiles/cards.module.css";
 import { useDispatch } from "react-redux";
 import { asyncAddToFavorite } from "../store/actions/recipeAction";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 const RecipeCard = ({ item }) => {
   const nav = useNavigate();
@@ -15,36 +16,27 @@ const RecipeCard = ({ item }) => {
     description,
     time = "30 min",
     difficulty = "Easy",
-    fav = false,
+    fav,
     onView,
     onToggleFavorite,
   } = item;
   const dispatch = useDispatch();
   const recipe = useSelector((state) => state.recipes.data);
   const filteredData = recipe?.find((f) => f._id == _id);
+
   const favorite = () => {
-    //testing logic
-    const favResult = !filteredData.fav;
-    // console.log(item);
-    console.log('id',_id);
-    
+    const favResult = !fav;
+
     dispatch(asyncAddToFavorite({ _id, favResult }));
-    if (favResult==true) {
-      
-      console.log(favResult);
-    toast.success(`${title} added to favorites!!!`);
-    }
-    if (favResult==false) {
-      console.log(favResult);
-      
-    toast.success(`${title} removed from favorites!!!`);
-    }
-    //test ends
+    toast.success(
+      favResult
+        ? `${title} added to favorites!`
+        : `${title} removed from favorites!`
+    );
   };
 
   const viewRecipe = () => {
     nav(`/recipes/details/${_id}`);
-    
   };
   return (
     <div className={styles.card}>
@@ -53,7 +45,9 @@ const RecipeCard = ({ item }) => {
         <img src={imageUrl} alt={title} />
 
         <button
-          className={`${styles.favoriteBtn} ${fav ? styles.active : ""}`}
+          className={`${styles.favoriteBtn} ${
+            fav ? styles.active : styles.unActive
+          }`}
           onClick={favorite}
           aria-label="Save recipe"
         >

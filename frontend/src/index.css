@@ -1,20 +1,20 @@
 @font-face {
   font-family: "Montserrat";
-  src: url("/fonts/Montserrat-Regular.woff2") format("woff2"), url("../font/Montserrat-Regular.woff2") format("woff");
+  src: url("/fonts/Montserrat-Regular.woff2") format("ttf"), url("../font/Montserrat-Regular.ttf") format("woff");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Montserrat";
-  src: url("../font/Montserrat-Medium.woff2") format("woff2");
+  src: url("../font/Montserrat-Medium.ttf") format("ttf");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Montserrat";
-  src: url("../font/Montserrat-Bold.woff2") format("woff2");
+  src: url("../font/Montserrat-Bold.ttf") format("ttf");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -88,7 +88,7 @@ label {
   --text: #222222;
   --muted: #666666;
   --border: #e2e2e2;
-  --white: #ffffff;
+  --white: #f8f9f6;
   --bg: #faf7f4;
   --fw-light: 300;
   --fw-regular: 400;

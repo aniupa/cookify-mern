@@ -1,6 +1,6 @@
 import axios from "../../utils/axios";
 import { toast } from "react-toastify";
-import { loadRecipe } from "../reducers/recipeSlice";
+import { loadRecipe, toggleFavoriteLocal } from "../reducers/recipeSlice";
 import { loadFavorites } from "../reducers/FavoriteSlice";
 export const asyncGetRecipeActions = () => async (dispatch, getState) => {
   try {
@@ -34,17 +34,18 @@ export const asyncAddRecipeActions = (recipe) => async (dispatch, getState) => {
 };
 
 export const asyncAddToFavorite =
-  ({ id, favResult }) =>
+  ({ _id, favResult }) =>
   async (dispatch, getState) => {
+     dispatch(toggleFavoriteLocal({ id: _id, fav: favResult }));
     try {
-      // console.log(_id);
-      
-      const res = await axios.patch(`/recipes/${id}`, { fav: favResult });
+
+      const res = await axios.patch(`/recipes/${_id}`, { fav: favResult });
       dispatch(asyncGetRecipeActions());
     } catch (error) {
-      // console.log(_id);
-      
+
       console.log(error);
+      
+    dispatch(toggleFavoriteLocal({ id: _id, fav: !favResult }));
     }
   };
 

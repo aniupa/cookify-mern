@@ -22,8 +22,8 @@ const nav = useNavigate();
   const dispatch = useDispatch();
   const recipe = useSelector((state) => state.recipes.data);
   const filteredData = recipe?.find((f) => f._id == _id);
-  useEffect(()=>{console.log(_id);
-  },[])
+  // useEffect(()=>{console.log(_id);
+  // },[])
   const favorite = () => {
     //testing logic
     const favResult = !filteredData.fav;

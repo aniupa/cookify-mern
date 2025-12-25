@@ -1,12 +1,12 @@
+/* HERO CONTENT */
 .heroWrapper {
   background: radial-gradient(circle at top, var(--secondary), var(--primary));
+  width: 100%;
   padding: 1.5rem 2rem 3rem;
   border-radius: 22px;
   color: var(--white);
 }
-
-/* NAVBAR */
-.navbar {
+.heroWrapper .navbar {
   background: var(--white);
   color: var(--text);
   padding: 1rem 2rem;
@@ -19,61 +19,44 @@
   flex-wrap: nowrap;
   margin-bottom: 2rem;
 }
-
-.logo {
+.heroWrapper .navbar .logo {
   font-weight: 700;
   font-size: 1.3rem;
   color: var(--primary);
 }
-
-.navLinks {
-  display: flex;
-  gap: 1.5rem;
-}
-.navLinks a {
-  text-decoration: none;
-  color: var(--text);
-  font-size: 0.95rem;
-}
-
-/* HERO CONTENT */
-.heroContent {
+.heroWrapper .heroContent {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
   align-items: center;
   margin-bottom: 2.5rem;
 }
-
-.heroImage img {
+.heroWrapper .heroContent .heroImage img {
   width: 100%;
   max-height: 420px;
   border-radius: 18px;
   -o-object-fit: cover;
      object-fit: cover;
 }
-
-.heroText {
+.heroWrapper .heroContent .heroText {
   padding-right: 2rem;
 }
-.heroText h1 {
+.heroWrapper .heroContent .heroText h1 {
   font-size: 2.8rem;
   margin-bottom: 1rem;
   line-height: 1.2;
 }
-.heroText p {
+.heroWrapper .heroContent .heroText p {
   color: var(--white);
   font-size: 0.95rem;
   max-width: 420px;
 }
-
-.heroActions {
+.heroWrapper .heroContent .heroText .heroActions {
   margin-top: 1.5rem;
   display: flex;
   gap: 1rem;
 }
-
-.primaryBtn {
+.heroWrapper .heroContent .heroText .heroActions .primaryBtn {
   background: var(--primary);
   border: none;
   padding: 0.8rem 1.6rem;
@@ -82,8 +65,7 @@
   font-weight: 600;
   cursor: pointer;
 }
-
-.videoBtn {
+.heroWrapper .heroContent .heroText .heroActions .videoBtn {
   background: transparent;
   border: 1px solid var(--white);
   color: var(--white);
@@ -99,9 +81,47 @@
   cursor: pointer;
 }
 
-.categorySlider {
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.sectionHeader h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.sectionHeader p {
+  margin-top: 0.4rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.recipesSection {
+  background: beige;
   width: 100%;
-  padding: 4rem 1rem;
+  padding: 5rem 1.5rem 4rem;
+  border-top-left-radius: 48px;
+  border-top-right-radius: 48px;
+}
+.recipesSection .recipesInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+}
+.recipesSection .viewAllWrap {
+  margin-top: 3rem;
+  text-align: center;
+}
+.recipesSection .viewAllWrap .viewAllBtn {
+  background: var(--primary);
+  color: var(--white);
+  border: none;
+  padding: 0.9rem 2.2rem;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .card {
@@ -179,87 +199,41 @@
   color: var(--primary);
 }
 
-.sectionHeader {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-.sectionHeader h2 {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--text);
-}
-.sectionHeader p {
-  margin-top: 0.4rem;
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
-.recipesSection {
-  background: #f8f9f6;
-  padding: 5rem 1.5rem 4rem;
-  border-top-left-radius: 48px;
-  border-top-right-radius: 48px;
-}
-.recipesSection .recipesInner {
-  max-width: 1280px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2.5rem;
-}
-.recipesSection .viewAllWrap {
-  margin-top: 3rem;
-  text-align: center;
-}
-.recipesSection .viewAllBtn {
-  background: var(--primary);
-  color: var(--white);
-  border: none;
-  padding: 0.9rem 2.2rem;
-  border-radius: 999px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
 /* RESPONSIVE */
 @media (max-width: 920px) {
-  .recipeGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  /* HERO */
   .navLinks {
     display: none;
   }
-}
-@media (max-width: 920px) {
-  /* HERO */
   .heroContent {
     grid-template-columns: 1fr;
     gap: 2.5rem;
     text-align: center;
   }
-  .heroImage img {
+  .heroContent .heroImage img {
     max-height: 360px;
   }
-  .heroText h1 {
+  .heroContent .heroText h1 {
     font-size: 2.2rem;
   }
-  .heroText p {
+  .heroContent .heroText p {
     max-width: 100%;
     margin: 0 auto;
   }
-  .heroActions {
+  .heroContent .heroText .heroActions {
     justify-content: center;
     flex-wrap: wrap;
   }
-  /* NAV */
-  .navLinks {
-    display: none;
+  .recipesSection {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 8px;
+    padding: 2px;
+    background: #f2eee5;
   }
-  /* RECIPES */
-  .recipesInner {
-    grid-template-columns: repeat(1fr);
-    gap: 1.6rem;
-    padding: 4rem 1.5rem;
+  .recipesSection .recipesInner {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 2px;
   }
   .card {
     margin: 0 auto;
@@ -271,45 +245,44 @@
     padding: 1.2rem;
     border-radius: 16px;
   }
-  .recipeGrid {
-    grid-template-columns: 1fr;
-  }
-  .heroContent {
+  .heroWrapper .heroContent {
     grid-template-columns: 2fr;
     gap: 1.8rem;
   }
-  .heroText h1 {
-    font-size: 1.9rem;
-    line-height: 1.25;
-  }
-  .heroText p {
-    font-size: 0.9rem;
-  }
-  .heroActions {
-    flex-direction: column;
-    gap: 0.8rem;
-  }
-  .heroActions button {
-    width: 100%;
-    justify-content: center;
-  }
-  .heroImage img {
+  .heroWrapper .heroContent .heroImage img {
     max-height: 280px;
     border-radius: 14px;
   }
-  /* RECIPES */
+  .heroWrapper .heroContent .heroText h1 {
+    font-size: 1.9rem;
+    line-height: 1.25;
+  }
+  .heroWrapper .heroContent .heroText p {
+    font-size: 0.9rem;
+  }
+  .heroWrapper .heroContent .heroText .heroActions {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .heroWrapper .heroContent .heroText .heroActions button {
+    width: 100%;
+    justify-content: center;
+  }
   .recipesSection {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.4rem;
-    padding: 3.5rem 1rem;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 2px;
+    background: beige;
+  }
+  .recipesSection .recipesInner {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 2px;
   }
   .card {
     width: 100%;
     max-width: 340px;
     margin: 0 auto;
-  }
-  .imageWrapper img {
-    width: 100%;
   }
   button {
     min-height: 44px;

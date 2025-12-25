@@ -18,17 +18,18 @@ const SingleRecipe = () => {
   
   const navigate = useNavigate();
   const { id } = useParams();
+  const _id=id;
   const dispatch = useDispatch();
   const recipe = useSelector((state) => state.recipes.data);
   const user = useSelector((state) => state.users.data);
-  const filteredData = recipe?.find((f) => f._id == id);
+  const filteredData = recipe?.find((f) => f._id == _id);
 
 
 
   const favorite = (title) => {
     //testing logic
     const favResult = !filteredData.fav;
-    dispatch(asyncAddToFavorite({ id, favResult }));
+    dispatch(asyncAddToFavorite({ _id, favResult }));
     if (favResult==true) {
       
     toast.success(`${title} added to favorites!!!`)

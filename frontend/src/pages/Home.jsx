@@ -19,8 +19,6 @@ const Home = () => {
   }, []);
   // const { recipe, fetchRecipes, isLoading } = useInfiniteRecipe();
   const recipe = useSelector((state) => state.recipes.data);
-  const [visibleCount, setVisibleCount] = useState(6);
-  const visibleRecipes = recipe.slice(0, visibleCount);
 
   const renderRecipe = recipe?.map((item, i) => {
     return <HomeRecipeCard key={item?._id || i} item={item} />;
@@ -30,14 +28,11 @@ const Home = () => {
   };
   return (
     <>
+    
       <section className={styles.heroWrapper}>
         <header className={styles.navbar}>
           <div className={styles.logo}>Cookify</div>
-
-          {/* {Navbar} */}
-
-          {/* <button className={styles.contactBtn}>Contact</button> */}
-        </header>
+       </header>
 
         <div className={styles.heroContent}>
           {/* Left Image */}
@@ -71,17 +66,7 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Bottom Cards */}
-        {/* <div className={styles.categorySlider}> */}
-        {/* <section className={styles.recipeContainer}>
-        {recipe ? (
-
-          <div className={styles.recipeContainer}>{renderRecipe}</div>
-        ) : (
-          "No recipes found !"
-        )}
-      </section>
-      <button>View All</button> */}
+       
       </section>
       <div className={styles.sectionHeader}>
         <h2>Featured Recipes</h2>

@@ -13,6 +13,7 @@ const RecipeSlice = createSlice({
       const stored = localStorage.getItem("recipes");
       state.data = stored ? JSON.parse(stored) : [];
     },
+   
     addRecipe: (state, action) => {
       state.data.push(action.payload);
       localStorage.setItem("recipes", JSON.stringify(state.data));
@@ -35,19 +36,14 @@ const RecipeSlice = createSlice({
         }
       }
     },
-    // addCase:
-    //   (fetchNextRecipesPage.fulfilled,
-    //   (state, action) => {
-    //     state.loading = false;
-    //     const merged = [...state.list, ...action.payload.recipes];
-    //     const map = new Map();
-    //     merged.forEach((r) => {
-    //       if (!map.has(r._id)) map.set(r._id, r);
-    //     });
-    //     state.list = Array.from(map.values());
-    //     state.page = action.payload.page;
-    //     state.hasMore = action.payload.hasMore;
-    //   }),
+    toggleFavoriteLocal: (state, action) => {
+  const { id, fav } = action.payload;
+  const recipe = state.data.find(r => r._id === id);
+  if (recipe) {
+    recipe.fav = fav;
+  }
+}
+
   },
 });
 
@@ -58,4 +54,5 @@ export const {
   loadRecipe,
   loadLazyRecipe,
   deleteRecipe,
+  toggleFavoriteLocal,
 } = RecipeSlice.actions;
