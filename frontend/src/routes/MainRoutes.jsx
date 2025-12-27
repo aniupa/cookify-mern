@@ -4,6 +4,8 @@ import { lazy } from "react";
 import { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 const Home = lazy(() => import("../pages/Home"));
+
+const RecipeVideos = lazy(() => import("../pages/Videos/RecipeVideos"));
 const Recipes = lazy(() => import("../pages/Recipes"));
 const CreateRecipe = lazy(() => import("../pages/CreateRecipe"));
 const SingleRecipe = lazy(() => import("../pages/SingleRecipe"));
@@ -43,6 +45,7 @@ const MainRoutes = () => {
       <Route path="/register" element={<Register />} />
       <Route path="user/*" element={<UserRoutes />} />
       <Route path="*" element={<NotFound />} />
+      <Route path="recipes/videos" element={<RecipeVideos/>}/>
       {/* auth Routes */}
     </Routes>
     </Suspense>

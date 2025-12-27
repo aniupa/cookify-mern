@@ -18,11 +18,7 @@ export default function useRecipeForm() {
 
   const createRecipeHandler = useCallback(
     async (data) => {
-      // console.log("useRecipeForm.submitHandler ->", data);
-
       dispatch(asyncAddRecipeActions(data));
-      // dispatch(addRecipe(data));
-
       navigate("/recipes");
     },
     [dispatch, navigate]

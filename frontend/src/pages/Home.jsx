@@ -26,6 +26,11 @@ const Home = () => {
   const exploreRecipes = () => {
     navigate("/recipes");
   };
+  const viewVideos=()=>{
+    console.log('videos');
+    navigate('/recipes/videos');
+    
+  }
   return (
     <>
     
@@ -56,11 +61,11 @@ const Home = () => {
 
             <div className={styles.heroActions}>
               <button className={styles.primaryBtn} onClick={exploreRecipes}>
-                Explore Recipes
+                Discover Recipes
               </button>
 
-              <button className={styles.videoBtn}>
-                <span>▶</span> Watch Cooking Videos
+              <button className={styles.videoBtn} onClick={viewVideos}>
+                <span>▶</span> Watch & Cook
               </button>
             </div>
           </div>

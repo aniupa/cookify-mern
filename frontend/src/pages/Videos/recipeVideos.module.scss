@@ -1,0 +1,218 @@
+@import '../../styles/mixins';
+.videosPage {
+  padding: 2rem;
+  background: var(--white);
+}
+
+/* HERO */
+.videosHero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #2f7f6f, #5ea899);
+  color: #fff;
+  padding: 2rem;
+  border-radius: 20px;
+  margin-bottom: 2rem;
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 0.3rem;
+  }
+
+  p {
+    opacity: 0.9;
+  }
+
+  .heroStats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    opacity: 0.9;
+  }
+}
+
+/* FILTER BAR */
+.filterBar {
+  position: sticky;
+  top: 80px;
+  z-index: 5;
+  display: flex;
+  gap: 0.8rem;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 14px;
+  margin-bottom: 2rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+
+  input,
+  select,
+  button {
+    padding: 0.6rem 0.9rem;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+
+  button:hover {
+    background: #2f7f6f;
+    color: #fff;
+    border-color: #2f7f6f;
+  }
+}
+
+/* VIDEO GRID */
+.videoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+/* VIDEO CARD */
+.videoCard {
+  background: #fff;
+  border-radius: 18px;
+  border: 1px solid blue;
+//   width: 50%;
+  img{
+    width: 250px;
+  }
+  padding: 1rem;
+  transition: transform 0.2s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  h3 {
+    margin: 0.8rem 0 0.4rem;
+    font-size: 1rem;
+  }
+
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    opacity: 0.8;
+  }
+
+  .actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+
+    button {
+      flex: 1;
+      padding: 0.5rem;
+      border-radius: 10px;
+      border: none;
+      background: #2f7f6f;
+      color: #fff;
+      cursor: pointer;
+      font-size: 0.85rem;
+
+      &:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+/* THUMBNAIL */
+.thumb {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+//   width: 50%;
+
+  img{
+
+    width: 250px;
+    // border: 1px solid red;
+    height: 160px;
+    // aspect-ratio: 1/1;
+    object-fit: cover;
+  }
+
+  .duration {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.7);
+    color: var(--white);
+    padding: 0.2rem 0.4rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+  }
+
+  .playIcon {
+    position: absolute;
+    inset: 0;
+    // display: grid;
+    display:  flex;
+    justify-content: center;
+    align-items: center;
+    // place-items: center;
+    font-size: 2rem;
+    color: var(--white);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    background: rgba(0, 0, 0, 0.35);
+//   height: 520p;
+// border: 1px solid red;
+  }
+
+  &:hover .playIcon {
+    opacity: 1;
+  }
+}
+
+/* SKELETON */
+.videoSkeleton {
+  height: 260px;
+  border-radius: 18px;
+  background: linear-gradient(
+    90deg,
+    #eee 25%,
+    #ddd 37%,
+    #eee 63%
+  );
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+/* RESPONSIVE */
+@include responsive(tablet){
+     .videoGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@include responsive(mobile){
+     .videoGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .videosHero {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .filterBar {
+   
+    display: none;
+  
+}
+}
