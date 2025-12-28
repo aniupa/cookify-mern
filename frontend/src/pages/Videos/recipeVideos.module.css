@@ -1,6 +1,7 @@
 .videosPage {
   padding: 2rem;
-  background: var(--white);
+  background: var(--tri);
+  width: 90%;
 }
 
 /* HERO */
@@ -8,8 +9,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(135deg, #2f7f6f, #5ea899);
-  color: #fff;
+  background: linear-gradient(135deg, var(--pri), var(--fav));
+  color: var(--white);
   padding: 2rem;
   border-radius: 20px;
   margin-bottom: 2rem;
@@ -37,7 +38,7 @@
   display: flex;
   gap: 0.8rem;
   padding: 1rem;
-  background: #fff;
+  background: var(--white);
   border-radius: 14px;
   margin-bottom: 2rem;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
@@ -47,15 +48,14 @@
 .filterBar button {
   padding: 0.6rem 0.9rem;
   border-radius: 10px;
-  border: 1px solid #ddd;
-  background: #fff;
+  border: 1px solid var(--border);
+  background: var(--white);
   cursor: pointer;
   font-size: 0.9rem;
 }
 .filterBar button:hover {
-  background: #2f7f6f;
-  color: #fff;
-  border-color: #2f7f6f;
+  background: var(--pri);
+  color: var(--white);
 }
 
 /* VIDEO GRID */
@@ -67,9 +67,8 @@
 
 /* VIDEO CARD */
 .videoCard {
-  background: #fff;
+  background: var(--white);
   border-radius: 18px;
-  border: 1px solid blue;
   padding: 1rem;
   transition: transform 0.2s ease;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
@@ -87,6 +86,10 @@
 .videoCard .meta {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  gap: 0;
+  flex-wrap: nowrap;
   font-size: 0.85rem;
   opacity: 0.8;
 }
@@ -100,13 +103,13 @@
   padding: 0.5rem;
   border-radius: 10px;
   border: none;
-  background: #2f7f6f;
-  color: #fff;
+  background: var(--pri);
+  color: var(--white);
   cursor: pointer;
   font-size: 0.85rem;
 }
 .videoCard .actions button:disabled {
-  background: #ccc;
+  background: var(--muted);
   cursor: not-allowed;
 }
 
@@ -114,11 +117,10 @@
 .thumb {
   position: relative;
   border-radius: 14px;
-  overflow: hidden;
 }
 .thumb img {
-  width: 250px;
-  height: 160px;
+  width: 100%;
+  aspect-ratio: 1/1;
   -o-object-fit: cover;
      object-fit: cover;
 }
@@ -138,6 +140,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: row;
+  gap: 0;
+  flex-wrap: nowrap;
   font-size: 2rem;
   color: var(--white);
   opacity: 0;
@@ -152,7 +157,7 @@
 .videoSkeleton {
   height: 260px;
   border-radius: 18px;
-  background: linear-gradient(90deg, #eee 25%, #ddd 37%, #eee 63%);
+  background: linear-gradient(90deg, var(--pri) 25%, var(--sec), var(--pri) 63%);
   animation: shimmer 1.4s infinite;
 }
 

@@ -1,7 +1,8 @@
 @import '../../styles/mixins';
 .videosPage {
   padding: 2rem;
-  background: var(--white);
+  background: var(--tri);
+  width: 90%;
 }
 
 /* HERO */
@@ -9,8 +10,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(135deg, #2f7f6f, #5ea899);
-  color: #fff;
+  background: linear-gradient(135deg, var(--pri),var(--fav));
+  color: var(--white);
   padding: 2rem;
   border-radius: 20px;
   margin-bottom: 2rem;
@@ -41,7 +42,7 @@
   display: flex;
   gap: 0.8rem;
   padding: 1rem;
-  background: #fff;
+  background: var(--white);
   border-radius: 14px;
   margin-bottom: 2rem;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
@@ -51,16 +52,15 @@
   button {
     padding: 0.6rem 0.9rem;
     border-radius: 10px;
-    border: 1px solid #ddd;
-    background: #fff;
+    border: 1px solid var(--border);
+    background: var(--white);
     cursor: pointer;
     font-size: 0.9rem;
   }
 
   button:hover {
-    background: #2f7f6f;
-    color: #fff;
-    border-color: #2f7f6f;
+    background: var(--pri);
+    color: var(--white);
   }
 }
 
@@ -73,10 +73,8 @@
 
 /* VIDEO CARD */
 .videoCard {
-  background: #fff;
+  background: var(--white);
   border-radius: 18px;
-  border: 1px solid blue;
-//   width: 50%;
   img{
     width: 250px;
   }
@@ -94,8 +92,7 @@
   }
 
   .meta {
-    display: flex;
-    justify-content: space-between;
+    @include flex(space-between);
     font-size: 0.85rem;
     opacity: 0.8;
   }
@@ -110,13 +107,13 @@
       padding: 0.5rem;
       border-radius: 10px;
       border: none;
-      background: #2f7f6f;
-      color: #fff;
+      background: var(--pri);
+      color: var(--white);
       cursor: pointer;
       font-size: 0.85rem;
 
       &:disabled {
-        background: #ccc;
+        background: var(--muted);
         cursor: not-allowed;
       }
     }
@@ -127,15 +124,13 @@
 .thumb {
   position: relative;
   border-radius: 14px;
-  overflow: hidden;
+  // overflow: hidden;
 //   width: 50%;
 
   img{
 
-    width: 250px;
-    // border: 1px solid red;
-    height: 160px;
-    // aspect-ratio: 1/1;
+    width: 100%;
+    aspect-ratio: 1/1;
     object-fit: cover;
   }
 
@@ -154,17 +149,13 @@
     position: absolute;
     inset: 0;
     // display: grid;
-    display:  flex;
-    justify-content: center;
-    align-items: center;
+    @include flex();
     // place-items: center;
     font-size: 2rem;
     color: var(--white);
     opacity: 0;
     transition: opacity 0.2s ease;
     background: rgba(0, 0, 0, 0.35);
-//   height: 520p;
-// border: 1px solid red;
   }
 
   &:hover .playIcon {
@@ -178,9 +169,9 @@
   border-radius: 18px;
   background: linear-gradient(
     90deg,
-    #eee 25%,
-    #ddd 37%,
-    #eee 63%
+    var(--pri) 25%,
+    var(--sec),
+    var(--pri) 63%
   );
   animation: shimmer 1.4s infinite;
 }

@@ -10,7 +10,7 @@ const VideoCard = ({ video }) => {
   const {
     _id,
     imageUrl,
-    imageUrlthumbnail = imageUrl,
+    // imageUrlthumbnail = imageUrl,
     title,
     description,
     time = "30 min",
@@ -26,7 +26,7 @@ const VideoCard = ({ video }) => {
   const dispatch = useDispatch();
   const recipe = useSelector((state) => state.recipes.data);
   const filteredData = recipe?.find((f) => f._id == _id);
-
+// videoSkeleton
   const viewRecipe = () => {
     nav(`/recipes/details/${_id}`);
   };
