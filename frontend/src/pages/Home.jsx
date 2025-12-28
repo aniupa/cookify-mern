@@ -1,5 +1,11 @@
 import React from "react";
+import TrueFocus from "../utils/animations/trueFocus/trueFocus.jsx";
 // import { lazy } from "react";
+
+////////////
+
+
+/////////////////
 import Navbar from "../components/Navbar";
 import styles from "../cssFiles/Home.module.css";
 import { useState } from "react";
@@ -26,18 +32,25 @@ const Home = () => {
   const exploreRecipes = () => {
     navigate("/recipes");
   };
-  const viewVideos=()=>{
-    console.log('videos');
-    navigate('/recipes/videos');
-    
-  }
+  const viewVideos = () => {
+    console.log("videos");
+    navigate("/recipes/videos");
+  };
   return (
     <>
     
       <section className={styles.heroWrapper}>
         <header className={styles.navbar}>
-          <div className={styles.logo}>Cookify</div>
-       </header>
+          {/* <div className={styles.logo}>Cookify</div> */}
+          <TrueFocus
+          // sentence="Cookify"
+          // manualMode={false}
+          // blurAmount={5}
+          // borderColor="red"
+          // animationDuration={2}
+          // pauseBetweenAnimations={1}
+          />
+        </header>
 
         <div className={styles.heroContent}>
           {/* Left Image */}
@@ -70,21 +83,22 @@ const Home = () => {
             </div>
           </div>
         </div>
-
-       
       </section>
       <div className={styles.sectionHeader}>
+        
         <h2>Featured Recipes</h2>
         <p>Hand-picked dishes loved by our community</p>
       </div>
 
       <section className={styles.recipesSection}>
         <div className={styles.recipesInner}>
-          {recipe.length ? renderRecipe  : "No recipes found"}
+          {recipe.length ? renderRecipe : "No recipes found"}
         </div>
 
         <div className={styles.viewAllWrap}>
-          <button className={styles.viewAllBtn} onClick={exploreRecipes}>View All Recipes</button>
+          <button className={styles.viewAllBtn} onClick={exploreRecipes}>
+            View All Recipes
+          </button>
         </div>
       </section>
     </>
