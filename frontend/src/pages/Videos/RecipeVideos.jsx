@@ -6,7 +6,7 @@ import useInfiniteRecipe from "../../utils/useInfiniteRecipe";
 import VideoCard from "../../components/VideoCard.jsx";
 
 import End from "../End";
-
+ import RotatingText from '../../utils/animations/RotatingText/RotatingText.jsx'
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useSelector } from "react-redux";
 
@@ -17,6 +17,8 @@ const RecipeVideos = () => {
   const navigate = useNavigate();
 
   // const [videos, setVideos] = useState([]);
+ 
+
   // const [loading, setLoading] = useState(true);
   // const videos=useSelector(state=>state.recipes.data);
 
@@ -45,8 +47,22 @@ const RecipeVideos = () => {
       {/* HERO */}
       <div className={styles.videosHero}>
         <div>
+            
+
           <h1> Cook Along With Real Recipes</h1>
-          <p>Short videos. Real food. No nonsense.</p>
+          <RotatingText
+  texts={['Short videos', 'Real food', 'with', ' Cookify']}
+  mainClassName="px-2 sm:px-2 md:px-3 bg-cyan-300 text-black overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
+  staggerFrom={"last"}
+  initial={{ y: "100%" }}
+  animate={{ y: 0 }}
+  exit={{ y: "-120%" }}
+  staggerDuration={0.025}
+  splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
+  transition={{ type: "spring", damping: 30, stiffness: 400 }}
+  rotationInterval={2000}
+/>
+          {/* <p>. . .</p> */}
         </div>
 
         <div className={styles.heroStats}>

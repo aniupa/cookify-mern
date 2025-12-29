@@ -1,9 +1,10 @@
 import React from "react";
 import TrueFocus from "../utils/animations/trueFocus/trueFocus.jsx";
 // import { lazy } from "react";
-
+import { useRef } from "react";
+import ImageTrail from "../utils/animations/imageTrails/imageTrails.jsx";
+import VariableProximity from "../utils/animations/VariableProximity/VariableProximity.jsx";
 ////////////
-
 
 /////////////////
 import Navbar from "../components/Navbar";
@@ -20,6 +21,7 @@ import { useEffect } from "react";
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const containerRef = useRef(null);
   useEffect(() => {
     dispatch(asyncGetLimitRecipies(6));
   }, []);
@@ -28,6 +30,24 @@ const Home = () => {
 
   const renderRecipe = recipe?.map((item, i) => {
     return <HomeRecipeCard key={item?._id || i} item={item} />;
+  });
+  const renderImageTrail = recipe?.map((item, i) => {
+    return (
+      <ImageTrail
+        key={item?.id || i}
+        items={[
+          "https://unsplash.com/photos/a-hamburger-sitting-on-top-of-a-wooden-cutting-board-Fo80DfhsJUk",
+          "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGZvb2R8ZW58MHx8MHx8fDA%3D",
+          "https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZvb2R8ZW58MHx8MHx8fDA%3D",
+          "https://plus.unsplash.com/premium_photo-1663858367001-89e5c92d1e0e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGZvb2R8ZW58MHx8MHx8fDA%3D",
+          "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGZvb2R8ZW58MHx8MHx8fDA%3D",
+          "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGZvb2R8ZW58MHx8MHx8fDA%3D",
+          "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Zm9vZHxlbnwwfHwwfHx8MA%3D%3D",
+          "https://images.unsplash.com/photo-1593504049359-74330189a345?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cGl6emF8ZW58MHx8MHx8fDA%3D",
+        ]}
+        variant={2}
+      />
+    );
   });
   const exploreRecipes = () => {
     navigate("/recipes");
@@ -38,27 +58,23 @@ const Home = () => {
   };
   return (
     <>
-    
       <section className={styles.heroWrapper}>
         <header className={styles.navbar}>
-          {/* <div className={styles.logo}>Cookify</div> */}
-          <TrueFocus
-          // sentence="Cookify"
-          // manualMode={false}
-          // blurAmount={5}
-          // borderColor="red"
-          // animationDuration={2}
-          // pauseBetweenAnimations={1}
-          />
+          <TrueFocus />
         </header>
 
         <div className={styles.heroContent}>
           {/* Left Image */}
           <div className={styles.heroImage}>
-            <img
-              src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80"
-              alt="Food Dish"
-            />
+            <div
+              style={{
+                height: "500px",
+                position: "relative",
+                overflow: "hidden",
+              }}
+            >
+              {renderImageTrail}
+            </div>
           </div>
 
           {/* Right Text */}
@@ -85,9 +101,20 @@ const Home = () => {
         </div>
       </section>
       <div className={styles.sectionHeader}>
-        
         <h2>Featured Recipes</h2>
-        <p>Hand-picked dishes loved by our community</p>
+        <div ref={containerRef} style={{ position: "relative" }}>
+          <VariableProximity
+            label={"Hand-picked dishes loved by our community"}
+            className={"variable-proximity-demo"}
+            fromFontVariationSettings="'wght' 400, 'opsz' 9"
+            toFontVariationSettings="'wght' 1000, 'opsz' 40"
+            containerRef={containerRef}
+            radius={100}
+            falloff="linear"
+          />
+        </div>
+        {/* <VariableProximity label={""}/> */}
+        {/* <p></p> */}
       </div>
 
       <section className={styles.recipesSection}>

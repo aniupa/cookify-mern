@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { asyncAddToFavorite } from "../store/actions/recipeAction";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
-
+import PixelTransition from '../utils/animations/PixelTransition/PixelTransition';
 const RecipeCard = ({ item }) => {
   const nav = useNavigate();
 
@@ -41,10 +41,38 @@ const RecipeCard = ({ item }) => {
   return (
     <div className={styles.card}>
       {/* Image Section */}
+      
       <div className={styles.imageWrapper}>
-        <img src={imageUrl} alt={title} />
-
-        <button
+      
+        <PixelTransition
+  firstContent={
+    <img
+      src={imageUrl}
+      alt={title}
+      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+    />
+  }
+  secondContent={
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "grid",
+        placeItems: "center",
+        backgroundColor: "#111"
+      }}
+    >
+      <p style={{ fontWeight: 900, fontSize: "3rem", color: "#ffffff" }}>{title}</p>
+    </div>
+  }
+  
+  gridSize={12}
+  pixelColor='#ffffff'
+  once={false}
+  animationStepDuration={0.4}
+  className="custom-pixel-card"
+/>
+<button
           className={`${styles.favoriteBtn} ${
             fav ? styles.active : styles.unActive
           }`}
@@ -53,6 +81,9 @@ const RecipeCard = ({ item }) => {
         >
           ♥
         </button>
+        {/* <img src={imageUrl} alt={title} /> */}
+
+        
       </div>
 
       {/* Content */}
