@@ -13,7 +13,7 @@ const RecipeCard = lazy(() => import("../components/RecipeCard"));
 const UpdateRecipe = lazy(() => import("../pages/UpdateRecipe"));
 const Favorites = lazy(() => import("../pages/favorites"));
 const Login = lazy(() => import("../pages/Login"));
-const Register = lazy(() => import("../pages/Register"));
+const Register = lazy(() => import("../pages/authetication/RegisterUser/RegisterUser"));
 const NotFound = lazy(() => import("../pages/NotFound"));
 const About = lazy(() => import("../pages/About"));
 import Loader from '../pages/Loader'
