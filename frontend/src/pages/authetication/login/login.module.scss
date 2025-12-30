@@ -1,3 +1,11 @@
+@import "../../../styles/_mixins.scss";
+
+
+
+@import "../../../styles/mixins";
+
+
+
 .loginPage {
   min-height: 100vh;
   width: 100%;
@@ -11,35 +19,28 @@
 /* LEFT SIDE */
 .left {
   padding: 4rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  gap: 0;
-  flex-wrap: nowrap;
-  flex-direction: column;
-}
-.left h1 {
-  font-size: 3rem;
-  line-height: 1.2;
-  margin-bottom: 1rem;
-}
-.left h1 span {
-  font-weight: 800;
-}
-.left p {
-  opacity: 0.8;
-  max-width: 320px;
+ @include flex();
+ flex-direction: column;
+
+  h1 {
+    font-size: 3rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+
+    span {
+      font-weight: 800;
+    }
+  }
+
+  p {
+    opacity: 0.8;
+    max-width: 320px;
+  }
 }
 
 /* RIGHT SIDE */
 .right {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  gap: 0;
-  flex-wrap: nowrap;
+ @include flex();
 }
 
 /* GLASS CARD */
@@ -48,31 +49,36 @@
   padding: 2.5rem;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.15);
-  -webkit-backdrop-filter: blur(14px);
-          backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
-}
-.card h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-.card label {
-  font-size: 0.75rem;
-  margin-bottom: 0.25rem;
-  opacity: 0.9;
-}
-.card input {
-  width: 100%;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  label {
+    font-size: 0.75rem;
+    margin-bottom: 0.25rem;
+    opacity: 0.9;
+  }
+
+  input {
+    // padding: 0.7rem 0.9rem;
+    width: 100%;
   padding: 0.75rem;
   border-radius: 8px;
-  border: none;
-  margin-bottom: 1rem;
-  font-size: 0.85rem;
-}
-.card input:focus {
-  outline: 2px solid var(--fav);
+    // border-radius: 6px;
+    border: none;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+  }
+
+  input:focus {
+    outline: 2px solid var(--fav);
+  }
 }
 
 /* EXTRA */
@@ -87,6 +93,7 @@
 /* BUTTON */
 button {
   background: var(--fav);
+  width: 100%;
   border: none;
   padding: 0.75rem;
   border-radius: 8px;
@@ -94,13 +101,15 @@ button {
   font-weight: 600;
   cursor: pointer;
   transition: 0.3s;
-}
-button span {
-  margin-left: 6px;
-}
-button:hover {
-  background: var(--pri);
-  transform: translateY(-2px);
+
+  span {
+    margin-left: 6px;
+  }
+
+  &:hover {
+    background: var(--pri);
+    transform: translateY(-2px);
+  }
 }
 
 /* SIGNUP TEXT */
@@ -108,35 +117,47 @@ button:hover {
   text-align: center;
   font-size: 0.8rem;
   margin-top: 1.2rem;
-}
-.signup span {
-  font-weight: 600;
-  cursor: pointer;
+
+  span {
+    font-weight: 600;
+    cursor: pointer;
+  }
 }
 
 /* RESPONSIVE */
-@media (max-width: 920px) {
-  .card .loginPage {
+// @media (max-width: 900px) {
+  
+// }
+@include responsive(tablet){.card {
+    .loginPage {
     grid-template-columns: 1fr;
   }
-  .card .left {
+
+  .left {
     display: none;
   }
-  .card .card {
+
+  .card {
     width: 90%;
     max-width: 360px;
   }
-}
-@media (max-width: 480px) {
+  }}
+@include responsive(mobile){
   .loginPage {
     grid-template-columns: 1fr;
   }
   .left {
     display: none;
   }
+
   .card {
-    width: 90%;
+    // padding: 2rem 1.5rem;
+     width: 90%;
     max-width: 360px;
-  }
-}
-/* main card that contains the hero + form *//*# sourceMappingURL=RegisterForm.module.css.map */
+    
+  }}
+// @media (max-width: 480px) {
+  
+// }
+
+/* main card that contains the hero + form */

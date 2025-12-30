@@ -27,8 +27,10 @@ export const asyncLoginUser = (data) => async (dispatch, getState) => {
     dispatch(asyncCurrentUser());
 
     toast.success("user logged in successfully");
+    
   } catch (error) {
-    console.log(error);
+
+          toast.warn(`${error.response.data.message}`);
   }
 };
 

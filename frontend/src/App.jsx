@@ -14,12 +14,10 @@ const App = () => {
 
   useEffect(() => {
     dispatch(asyncCurrentUser());
-    
-    // dispatch(asyncGetRecipeActions());
   }, [dispatch]);
   return (
     <BrowserRouter>
-      <Navbar />
+      {/* <Navbar /> */}
       <MainRoutes />
     </BrowserRouter>
   );

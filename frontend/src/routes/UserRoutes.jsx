@@ -15,4 +15,3 @@ const UserRoutes = () => {
 };
 
 export default UserRoutes;
-//not sure if this is how it works just trying

@@ -322,8 +322,18 @@ button {
     max-width: 360px;
   }
   }}
-@include responsive(mobile){.card {
-    padding: 2rem 1.5rem;
+@include responsive(mobile){
+  .loginPage {
+    grid-template-columns: 1fr;
+  }
+  .left {
+    display: none;
+  }
+
+  .card {
+    // padding: 2rem 1.5rem;
+     width: 90%;
+    max-width: 360px;
     
   }}
 // @media (max-width: 480px) {

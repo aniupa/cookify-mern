@@ -87,6 +87,7 @@
 /* BUTTON */
 button {
   background: var(--fav);
+  width: 100%;
   border: none;
   padding: 0.75rem;
   border-radius: 8px;
@@ -139,4 +140,4 @@ button:hover {
     max-width: 360px;
   }
 }
-/* main card that contains the hero + form *//*# sourceMappingURL=RegisterForm.module.css.map */
+/* main card that contains the hero + form *//*# sourceMappingURL=login.module.css.map */

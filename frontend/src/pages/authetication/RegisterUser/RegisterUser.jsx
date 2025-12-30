@@ -26,42 +26,12 @@ const RegisterUser = () => {
     navigate("/Login");
   };
   return (
-    // <div className={styles.rf_container}>
-    //   <section className={styles.rf_main_sectionContainer}>
-    //     <main className={styles.rf_main}>
-    //       <section className={styles.rf_formContainer}>
-    //         <form
-    //           onSubmit={handleSubmit(registerUserHandler)}
-    //           className={styles.formContainer}
-    //         >
-    //           <h3 style={{ textAlign: "center" }}>REGISTER</h3>
-    //
-    //           <input type="submit" className={styles.rf_submit_btn} />
-    //         </form>
-    //       </section>
-    //       <div className={styles.rf_heroContainer}>
-    //         <div className={styles.rf_intro}>
-    //           <h2>Create Account</h2> <h3>what you will get? </h3>
-    //         </div>
-
-    //         <h6>
-    //           <ul>
-    //             <li>Save your favorite recipes in one place</li>
-    //             <li>Access step-by-step cooking guides</li>
-    //             <li>Create your own recipe collections</li>
-    //             <li>Join a growing community of home cooks</li>
-    //           </ul>
-    //         </h6>
-    //       </div>
-    //     </main>
-    //   </section>
-    // </div>
     <section className={styles.loginPage}>
       {/* LEFT CONTENT */}
       <div className={styles.left}>
         <h1>
-          Whatever happens <br />
-          here, <span>stays here</span>
+         Join the <b>Cookify</b>  community <br />
+          <span >and,</span> <br /> <span> start cooking today</span>
         </h1>
         {/* <p>Please fill the form on the right side.</p> */}
       </div>
@@ -69,7 +39,7 @@ const RegisterUser = () => {
       {/* RIGHT GLASS CARD */}
       <div className={styles.right}>
         <div className={styles.card}>
-          <h2>Register</h2>
+          <h2><b>Register</b> </h2>
           <form onSubmit={handleSubmit(registerUserHandler)}>
             {" "}
             <input
@@ -90,14 +60,15 @@ const RegisterUser = () => {
               {...register("password")}
               name="password"
             />
-          </form>
-
-          <button onClick={registerUserHandler}>
+            <button type="submit">
             Lets Go <span>→</span>
           </button>
+          </form>
+
+          
 
           <p className={styles.signup}>
-            Do you already have a account? <span onClick={login}>Sign In</span>
+            Do you already have a account? <span onClick={login}><b> Sign In</b></span>
           </p>
         </div>
       </div>
