@@ -28,10 +28,8 @@ const MainRoutes = () => {
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
-        {/* <Route path="/" element={<Home />} /> */}
-        {/* <Route path="/about" element={<About />} /> */}
         <Route
-          path="/"
+          path="/user/:id/Home"
           element={
             <AuthWrapper>
               <Navbar />
@@ -49,7 +47,7 @@ const MainRoutes = () => {
           }
         />
         <Route
-          path="/recipes"
+          path="/user/:id/recipes/"
           element={
             <AuthWrapper>
               <Navbar />
@@ -76,7 +74,7 @@ const MainRoutes = () => {
           }
         />
         <Route
-          path="/AddRecipe"
+          path="/user/:id/AddRecipe/"
           element={
             <AuthWrapper>
               <Navbar />
@@ -86,7 +84,7 @@ const MainRoutes = () => {
         />
 
         <Route
-          path="/recipe/update/:id"
+          path="/user/:id/recipe/update/:id"
           element={
             <AuthWrapper>
               <Navbar />
@@ -96,7 +94,7 @@ const MainRoutes = () => {
         />
 
         <Route
-          path="/favorites/"
+          path="/user/:id/favorites/"
           element={
             <AuthWrapper>
               <Navbar />

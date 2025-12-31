@@ -19,17 +19,21 @@ export const asyncGetLimitRecipies = (limit) => async (dispatch, getState) => {
     console.log(error);
   }
 };
-export const asyncAddRecipeActions = (recipe) => async (dispatch, getState) => {
+export const asyncAddRecipeActions = (recipe,userId) => async (dispatch, getState) => {
   try {
     // console.log(recipe);
+    // const  id=currentUser._id;
 
-    const res = await axios.post("/recipes", recipe);
+    const res = await axios.post("/recipes",{ recipe,userId});
 
     toast.success("recipe added successfully!!");
-    console.log("new recipe added successfully", res);
+    console.log("new recipe added successfully", userId);
+    // res.status.json()
   } catch (error) {
+    
+    // const  id=currentUser._id;
     toast.error("error while creating recipe in create.jsx");
-    return console.log("err creating recipe", "recipe:", recipe, error);
+    return console.log("err creating recipe", "recipe:",userId,error);
   }
 };
 

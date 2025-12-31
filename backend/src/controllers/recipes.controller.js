@@ -44,25 +44,30 @@ export async function getRecipesController(req, res) {
  */
 export async function createRecipeController(req, res) {
   try {
-    const { title, image, description, ingredients, instructions } = req.body;
+    const userId=req.body.userId;
+    const { title, imageUrl, description, ingredients, instructions ,videoUrl} = req.body.recipe;
 
     // Basic validation
-    if (!title || !image || !description || !ingredients || !instructions) {
-      return res.status(400).json({ message: "Missing required fields" });
-    }
+    // if (!title || !imageUrl || !description || !ingredients || !instructions) {
 
+    //   return res.status(400).json({ message: "Missing required fields" });
+    // }
+    // console.log(req.body);
     const newRecipe = await recipeModel.create({
       title,
-      image,
+      imageUrl,
       description,
       ingredients,
       instructions,
+      videoUrl,
+      createdBy:userId
+    //   // currentUser:currentUser,
+    //   // createdBy
     });
 
-    return res.status(201).json(newRecipe);
+    return res.status(201).json(newRecipe,userId);
   } catch (error) {
     console.error("createRecipeController error:", error);
-    // catch duplicate key or other DB errors if necessary
     return res.status(500).json({ message: "Internal server error" });
   }
 }

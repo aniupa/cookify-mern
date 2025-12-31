@@ -28,13 +28,14 @@ const Navbar = () => {
               />
             </NavLink>
             <NavLink
-              to="/AddRecipe"
+            // /user/:id/AddRecipe/</>
+              to={`/user/${isUser.data.user._id}/AddRecipe/`}
               className={({ isActive }) => (isActive ? styles.isActive : "")}
             >
               Create Recipe
             </NavLink>
             <NavLink
-              to="/Favorites"
+              to={`/user/${isUser.data.user._id}/favorites`}
               className={({ isActive }) => (isActive ? styles.isActive : "")}
             >
               Favorites
@@ -66,7 +67,7 @@ const Navbar = () => {
           </>
         )}
         <NavLink
-          to="/"
+          to={`/user/${isUser.data.user._id}/Home`}
           className={({ isActive }) => (isActive ? styles.isActive : "")}
         >
           Home
@@ -78,7 +79,7 @@ const Navbar = () => {
           About
         </NavLink>
         <NavLink
-          to="/recipes"
+          to={`/user/${isUser.data.user._id}/recipes/`}
           className={({ isActive }) => (isActive ? styles.isActive : "")}
         >
           Recipes

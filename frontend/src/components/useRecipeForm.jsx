@@ -6,6 +6,8 @@ import {
   asyncAddRecipeActions,
   asyncUpdateRecipeHandler,
 } from "../store/actions/recipeAction";
+// import {,
+// } from "../store/actions/recipeAction";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -14,12 +16,20 @@ export default function useRecipeForm() {
   const navigate = useNavigate();
   const recipe = useSelector((state) => state.recipes.data);
   const params = useParams();
+  
+  const isUser = useSelector((state) => state.users.data);
+  // const currentUser=localStorage.getItem('user');
+  const userId=isUser.data.user._id;
   const defaultRecipe = recipe.find((f) => f.id == params.id);
 
   const createRecipeHandler = useCallback(
     async (data) => {
-      dispatch(asyncAddRecipeActions(data));
-      navigate("/recipes");
+      // const newData={}
+      
+      // console.log('tetsing :' ,  );
+      
+      dispatch(asyncAddRecipeActions(data,userId));
+      navigate(`/user/${isUser.data.user._id}/recipes/`);
     },
     [dispatch, navigate]
   );
