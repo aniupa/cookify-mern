@@ -108,6 +108,7 @@ const MainRoutes = () => {
           path="/user/*"
           element={
             <AuthWrapper>
+              <Navbar />
               <UserRoutes />{" "}
             </AuthWrapper>
           }
