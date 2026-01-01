@@ -19,7 +19,7 @@ export default function Login() {
   const navigate = useNavigate();
   useEffect(() => {
 
-    user ? navigate("/") : "";
+    user ? navigate(`/user/${user}/Home`) : "";
   }, [dispatch]);
   const signUp=()=>{
     navigate('/register')

@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   data: [],
+  MyRecipes:[]
 };
 
 const RecipeSlice = createSlice({
@@ -13,7 +14,7 @@ const RecipeSlice = createSlice({
       const stored = localStorage.getItem("recipes");
       state.data = stored ? JSON.parse(stored) : [];
     },
-   
+
     addRecipe: (state, action) => {
       state.data.push(action.payload);
       localStorage.setItem("recipes", JSON.stringify(state.data));
@@ -24,6 +25,9 @@ const RecipeSlice = createSlice({
     },
     loadRecipe: (state, action) => {
       state.data = action.payload ?? [];
+    },
+    LoadMyRecipe: (state, action) => {
+      state.MyRecipes=action.payload ?? [];
     },
     loadLazyRecipe: (state, action) => {
       // state.data = [...state.data, ...action.payload];
@@ -37,13 +41,12 @@ const RecipeSlice = createSlice({
       }
     },
     toggleFavoriteLocal: (state, action) => {
-  const { id, fav } = action.payload;
-  const recipe = state.data.find(r => r._id === id);
-  if (recipe) {
-    recipe.fav = fav;
-  }
-}
-
+      const { id, fav } = action.payload;
+      const recipe = state.data.find((r) => r._id === id);
+      if (recipe) {
+        recipe.fav = fav;
+      }
+    },
   },
 });
 
@@ -55,4 +58,5 @@ export const {
   loadLazyRecipe,
   deleteRecipe,
   toggleFavoriteLocal,
+  LoadMyRecipe
 } = RecipeSlice.actions;

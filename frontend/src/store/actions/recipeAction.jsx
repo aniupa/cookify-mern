@@ -1,6 +1,6 @@
 import axios from "../../utils/axios";
 import { toast } from "react-toastify";
-import { loadRecipe, toggleFavoriteLocal } from "../reducers/recipeSlice";
+import { LoadMyRecipe,loadRecipe, toggleFavoriteLocal } from "../reducers/recipeSlice";
 import { loadFavorites } from "../reducers/FavoriteSlice";
 export const asyncGetRecipeActions = () => async (dispatch, getState) => {
   try {
@@ -11,6 +11,18 @@ export const asyncGetRecipeActions = () => async (dispatch, getState) => {
     console.log(error);
   }
 };
+
+export const asyncGetMyRecipeActions = (userId) => async (dispatch, getState) => {
+  try {
+    const res = await axios.get(`/user/${userId}/myRecipes`,{userId});
+    console.log(res);
+    
+    dispatch(LoadMyRecipe(res.data.recipes));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const asyncGetLimitRecipies = (limit) => async (dispatch, getState) => {
   try {
     const res = await axios.get(`/recipes?limit=${limit}&offset=0`);

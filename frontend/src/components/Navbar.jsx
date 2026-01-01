@@ -3,11 +3,14 @@ import styles from "../cssFiles/Navbar.module.css";
 import userStyles from "../cssFiles/userUi.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { resetUser } from "../store/reducers/UserSlice";
+// import { useNavigate } from "react-router-dom";
+// const navigate=useNavigate();
 const Navbar = () => {
   const dispatch = useDispatch();
   const isUser = useSelector((state) => state.users.data);
   const logoutHandler = () => {
     dispatch(resetUser());
+    // navigate('/home');
   };
   return (
     <div className={styles.navbar}>
@@ -41,7 +44,7 @@ const Navbar = () => {
               Favorites
             </NavLink>
             <NavLink
-              to="/"
+              to="/register"
               onClick={() => {
                 localStorage.removeItem("token");
                 logoutHandler();
@@ -59,7 +62,7 @@ const Navbar = () => {
               Register
             </NavLink>
             <NavLink
-              to={"/login"}
+              to={"/"}
               className={({ isActive }) => (isActive ? styles.isActive : "")}
             >
               Login

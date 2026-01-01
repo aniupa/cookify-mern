@@ -47,12 +47,7 @@ export async function createRecipeController(req, res) {
     const userId=req.body.userId;
     const { title, imageUrl, description, ingredients, instructions ,videoUrl} = req.body.recipe;
 
-    // Basic validation
-    // if (!title || !imageUrl || !description || !ingredients || !instructions) {
-
-    //   return res.status(400).json({ message: "Missing required fields" });
-    // }
-    // console.log(req.body);
+   
     const newRecipe = await recipeModel.create({
       title,
       imageUrl,
@@ -61,8 +56,6 @@ export async function createRecipeController(req, res) {
       instructions,
       videoUrl,
       createdBy:userId
-    //   // currentUser:currentUser,
-    //   // createdBy
     });
 
     return res.status(201).json(newRecipe,userId);
@@ -117,6 +110,21 @@ export async function updateRecipeController(req, res) {
     return res.status(200).json({ message: "Recipe updated successfully", recipe });
   } catch (error) {
     console.error("updateRecipeController error:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
+
+
+export async function getMyRecipesController(req, res) {
+  try {
+    //  console.log(req.body);
+     const {userId}=req.body;
+     const myRecipe=await recipeModel.find({createdBy:userId}).sort({createdAt:-1}).lean();
+     res.status(200).json({myRecipe})
+
+     
+  } catch (error) {
+    console.error("getRecipesController error:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 }

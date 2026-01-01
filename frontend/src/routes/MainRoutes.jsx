@@ -21,8 +21,10 @@ const About = lazy(() => import("../pages/About"));
 import Loader from "../pages/Loader";
 const UserRoutes = lazy(() => import("./UserRoutes"));
 const AuthWrapper = lazy(() => import("../services/AuthWrapper"));
-
 import Navbar from "../components/Navbar";
+
+
+
 
 const MainRoutes = () => {
   return (
@@ -34,6 +36,15 @@ const MainRoutes = () => {
             <AuthWrapper>
               <Navbar />
               <Home />
+            </AuthWrapper>
+          }
+        />
+        <Route
+          path="/user/:id/MyRecipes"
+          element={
+            <AuthWrapper>
+              <Navbar />
+              <MyRecipes />
             </AuthWrapper>
           }
         />
@@ -111,8 +122,8 @@ const MainRoutes = () => {
             </AuthWrapper>
           }
         />
-
-        <Route path="/login" element={<Login />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFound />} />
 

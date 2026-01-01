@@ -23,7 +23,7 @@ const RegisterUser = () => {
   };
   const login = () => {
     // console.log('login');
-    navigate("/Login");
+    navigate("/");
   };
   return (
      <section className={styles.loginPage}>
