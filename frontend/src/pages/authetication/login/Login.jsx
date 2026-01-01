@@ -14,12 +14,14 @@ import { toast } from "react-toastify";
 
 export default function Login() {
   const { register, handleSubmit } = useForm();
+  // const isUser = useSelector((state) => state.users.data);
   const user = useSelector((state) => state.users.data);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
 
-    user ? navigate(`/user/${user}/Home`) : "";
+
+    user ? navigate(`/user/${user.data.user._id}/Home`) : "";
   }, [dispatch]);
   const signUp=()=>{
     navigate('/register')
