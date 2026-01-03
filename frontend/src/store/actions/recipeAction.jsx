@@ -14,10 +14,12 @@ export const asyncGetRecipeActions = () => async (dispatch, getState) => {
 
 export const asyncGetMyRecipeActions = (userId) => async (dispatch, getState) => {
   try {
-    const res = await axios.get(`/user/${userId}/myRecipes`,{userId});
-    console.log(res);
+    // console.log(userId);
     
-    dispatch(LoadMyRecipe(res.data.recipes));
+    const res = await axios.get(`/user/${userId}/myRecipes`,{userId});
+    // console.log(res.data.myRecipe);
+    
+    dispatch(LoadMyRecipe(res.data.myRecipe));
   } catch (error) {
     console.log(error);
   }

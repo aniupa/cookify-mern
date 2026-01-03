@@ -27,7 +27,7 @@ const RecipeSlice = createSlice({
       state.data = action.payload ?? [];
     },
     LoadMyRecipe: (state, action) => {
-      state.MyRecipes=action.payload ?? [];
+      state.MyRecipes=action.payload;
     },
     loadLazyRecipe: (state, action) => {
       // state.data = [...state.data, ...action.payload];
@@ -39,6 +39,10 @@ const RecipeSlice = createSlice({
           existingIds.add(id);
         }
       }
+    },
+    resetRecipes:(state,action)=>{
+      state.MyRecipes=null;
+      state.data=null;
     },
     toggleFavoriteLocal: (state, action) => {
       const { id, fav } = action.payload;
@@ -58,5 +62,6 @@ export const {
   loadLazyRecipe,
   deleteRecipe,
   toggleFavoriteLocal,
-  LoadMyRecipe
+  LoadMyRecipe,
+  resetRecipes
 } = RecipeSlice.actions;

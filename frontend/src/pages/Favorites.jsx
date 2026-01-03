@@ -12,7 +12,7 @@ const Favorites = () => {
     <RecipeCard key={item.id ? item.id : i} item={item} />
   ));
   return (
-    <div className={styles.recipeContainer}>
+    <div >
       {filtered?.length > 0 ? mapped : <h2>"No Favorites found !!"</h2>}
     </div>
   );

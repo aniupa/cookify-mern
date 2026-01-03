@@ -2,7 +2,9 @@ import axios from '../../utils/axios'
 import { toast } from "react-toastify";
 
 //reducers
-import { loadUser } from "../reducers/UserSlice";
+import { loadUser, resetUser } from "../reducers/UserSlice";
+import { resetRecipes } from '../reducers/RecipeSlice';
+resetRecipes
 
 
 export const asyncRegisterUser = (data) => async (dispatch, getState) => {
@@ -16,6 +18,10 @@ export const asyncRegisterUser = (data) => async (dispatch, getState) => {
     if (error?.response?.status === 409) {
         
         toast.error("Email already registered, login instead");
+      }
+      else{
+        console.log(error);
+        
       }
   }
 };
@@ -39,6 +45,8 @@ export const asyncCurrentUser = () => (dispatch, getState) => {
     const user = JSON.parse(localStorage.getItem("token"));
     if (user) dispatch(loadUser(user));
     else {
+      // resetUser
+      dispatch(resetRecipes());
       toast.warn('unauthorized user')
     }
   } catch (error) {

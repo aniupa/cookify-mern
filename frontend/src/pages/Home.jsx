@@ -18,10 +18,12 @@ import { asyncGetLimitRecipies } from "../store/actions/recipeAction.jsx";
 import End from "./End";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const containerRef = useRef(null);
+  const isUser=useSelector((state)=>state.users.data)
   useEffect(() => {
     dispatch(asyncGetLimitRecipies(6));
   }, []);
@@ -50,7 +52,7 @@ const Home = () => {
     );
   });
   const exploreRecipes = () => {
-    navigate("/recipes");
+    navigate(`/user/${isUser.data.user._id}/recipes/`);
   };
   const viewVideos = () => {
     console.log("videos");

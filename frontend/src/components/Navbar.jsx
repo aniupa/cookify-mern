@@ -29,6 +29,14 @@ const Navbar = () => {
                 alt={isUser?.image}
                 className={styles._logo}
               />
+
+            </NavLink>
+            <NavLink
+              to={`/user/${isUser.data.user._id}/MyRecipes`}
+              className={({ isActive }) => (isActive ? styles.isActive : "")}
+            >
+              MyRecipes
+              
             </NavLink>
             <NavLink
             // /user/:id/AddRecipe/</>

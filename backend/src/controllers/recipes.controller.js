@@ -118,7 +118,10 @@ export async function updateRecipeController(req, res) {
 export async function getMyRecipesController(req, res) {
   try {
     //  console.log(req.body);
-     const {userId}=req.body;
+    //  const {userId}=req.body;
+    const params=req.params;
+    const userId=params.id;
+    //  console.log(params.id)
      const myRecipe=await recipeModel.find({createdBy:userId}).sort({createdAt:-1}).lean();
      res.status(200).json({myRecipe})
 

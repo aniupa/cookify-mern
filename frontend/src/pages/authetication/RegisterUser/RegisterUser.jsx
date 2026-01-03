@@ -55,6 +55,8 @@ const RegisterUser = () => {
       <div className={styles.card}>
         <h2>Register</h2>
         <form onSubmit={handleSubmit(registerUserHandler)}>
+           <input type="text" placeholder="username" name="username" {...register("username")} />
+         
           <input type="email" placeholder="email" {...register("email")} />
           <input type="password" placeholder="password" {...register("password")} />
           <button type="submit">Let's Go →</button>

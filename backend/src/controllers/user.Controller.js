@@ -3,10 +3,12 @@ import { userModel } from "../models/user.model.js";
 export const userRegisterController = async (req, res) => {
   
   try {
-    const { userName, email, password } = req.body;
+    const { username, email, password } = req.body;
+    console.log(req.body);
+    
 
     // basic request validation
-    if (!userName || !email || !password) {
+    if (!username || !email || !password) {
       return res
         .status(400)
         .json({ message: "username, email and password are required" });
@@ -25,13 +27,13 @@ export const userRegisterController = async (req, res) => {
 
     // 3) create user (may still throw duplicate key if race condition)
     const user = await userModel.create({
-      userName,
+      username,
       email: normalizedEmail,
       password: password,
     });
 
     // you may want to remove password before sending back
-    return res.status(201).json({ message: "User created", userId: user._id });
+    return res.status(201).json({  userId: user._id });
   } catch (err) {
     // 4) catch duplicate key error (race condition safety)
     if (err && err.code === 11000) {
@@ -57,7 +59,7 @@ export const userLoginController = async (req, res) => {
         .json({ message: "unauthorized user... pls register!!" });
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
 
     res.status(500).json({ message: "internal server error" });
   }

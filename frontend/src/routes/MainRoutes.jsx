@@ -33,6 +33,7 @@ const MainRoutes = () => {
       <Routes>
         <Route
           path="/user/:id/Home"
+          
           element={
             <AuthWrapper>
               <Navbar />
