@@ -7,13 +7,13 @@ const Home = lazy(() => import("../pages/Home"));
 
 const RecipeVideos = lazy(() => import("../pages/Videos/RecipeVideos"));
 const Recipes = lazy(() => import("../pages/Recipes"));
-const CreateRecipe = lazy(() => import("../pages/CreateRecipe"));
-const SingleRecipe = lazy(() => import("../pages/SingleRecipe"));
+const CreateRecipe = lazy(() => import("../pages/createRecipe/CreateRecipe"));
+const SingleRecipe = lazy(() => import("../pages/singleRecipePg/SingleRecipe"));
 const RecipeCard = lazy(() => import("../components/RecipeCard"));
 const UpdateRecipe = lazy(() => import("../pages/UpdateRecipe"));
 const Favorites = lazy(() => import("../pages/favorites"));
 const Login = lazy(() => import("../pages/authetication/login/Login"));
-const MyRecipes=lazy(()=>import('../pages/myRecipes/MyRecipes'))
+const MyRecipes = lazy(() => import("../pages/myRecipes/MyRecipes"));
 const Register = lazy(() =>
   import("../pages/authetication/RegisterUser/RegisterUser")
 );
@@ -24,16 +24,12 @@ const UserRoutes = lazy(() => import("./UserRoutes"));
 const AuthWrapper = lazy(() => import("../services/AuthWrapper"));
 import Navbar from "../components/Navbar";
 
-
-
-
 const MainRoutes = () => {
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
         <Route
           path="/user/:id/Home"
-          
           element={
             <AuthWrapper>
               <Navbar />

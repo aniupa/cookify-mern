@@ -20,7 +20,7 @@ export async function getRecipesController(req, res) {
 
     // fetch limit+1 to determine hasMore
     const docs = await recipeModel
-      .find(query)
+      .find(query).populate('createdBy','username')
       .sort({ _id: -1 }) // newest first (stable)
       .limit(limit + 1)
       .lean();
