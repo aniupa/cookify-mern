@@ -1,126 +1,112 @@
 @import '../styles/mixins';
 
-$primary: #2f7f6d;
-$bg: #f6f5f2;
-$text: #222;
-$muted: #666;
+// $primary: #2f7f6d;
+// $bg: #f6f5f2;
+// $text: #222;
+// $muted: #666;
+
+
 
 .page {
   min-height: 100vh;
-  background: linear-gradient(
-    135deg,
-    #e7efe9,
-    #f6f5f2
-  );
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem 1rem;
-}
-
-.container {
   width: 100%;
-  max-width: 1100px;
   display: flex;
   justify-content: center;
+  align-items: center;
+  padding: 2rem 1rem;
+  background: linear-gradient(135deg, #efd5c3, #7ea89a);
 }
 
 .card {
-  background: white;
   width: 100%;
   max-width: 520px;
-  border-radius: 20px;
-  padding: 2.5rem 2.5rem;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+  background: var(--white);
+  border-radius: 18px;
+  padding: 2.2rem;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
 }
 
-/* Header */
-.header {
+.card h1 {
   text-align: center;
-  margin-bottom: 2rem;
-
-  h1 {
-    font-size: 1.9rem;
-    color: $text;
-  }
-
-  p {
-    margin-top: 0.4rem;
-    font-size: 0.95rem;
-    color: $muted;
-  }
+  margin-bottom: 0.4rem;
 }
 
-/* Form */
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.3rem;
+.subtitle {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text);
+  margin-bottom: 1.6rem;
 }
 
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-
-  label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: $text;
-  }
-
-  input,
-  textarea {
-    width: 100%;
-    padding: 0.75rem 0.9rem;
-    border-radius: 12px;
-    border: 1.5px solid #e1e1e1;
-    font-size: 0.9rem;
-    transition: all 0.2s ease;
-
-    &:focus {
-      outline: none;
-      border-color: $primary;
-      box-shadow: 0 0 0 3px rgba(47, 127, 109, 0.15);
-    }
-  }
-}
-
-/* Button */
-.submitBtn {
+label {
+  font-size: 0.85rem;
+  font-weight: 600;
   margin-top: 1rem;
-  background: $primary;
-  color: white;
+  display: block;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  margin-top: 0.4rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  font-size: 0.85rem;
+  resize: none;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--pri);
+}
+
+button {
+  margin-top: 1.8rem;
+  width: 100%;
+  padding: 0.85rem;
+  background: var(--pri);
+  color: var(--white);
   border: none;
-  border-radius: 999px;
-  padding: 0.9rem;
-  font-size: 1rem;
+  border-radius: 30px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.25s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    filter: brightness(0.95);
-  }
+  transition: background 0.3s;
 }
 
-/* Tablet */
-@media (max-width: 768px) {
+button:hover {
+  background: #256656;
+}
+
+button:disabled {
+  background: #9fbfb5;
+  cursor: not-allowed;
+}
+
+
+
+
+// /* Tablet */
+@include responsive (tablet) {
   .card {
     padding: 2rem;
   }
 }
 
 /* Mobile */
-@media (max-width: 480px) {
+@include responsive(mobile) {
   .page {
     padding: 2rem 0.8rem;
   }
 
   .card {
     border-radius: 16px;
-    padding: 1.8rem 1.4rem;
+    // padding: 1.8rem 1.4rem;
+    // width: fit-content;
+    margin: .5rem;
+    padding: auto;
+    width: auto;
   }
 
   .header h1 {
