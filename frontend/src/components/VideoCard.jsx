@@ -1,48 +1,55 @@
+
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useState } from "react";
 import styles from "../pages/Videos/recipeVideos.module.css";
-import { useDispatch } from "react-redux";
-import { asyncAddToFavorite } from ".././store/actions/recipeAction";
-import { toast } from "react-toastify";
-import { useEffect } from "react";
 
 const VideoCard = ({ video }) => {
   const {
     _id,
     imageUrl,
-    // imageUrlthumbnail = imageUrl,
+    videoUrl,
     title,
-    description,
-    time = "30 min",
-    difficulty = "Easy",
-    // duration=20,
     rating = 4,
-    fav,
-    onView,
-    onToggleFavorite,
     views = 164,
   } = video;
+
+  const navigate = useNavigate();
+  const [isHover, setIsHover] = useState(false);
+
   const duration = "20 mins";
-  const dispatch = useDispatch();
-  const recipe = useSelector((state) => state.recipes.data);
-  const filteredData = recipe?.find((f) => f._id == _id);
-// videoSkeleton
-  const viewRecipe = () => {
-    nav(`/recipes/details/${_id}`);
+
+  const getYoutubeId = (url) => {
+    const match = url.match(
+      /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([^&?/]+)/
+    );
+    return match ? match[1] : null;
   };
+
+  const videoId = getYoutubeId(videoUrl);
+
   return (
-    <div className={styles.videoCard}>
-      {/* //playIcon */}
+    <div
+      className={styles.videoCard}
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+    >
       <div className={styles.thumb}>
-        <img
-          src={imageUrl ? imageUrl : <h1>Loading...</h1>}
-          alt={title}
-        />
+        {isHover && videoId ? (
+          <iframe
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&rel=0`}
+            title={title}
+            frameBorder="0"
+            allow="autoplay; encrypted-media"
+          />
+        ) : (
+          <img src={imageUrl} alt={title} />
+        )}
+
         <span className={styles.duration}>{duration}</span>
         <span className={styles.playIcon}>▶</span>
       </div>
 
-      <h3>{video.title}</h3>
+      <h3>{title}</h3>
 
       <div className={styles.meta}>
         <span>⭐ {rating}</span>
@@ -50,9 +57,11 @@ const VideoCard = ({ video }) => {
       </div>
 
       <div className={styles.actions}>
-        <button onClick={() => navigate(`/videos/${video._id}`)}>Watch</button>
+        <button onClick={() => navigate(`/videos/${_id}`)}>
+          Watch
+        </button>
 
-        <button disabled={!video.recipeId} onClick={() => viewRecipe}>
+        <button onClick={() => navigate(`/recipes/details/${_id}`)}>
           View Recipe
         </button>
       </div>

@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   data: [],
-  MyRecipes:[]
+  MyRecipes:[],
+  Videos:[],
 };
 
 const RecipeSlice = createSlice({
@@ -51,6 +52,9 @@ const RecipeSlice = createSlice({
         recipe.fav = fav;
       }
     },
+    LoadVideos:(state,action)=>{
+      state.Videos=action.payload;
+    }
   },
 });
 
@@ -63,5 +67,5 @@ export const {
   deleteRecipe,
   toggleFavoriteLocal,
   LoadMyRecipe,
-  resetRecipes
+  resetRecipes,LoadVideos
 } = RecipeSlice.actions;

@@ -6,31 +6,34 @@ import useInfiniteRecipe from "../../utils/useInfiniteRecipe";
 import VideoCard from "../../components/VideoCard.jsx";
 
 import End from "../End";
- import RotatingText from '../../utils/animations/RotatingText/RotatingText.jsx'
+import RotatingText from "../../utils/animations/RotatingText/RotatingText.jsx";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { LoadVideos } from "../../store/reducers/RecipeSlice.jsx";
+import { asyncGetVideosActions } from "../../store/actions/videosAction.jsx";
 
 const RecipeVideos = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { recipe, hasMore, fetchRecipes, isLoading } = useInfiniteRecipe();
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const videos=useSelector(state=>state.recipes.Videos.data);
 
-  // const [videos, setVideos] = useState([]);
- 
-
-  // const [loading, setLoading] = useState(true);
-  // const videos=useSelector(state=>state.recipes.data);
-
-  
   // ---- filters from URL ----
   const veg = searchParams.get("veg");
   const maxTime = searchParams.get("maxTime");
   const difficulty = searchParams.get("difficulty");
 
- const renderVideo = recipe?.map((video, i) => {
+  const renderVideo = videos?.map((video, i) => {
     return <VideoCard key={video?._id || i} video={video} />;
-  }); 
+  });
+
+  useEffect(() => {
+    console.log(videos);
+    
+    dispatch(asyncGetVideosActions());
+  }, [dispatch]);
   const updateFilter = (key, value) => {
     const params = Object.fromEntries([...searchParams]);
     if (value === null) delete params[key];
@@ -47,21 +50,19 @@ const RecipeVideos = () => {
       {/* HERO */}
       <div className={styles.videosHero}>
         <div>
-            
-
           <h1> Cook Along With Real Recipes</h1>
           <RotatingText
-  texts={['Short videos', 'Real food', 'with', ' Cookify']}
-  mainClassName="px-2 sm:px-2 md:px-3 bg-cyan-300 text-black overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
-  staggerFrom={"last"}
-  initial={{ y: "100%" }}
-  animate={{ y: 0 }}
-  exit={{ y: "-120%" }}
-  staggerDuration={0.025}
-  splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
-  transition={{ type: "spring", damping: 30, stiffness: 400 }}
-  rotationInterval={2000}
-/>
+            texts={["Short videos", "Real food", "with", " Cookify"]}
+            mainClassName="px-2 sm:px-2 md:px-3 bg-cyan-300 text-black overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
+            staggerFrom={"last"}
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "-120%" }}
+            staggerDuration={0.025}
+            splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
+            transition={{ type: "spring", damping: 30, stiffness: 400 }}
+            rotationInterval={2000}
+          />
           {/* <p>. . .</p> */}
         </div>
 
@@ -100,7 +101,7 @@ const RecipeVideos = () => {
           <option value="hard">Hard</option>
         </select>
       </div>
-{/* videoSkeleton */}
+      {/* videoSkeleton */}
       {/* VIDEO GRID */}
       {recipe && recipe.length > 0 ? (
         <InfiniteScroll
