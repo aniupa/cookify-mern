@@ -5,4 +5,8 @@
   flex-direction: column;
   gap: 0;
   flex-wrap: nowrap;
+  gap: 0.5rem;
+}
+.formContainer input {
+  text-align: center;
 }/*# sourceMappingURL=formStyles.module.css.map */
