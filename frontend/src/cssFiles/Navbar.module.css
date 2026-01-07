@@ -15,11 +15,24 @@
   border-bottom: 1px solid var(--border);
   padding: 0.8rem 1rem;
 }
+.navbar .avatar {
+  border-radius: 100%;
+  width: 25px;
+  background: #6b2626;
+}
+.navbar .avatar img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 100%;
+}
 .navbar__logo {
   border-radius: 100%;
-  background-color: transparent;
+  border: 1px solid red;
 }
 .navbar__logo img {
+  border: 1px solid red;
   width: 100%;
   aspect-ratio: 1/1;
   -o-object-fit: cover;

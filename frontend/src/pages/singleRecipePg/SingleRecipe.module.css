@@ -75,6 +75,8 @@
   color: #fff;
   border: none;
   padding: 0.45rem 1.1rem;
+  width: -moz-fit-content;
+  width: fit-content;
   border-radius: 20px;
   cursor: pointer;
 }

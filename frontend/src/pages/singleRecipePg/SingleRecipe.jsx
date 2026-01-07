@@ -24,10 +24,10 @@ const SingleRecipe = () => {
     const favResult = !filteredData.fav;
     dispatch(asyncAddToFavorite({ _id, favResult }));
     if (favResult == true) {
-      toast.success(`${title} added to favorites!!!`);
+      toast.success(`${filteredData.title} added to favorites!!!`);
     }
     if (favResult == false) {
-      toast.success(`${title} Removed from favorites!!!`);
+      toast.success(`${filteredData.title} Removed from favorites!!!`);
     }
     //test ends
   };
@@ -102,10 +102,13 @@ const SingleRecipe = () => {
                 <img
                   src={
                     filteredData.createdBy?.avatar ||
-                    "https://i.pravatar.cc/100"
+                    `https://ui-avatars.com/api/?name=${
+                filteredData?.createdBy?.username || 'Anonymous'
+              }+User&background=2f7f6f&color=fff`
                   }
                   alt="author"
                 />
+                
                 <div>
                   <span>Created by</span>
                   <strong>{filteredData.createdBy?.username || 'Anonymous'
@@ -113,7 +116,7 @@ const SingleRecipe = () => {
                 </div>
               </div>
 
-              <button className={styles.favBtn}>♡ Save</button>
+              <button className={styles.favBtn} onClick={favorite}>{filteredData.fav ? 'add to fav':'remove from fav'}</button>
             </div>
           </div>
         </div>

@@ -17,10 +17,30 @@
 
   padding: 0.8rem 1rem;
 
+  .avatar{
+     border-radius: 100%;
+     width: 25px;
+    // border: 1px solid red;
+    background: #6b2626;
+    // background-color: var[--border];
+    img {
+      
+    // border: 1px solid red;
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 100%;
+    }
+  }
+
+
   &__logo {
     border-radius: 100%;
-    background-color: transparent;
+    border: 1px solid red;
+    // background-color: transparent;
     img {
+      
+    border: 1px solid red;
       width: 100%;
       aspect-ratio: 1/1;
       object-fit: cover;
@@ -38,6 +58,7 @@
       text-decoration:underline;
     }
   }
+  
 }
 
 @include responsive(tablet){

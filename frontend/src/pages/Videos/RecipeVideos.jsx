@@ -41,9 +41,10 @@ const RecipeVideos = () => {
     setSearchParams(params);
   };
 
-  const viewRecipe = () => {
-    navigate(`/recipes/${videos.recipeId}`);
-  };
+  // const viewRecipe = () => {
+  //   // navigate(`/recipes/${videos.recipeId}`);
+  //   navigate('')
+  // };
 
   return (
     <section className={styles.videosPage}>

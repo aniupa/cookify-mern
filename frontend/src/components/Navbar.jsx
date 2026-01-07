@@ -7,7 +7,8 @@ import { resetUser } from "../store/reducers/UserSlice";
 // const navigate=useNavigate();
 const Navbar = () => {
   const dispatch = useDispatch();
-  const isUser = useSelector((state) => state.users.data);
+  // const isUser = useSelector((state) => state.users.data);
+  const isUser = useSelector((state) => state?.users?.data?.data?.user);
   const logoutHandler = () => {
     dispatch(resetUser());
     // navigate('/home');
@@ -21,18 +22,21 @@ const Navbar = () => {
           
           
             <NavLink
-              to={`/user/${isUser.data.user._id}/profile`}
+              to={`/user/${isUser._id}/profile`}
               className={({ isActive }) => (isActive ? styles.isActive : "")}
             >
-              <img
-                src={isUser?.image ? isUser?.image : "../assets/unlike-removebg-preview.png"}
-                alt={isUser?.image}
-                className={styles._logo}
+              <img 
+                src={isUser?.avatar ? isUser.avatar : `https://ui-avatars.com/api/?name=${
+                isUser?.username || 'avatar'
+              }+User&background=355F5B&color=fff`
+            }
+                alt=''
+                className={styles.avatar}
               />
 
             </NavLink>
             <NavLink
-              to={`/user/${isUser.data.user._id}/MyRecipes`}
+              to={`/user/${isUser._id}/MyRecipes`}
               className={({ isActive }) => (isActive ? styles.isActive : "")}
             >
               MyRecipes
@@ -40,13 +44,13 @@ const Navbar = () => {
             </NavLink>
             <NavLink
             // /user/:id/AddRecipe/</>
-              to={`/user/${isUser.data.user._id}/AddRecipe/`}
+              to={`/user/${isUser._id}/AddRecipe/`}
               className={({ isActive }) => (isActive ? styles.isActive : "")}
             >
               Create Recipe
             </NavLink>
             <NavLink
-              to={`/user/${isUser.data.user._id}/favorites`}
+              to={`/user/${isUser._id}/favorites`}
               className={({ isActive }) => (isActive ? styles.isActive : "")}
             >
               Favorites
@@ -78,7 +82,7 @@ const Navbar = () => {
           </>
         )}
         <NavLink
-          to={`/user/${isUser.data.user._id}/Home`}
+          to={`/user/${isUser._id}/Home`}
           className={({ isActive }) => (isActive ? styles.isActive : "")}
         >
           Home
@@ -90,7 +94,7 @@ const Navbar = () => {
           About
         </NavLink>
         <NavLink
-          to={`/user/${isUser.data.user._id}/recipes/`}
+          to={`/user/${isUser._id}/recipes/`}
           className={({ isActive }) => (isActive ? styles.isActive : "")}
         >
           Recipes

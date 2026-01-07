@@ -1,5 +1,5 @@
 
-import { useNavigate } from "react-router-dom";
+import { href, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import styles from "../pages/Videos/recipeVideos.module.css";
 
@@ -26,15 +26,16 @@ const VideoCard = ({ video }) => {
   };
 
   const videoId = getYoutubeId(videoUrl);
-
+  const [play, setPlay] = useState(false);
   return (
     <div
       className={styles.videoCard}
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
+      onClick={() => setPlay(true)}
+      // onMouseEnter={() => setIsHover(true)}
+      // onMouseLeave={() => setIsHover(false)}
     >
       <div className={styles.thumb}>
-        {isHover && videoId ? (
+        {play && videoId ? (
           <iframe
             src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&rel=0`}
             title={title}
@@ -52,12 +53,12 @@ const VideoCard = ({ video }) => {
       <h3>{title}</h3>
 
       <div className={styles.meta}>
-        <span>⭐ {rating}</span>
+        {/* <span>⭐ {rating}</span> */}
         <span>👁 {views}</span>
       </div>
 
       <div className={styles.actions}>
-        <button onClick={() => navigate(`/videos/${_id}`)}>
+        <button onClick={()=>window.open(videoUrl, "_blank")} >
           Watch
         </button>
 

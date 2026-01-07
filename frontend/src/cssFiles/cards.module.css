@@ -1,11 +1,10 @@
 .recipeContainer {
   width: 100%;
-  /* border: 1px solid red; */
 }
 
 .card {
+  width: 100%;
   margin-top: 1rem;
-  padding: 1rem;
   background: var(--white);
   border-radius: var(--radius-lg);
   overflow: hidden;
