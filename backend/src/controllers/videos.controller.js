@@ -5,13 +5,13 @@ export async function getVideosController(req, res) {
     const videos = await recipeModel.find({
       videoUrl: {
         $exists: true,
-        $ne: "",
-        $ne: null,
+        $nin: ["", null],
       },
     });
 
-    res.status(200).json(videos);
+    return res.status(200).json(videos);
   } catch (error) {
     console.log(error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 }

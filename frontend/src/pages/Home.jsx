@@ -23,17 +23,18 @@ const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const containerRef = useRef(null);
-  const isUser=useSelector((state)=>state.users.data)
+  const userId = useSelector((state) => state?.users?.data?.data?.user?._id);
   useEffect(() => {
     dispatch(asyncGetLimitRecipies(6));
-  }, []);
+  }, [dispatch]);
   // const { recipe, fetchRecipes, isLoading } = useInfiniteRecipe();
   const recipe = useSelector((state) => state.recipes.data);
+  const recipeList = Array.isArray(recipe) ? recipe : [];
 
-  const renderRecipe = recipe?.map((item, i) => {
+  const renderRecipe = recipeList.map((item, i) => {
     return <HomeRecipeCard key={item?._id || i} item={item} />;
   });
-  const renderImageTrail = recipe?.map((item, i) => {
+  const renderImageTrail = recipeList.map((item, i) => {
     return (
       <ImageTrail
         key={item?.id || i}
@@ -52,7 +53,8 @@ const Home = () => {
     );
   });
   const exploreRecipes = () => {
-    navigate(`/user/${isUser.data.user._id}/recipes/`);
+    if (!userId) return;
+    navigate(`/user/${userId}/recipes/`);
   };
   const viewVideos = () => {
     console.log("videos");
@@ -121,7 +123,7 @@ const Home = () => {
 
       <section className={styles.recipesSection}>
         <div className={styles.recipesInner}>
-          {recipe.length ? renderRecipe : "No recipes found"}
+          {recipeList.length ? renderRecipe : "No recipes found"}
         </div>
 
         <div className={styles.viewAllWrap}>
