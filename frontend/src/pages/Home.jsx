@@ -29,7 +29,7 @@ const Home = () => {
   }, [dispatch]);
   // const { recipe, fetchRecipes, isLoading } = useInfiniteRecipe();
   const recipe = useSelector((state) => state.recipes.data);
-  const recipeList = Array.isArray(recipe) ? recipe : [];
+  const recipeList = Array.isArray(recipe) ? recipe.slice(0, 6) : [];
 
   const renderRecipe = recipeList.map((item, i) => {
     return <HomeRecipeCard key={item?._id || i} item={item} />;
