@@ -19,10 +19,10 @@ export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
-
-
-    user ? navigate(`/user/${user.data.user._id}/Home`) : "";
-  }, [dispatch]);
+    if (user?.data?.user?._id) {
+      navigate(`/user/${user.data.user._id}/Home`);
+    }
+  }, [user, navigate]);
   const signUp=()=>{
     navigate('/register')
   }
@@ -31,7 +31,7 @@ export default function Login() {
     try {
       dispatch(asyncLoginUser(data));
       
-      navigate("/");
+      // redirect handled by useEffect after user state updates
     //   console.log(data);
       
       
