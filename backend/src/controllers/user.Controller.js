@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { userModel } from "../models/user.model.js";
 
 export const userRegisterController = async (req, res) => {
@@ -72,6 +73,48 @@ export const userLoginController = async (req, res) => {
     // console.log(error);
 
     res.status(500).json({ message: "internal server error" });
+  }
+};
+
+export const updateUserController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(400).json({ message: "Invalid user id" });
+    }
+
+    const allowedFields = ["username", "email", "password", "avatar", "bio"];
+    const updates = {};
+    for (const field of allowedFields) {
+      const value = req.body?.[field];
+      if (value !== undefined && value !== null && value !== "") {
+        updates[field] = value;
+      }
+    }
+
+    if (updates.email) {
+      updates.email = updates.email.trim().toLowerCase();
+    }
+
+    if (Object.keys(updates).length === 0) {
+      return res.status(400).json({ message: "No valid fields to update" });
+    }
+
+    const user = await userModel
+      .findByIdAndUpdate(id, { $set: updates }, { new: true, runValidators: true })
+      .lean();
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const { password: _password, ...safeUser } = user;
+    return res.status(200).json({ user: safeUser });
+  } catch (err) {
+    if (err && err.code === 11000) {
+      return res.status(409).json({ message: "Email already registered" });
+    }
+    console.error("Update user error:", err);
+    return res.status(500).json({ message: "Server error" });
   }
 };
 

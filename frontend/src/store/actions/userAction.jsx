@@ -54,3 +54,28 @@ export const asyncCurrentUser = () => (dispatch, getState) => {
   }
   //
 };
+
+export const asyncUpdateUser = (id, data) => async (dispatch, getState) => {
+  try {
+    const payload = { ...data };
+    Object.keys(payload).forEach((key) => {
+      if (payload[key] === "" || payload[key] === null || payload[key] === undefined) {
+        delete payload[key];
+      }
+    });
+
+    const res = await axios.patch(`/user/${id}`, payload);
+
+    const stored = JSON.parse(localStorage.getItem("token") || "null");
+    if (stored?.data?.user) {
+      stored.data.user = res?.data?.user || stored.data.user;
+      localStorage.setItem("token", JSON.stringify(stored));
+      dispatch(loadUser(stored));
+    }
+
+    toast.success("profile updated successfully");
+  } catch (error) {
+    const message = error?.response?.data?.message || "failed to update profile";
+    toast.error(message);
+  }
+};

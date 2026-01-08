@@ -4,20 +4,22 @@ import styles from "../cssFiles/userUi.module.css";
 // import HomeRecipeCard from "../components/HomeRecipeCard";
 import RecipeCard from "../components/RecipeCard";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "../utils/axios";
+import { asyncUpdateUser } from "../store/actions/userAction";
 import formStyles from "../styles/formStyles.module.css";
 
 const Profile = () => {
   // const [activeTab, setActiveTab] = useState("recipes");
+  const dispatch = useDispatch();
 
   const currentUser = useSelector((state) => state?.users?.data?.data?.user);
 
   const userRecipes = useSelector((state) => state?.recipes?.MyRecipes);
 
   const recipeCount = Array.isArray(userRecipes) ? userRecipes.length : 0;
-  const joinedDate = currentUser?.createdAt
-    ? new Date(currentUser.createdAt).toISOString().slice(0, 10)
+  const joinedYear = currentUser?.createdAt
+    ? new Date(currentUser.createdAt).getFullYear()
     : "N/A";
   const [randomBio, setRandomBio] = useState("");
   const bioText =
@@ -26,14 +28,27 @@ const Profile = () => {
     "Home cook sharing simple and tasty recipes.";
 
     
-  const { register, handleSubmit } = useForm({
-    default: { username: currentUser?.username },
+  const { register, handleSubmit, reset } = useForm({
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+    },
   });
   //   console.log(currentUser);
 
   const submitHandler = (data) => {
-    console.log(data);
+    if (!currentUser?._id) return;
+    dispatch(asyncUpdateUser(currentUser._id, data));
   };
+
+  useEffect(() => {
+    reset({
+      username: currentUser?.username || "",
+      email: currentUser?.email || "",
+      password: "",
+    });
+  }, [currentUser, reset]);
 
   useEffect(() => {
     let isActive = true;
@@ -82,7 +97,7 @@ const Profile = () => {
               <span>Recipes</span>
             </div>
             <div>
-              <strong>{joinedDate}</strong>
+              <strong>{joinedYear}</strong>
               <span>Joined</span>
             </div>
           </div>
@@ -94,9 +109,14 @@ const Profile = () => {
         <h3>Update Profile</h3>
 
         <form className={styles.form} onSubmit={handleSubmit(submitHandler)}>
-          <input type="text" placeholder="Username" />
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="New Password" />
+          <input type="text" placeholder="Username" {...register("username")} />
+          <input type="email" placeholder="Email" {...register("email")} />
+          <input
+            type="password"
+            placeholder="New Password"
+            autoComplete="new-password"
+            {...register("password")}
+          />
 
           <button type="submit">Save Changes</button>
         </form>
