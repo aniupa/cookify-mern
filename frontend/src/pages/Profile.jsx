@@ -37,7 +37,7 @@ const Profile = ({ user }) => {
             src={
               currentUser?.avatar ||
               `https://ui-avatars.com/api/?name=${
-                currentUser?.username || cookify
+                currentUser?.username || "cookify"
               }+User&background=2f7f6f&color=fff`
             }
             alt="user avatar"
@@ -45,7 +45,7 @@ const Profile = ({ user }) => {
         </div>
 
         <div className={styles.info}>
-          <h2>{user?.username || "prakash"}</h2>
+          <h2>{currentUser?.username || "Anonymous"}</h2>
           <p className={styles.bio}>
             Home cook sharing simple & tasty recipes 🍳
           </p>
