@@ -72,7 +72,8 @@ label {
 }
 
 #root {
-  @include flex(center, center, column);
+  display: flex;
+  flex-direction: column;
 }
 :root {
   // --primary: #2f7f6d;

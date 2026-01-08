@@ -78,7 +78,7 @@ const Profile = () => {
             src={
               currentUser?.avatar ||
               `https://ui-avatars.com/api/?name=${
-                currentUser?.username || ""cookify""
+                currentUser?.username || "cookify"
               }+User&background=2f7f6f&color=fff`
             }
             alt="user avatar"
