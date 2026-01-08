@@ -3,7 +3,7 @@ import { userModel } from "../models/user.model.js";
 export const userRegisterController = async (req, res) => {
   
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, avatar, bio } = req.body;
     console.log(req.body);
     
 
@@ -30,6 +30,8 @@ export const userRegisterController = async (req, res) => {
       username,
       email: normalizedEmail,
       password: password,
+      avatar,
+      bio,
     });
 
     // you may want to remove password before sending back
@@ -46,21 +48,47 @@ export const userRegisterController = async (req, res) => {
 
 export const userLoginController = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password } = req.body ?? {};
     // console.log(req.body);
-    const user = await userModel.findOne({ email });
-    if (user) {
-      user.password == password
-        ? res.status(200).json({ message: `welcome `, user })
-        : res.status(400).json({ message: "invalid password" });
-    } else {
+    if (!email || !password) {
+      return res.status(400).json({ message: "email and password are required" });
+    }
+
+    const normalizedEmail = email.trim().toLowerCase();
+    const user = await userModel.findOne({ email: normalizedEmail }).lean();
+    if (!user) {
       return res
-        .status(500)
+        .status(401)
         .json({ message: "unauthorized user... pls register!!" });
     }
+
+    if (user.password !== password) {
+      return res.status(401).json({ message: "invalid password" });
+    }
+
+    const { password: _password, ...safeUser } = user;
+    return res.status(200).json({ message: `welcome `, user: safeUser });
   } catch (error) {
     // console.log(error);
 
     res.status(500).json({ message: "internal server error" });
   }
+};
+
+const randomBios = [
+  "Home cook sharing easy recipes.",
+  "Always testing new flavors in the kitchen.",
+  "Simple meals, big taste.",
+  "Weekend baker and weeknight cook.",
+  "Fresh ingredients, simple steps.",
+  "Learning one recipe at a time.",
+  "Cooking is my daily reset.",
+  "Family recipes with a modern twist.",
+  "Quick meals for busy days.",
+  "Food lover and recipe keeper.",
+];
+
+export const randomBioController = (req, res) => {
+  const bio = randomBios[Math.floor(Math.random() * randomBios.length)];
+  return res.status(200).json({ bio });
 };

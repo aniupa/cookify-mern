@@ -58,7 +58,7 @@ export async function createRecipeController(req, res) {
       createdBy:userId
     });
 
-    return res.status(201).json(newRecipe,userId);
+    return res.status(201).json({ recipe: newRecipe, userId });
   } catch (error) {
     console.error("createRecipeController error:", error);
     return res.status(500).json({ message: "Internal server error" });
