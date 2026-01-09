@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { userModel } from "../models/user.model.js";
+import { recipeModel } from "../models/recipe.model.js";
 
 export const userRegisterController = async (req, res) => {
   
@@ -134,4 +135,39 @@ const randomBios = [
 export const randomBioController = (req, res) => {
   const bio = randomBios[Math.floor(Math.random() * randomBios.length)];
   return res.status(200).json({ bio });
+};
+
+export const getUserFavoritesController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(400).json({ message: "Invalid user id" });
+    }
+
+    const user = await userModel.findById(id).select("favorites").lean();
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const favoriteIds = user.favorites || [];
+    if (favoriteIds.length === 0) {
+      return res.status(200).json({ favorites: [] });
+    }
+
+    const favorites = await recipeModel
+      .find({ _id: { $in: favoriteIds } })
+      .populate("createdBy", "username avatar")
+      .sort({ createdAt: -1 })
+      .lean();
+
+    const withFavorites = favorites.map((recipe) => ({
+      ...recipe,
+      fav: true,
+    }));
+
+    return res.status(200).json({ favorites: withFavorites });
+  } catch (error) {
+    console.error("getUserFavoritesController error:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 };

@@ -14,40 +14,28 @@ import { useNavigate, useParams } from "react-router-dom";
 export default function useRecipeForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const recipe = useSelector((state) => state.recipes.data);
   const params = useParams();
   
-  const isUser = useSelector((state) => state.users.data);
-  // const currentUser=localStorage.getItem('user');
-  const userId=isUser.data.user._id;
-  const defaultRecipe = recipe.find((f) => f.id == params.id);
+  const userId = useSelector((state) => state?.users?.data?.data?.user?._id);
 
   const createRecipeHandler = useCallback(
     async (data) => {
-      // const newData={}
-      
-      // console.log('tetsing :' ,  );
-      
-      dispatch(asyncAddRecipeActions(data,userId));
-      navigate(`/user/${isUser.data.user._id}/recipes/`);
+      if (!userId) return;
+      dispatch(asyncAddRecipeActions(data, userId));
+      navigate(`/user/${userId}/recipes/`);
     },
-    [dispatch, navigate]
+    [dispatch, navigate, userId]
   );
  
-  const updateRecipeHandler = async (defaultRecipe) => {
-    const id = params.id;
-    console.log(id);
-    
-
-    dispatch(asyncUpdateRecipeHandler({ id, defaultRecipe }));
-    console.log("updateRecipeHandler");
-
-    reset();
-    navigate("/recipes");
-
-    toast.success("recipe data updated successfully!!");
-    navigate("/recipes");
-  };
+  const updateRecipeHandler = useCallback(
+    async (data) => {
+      const id = params.id;
+      if (!id || !userId) return;
+      await dispatch(asyncUpdateRecipeHandler({ id, data }));
+      navigate(`/user/${userId}/MyRecipes`);
+    },
+    [dispatch, navigate, params.id, userId]
+  );
 
   return { createRecipeHandler, updateRecipeHandler };
 }

@@ -1,13 +1,21 @@
 import express from "express";
-import {getRecipesController,createRecipeController,updateRecipeController,deleteRecipeController} from '../controllers/recipes.controller.js'
+import {
+  getRecipesController,
+  createRecipeController,
+  updateRecipeController,
+  deleteRecipeController,
+  setFavoriteController,
+} from "../controllers/recipes.controller.js";
 import { getMyRecipesController } from "../controllers/recipes.controller.js";
+import { requireUserId } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
 router.get('/recipes',getRecipesController)
-router.post('/recipes',createRecipeController)
-router.delete('/recipes/:id',deleteRecipeController)
-router.patch('/recipes/:id',updateRecipeController)
+router.post('/recipes',requireUserId,createRecipeController)
+router.delete('/recipes/:id',requireUserId,deleteRecipeController)
+router.patch('/recipes/:id',requireUserId,updateRecipeController)
+router.post("/recipes/:id/favorite", requireUserId, setFavoriteController);
 
 router.get('/user/:id/myRecipes',getMyRecipesController)
 

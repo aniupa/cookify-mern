@@ -1,42 +1,42 @@
-import { useSearchParams, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
 import styles from "../Videos/recipeVideos.module.scss";
-import useInfiniteRecipe from "../../utils/useInfiniteRecipe";
 
 import VideoCard from "../../components/VideoCard.jsx";
 
-import End from "../End";
 import RotatingText from "../../utils/animations/RotatingText/RotatingText.jsx";
-import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch, useSelector } from "react-redux";
-import { LoadVideos } from "../../store/reducers/RecipeSlice.jsx";
 import { asyncGetVideosActions } from "../../store/actions/videosAction.jsx";
 
 const RecipeVideos = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { recipe, hasMore, fetchRecipes, isLoading } = useInfiniteRecipe();
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const videos=useSelector(state=>state.recipes.Videos.data);
+  const videos = useSelector((state) => state.recipes.Videos) || [];
 
   // ---- filters from URL ----
+  const search = searchParams.get("search");
   const veg = searchParams.get("veg");
   const maxTime = searchParams.get("maxTime");
   const difficulty = searchParams.get("difficulty");
+  const trending = searchParams.get("trending");
 
   const renderVideo = videos?.map((video, i) => {
     return <VideoCard key={video?._id || i} video={video} />;
   });
 
   useEffect(() => {
-    console.log(videos);
-    
-    dispatch(asyncGetVideosActions());
-  }, [dispatch]);
+    const filters = {};
+    if (search) filters.search = search;
+    if (veg !== null) filters.veg = veg;
+    if (maxTime) filters.maxTime = maxTime;
+    if (difficulty) filters.difficulty = difficulty;
+    if (trending) filters.trending = trending;
+    dispatch(asyncGetVideosActions(filters));
+  }, [dispatch, search, veg, maxTime, difficulty, trending]);
   const updateFilter = (key, value) => {
     const params = Object.fromEntries([...searchParams]);
-    if (value === null) delete params[key];
+    if (value === null || value === "") delete params[key];
     else params[key] = value;
     setSearchParams(params);
   };
@@ -104,16 +104,8 @@ const RecipeVideos = () => {
       </div>
       {/* videoSkeleton */}
       {/* VIDEO GRID */}
-      {recipe && recipe.length > 0 ? (
-        <InfiniteScroll
-          dataLength={recipe.length}
-          next={fetchRecipes}
-          hasMore={hasMore}
-          endMessage={<End />}
-          loader={<h2>Loading...</h2>}
-        >
-          <div className={styles.videoGrid}>{renderVideo}</div>
-        </InfiniteScroll>
+      {videos && videos.length > 0 ? (
+        <div className={styles.videoGrid}>{renderVideo}</div>
       ) : (
         "No recipes found !"
       )}

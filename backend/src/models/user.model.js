@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: [true, "password required"] },
     avatar: { type: String, trim: true, default: "" },
     bio: { type: String, trim: true, default: "", maxlength: 280 },
+    favorites: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "recipe" }],
+      default: [],
+    },
   },
   { timestamps: true }
 );

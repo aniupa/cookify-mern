@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "../utils/axios";
 import { asyncUpdateUser } from "../store/actions/userAction";
 import formStyles from "../styles/formStyles.module.css";
+import { asyncGetFavoritesActions } from "../store/actions/recipeAction";
 
 const Profile = () => {
   // const [activeTab, setActiveTab] = useState("recipes");
@@ -16,8 +17,10 @@ const Profile = () => {
   const currentUser = useSelector((state) => state?.users?.data?.data?.user);
 
   const userRecipes = useSelector((state) => state?.recipes?.MyRecipes);
+  const favorites = useSelector((state) => state?.favorites?.data) || [];
 
   const recipeCount = Array.isArray(userRecipes) ? userRecipes.length : 0;
+  const favoritesCount = Array.isArray(favorites) ? favorites.length : 0;
   const joinedYear = currentUser?.createdAt
     ? new Date(currentUser.createdAt).getFullYear()
     : "N/A";
@@ -49,6 +52,12 @@ const Profile = () => {
       password: "",
     });
   }, [currentUser, reset]);
+
+  useEffect(() => {
+    if (currentUser?._id) {
+      dispatch(asyncGetFavoritesActions(currentUser._id));
+    }
+  }, [dispatch, currentUser?._id]);
 
   useEffect(() => {
     let isActive = true;
@@ -95,6 +104,10 @@ const Profile = () => {
             <div>
               <strong>{recipeCount}</strong>
               <span>Recipes</span>
+            </div>
+            <div>
+              <strong>{favoritesCount}</strong>
+              <span>Favorites</span>
             </div>
             <div>
               <strong>{joinedYear}</strong>

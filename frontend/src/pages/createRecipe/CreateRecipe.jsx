@@ -82,6 +82,37 @@ const CreateRecipe = () => {
           required
         />
 
+        <label>Time (minutes)</label>
+        <input
+          type="number"
+          name="time"
+          placeholder="30"
+          min="1"
+          {...register("time")}
+        />
+
+        <label>Difficulty</label>
+        <select name="difficulty" {...register("difficulty")}>
+          <option value="">Select difficulty</option>
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+
+        <label>Veg Option</label>
+        <select name="isVeg" {...register("isVeg")}>
+          <option value="">Select</option>
+          <option value="true">Veg</option>
+          <option value="false">Non-Veg</option>
+        </select>
+
+        <label>Trending</label>
+        <select name="isTrending" {...register("isTrending")}>
+          <option value="">Select</option>
+          <option value="true">Trending</option>
+          <option value="false">Not Trending</option>
+        </select>
+
         <button type="submit" onClick={()=>{setLoading(true);}} >
           {/* <button type="submit" disabled={loading} ? dont knoow its meaning></button> */}
           {loading ? "Creating..." : "Create Recipe"}

@@ -1,41 +1,30 @@
+import {
+  createRecipe,
+  deleteRecipe,
+  getMyRecipes,
+  getRecipes,
+  setFavorite,
+  updateRecipe,
+} from "../services/recipes.service.js";
 
-import { recipeModel } from "../models/recipe.model.js";
-import mongoose from "mongoose";
+const handleServiceError = (res, error, label) => {
+  if (error?.status) {
+    return res.status(error.status).json({ message: error.message });
+  }
+  console.error(label, error);
+  return res.status(500).json({ message: "Internal server error" });
+};
 
 export async function getRecipesController(req, res) {
   try {
-    const limit = Math.max(1, parseInt(req.query.limit, 10) || 6);
-    const after = req.query.after || null; // last-seen _id (string) or null
-
-    // build query
-    const query = {};
-    if (after) {
-      // validate cursor
-      if (!mongoose.isValidObjectId(after)) {
-        return res.status(400).json({ message: "Invalid cursor (after)" });
-      }
-      // descending order: newer -> older, so fetch _id < after
-      query._id = { $lt:new mongoose.Types.ObjectId(after) };
-    }
-
-    // fetch limit+1 to determine hasMore
-    const docs = await recipeModel
-      .find(query).populate('createdBy','username')
-      .sort({ _id: -1 }) // newest first (stable)
-      .limit(limit + 1)
-      .lean();
-
-    const hasMore = docs.length > limit;
-    const items = hasMore ? docs.slice(0, limit) : docs;
-
-    return res.json({
-      recipes: items,
-      hasMore,
-      nextCursor: items.length ? String(items[items.length - 1]._id) : null,
+    const result = await getRecipes({
+      limit: req.query.limit,
+      after: req.query.after || null,
+      userId: req.query.userId || null,
     });
+    return res.json(result);
   } catch (error) {
-    console.error("getRecipesController error:", error);
-    return res.status(500).json({ message: "Internal server error" });
+    return handleServiceError(res, error, "getRecipesController error:");
   }
 }
 
@@ -44,24 +33,11 @@ export async function getRecipesController(req, res) {
  */
 export async function createRecipeController(req, res) {
   try {
-    const userId=req.body.userId;
-    const { title, imageUrl, description, ingredients, instructions ,videoUrl} = req.body.recipe;
-
-   
-    const newRecipe = await recipeModel.create({
-      title,
-      imageUrl,
-      description,
-      ingredients,
-      instructions,
-      videoUrl,
-      createdBy:userId
-    });
-
-    return res.status(201).json({ recipe: newRecipe, userId });
+    const userId = req.userId || req.body.userId;
+    const recipe = await createRecipe({ userId, recipe: req.body.recipe });
+    return res.status(201).json({ recipe, userId });
   } catch (error) {
-    console.error("createRecipeController error:", error);
-    return res.status(500).json({ message: "Internal server error" });
+    return handleServiceError(res, error, "createRecipeController error:");
   }
 }
 
@@ -70,64 +46,52 @@ export async function createRecipeController(req, res) {
  */
 export async function deleteRecipeController(req, res) {
   try {
-    const id = req.params.id;
-    if (!mongoose.isValidObjectId(id)) {
-      return res.status(400).json({ message: "Invalid id" });
-    }
-
-    const recipe = await recipeModel.findByIdAndDelete(id);
-    if (!recipe) return res.status(404).json({ message: "Recipe not found" });
+    await deleteRecipe({
+      recipeId: req.params.id,
+      userId: req.userId || req.body?.userId || req.query?.userId,
+    });
     return res.status(200).json({ message: "Recipe deleted successfully" });
   } catch (error) {
-    console.error("deleteRecipeController error:", error);
-    return res.status(500).json({ message: "Internal server error" });
+    return handleServiceError(res, error, "deleteRecipeController error:");
   }
 }
 
 export async function updateRecipeController(req, res) {
   try {
-    const { id } = req.params;
-    if (!mongoose.isValidObjectId(id)) {
-      return res.status(400).json({ message: "Invalid id" });
-    }
-
-    const data = { ...req.body };
-
-    Object.keys(data).forEach((key) => {
-      if (data[key] === "" || data[key] === null || data[key] === undefined) {
-        delete data[key];
-      }
+    const updatedRecipe = await updateRecipe({
+      id: req.params.id,
+      userId: req.userId || req.body?.userId,
+      data: req.body,
     });
-
-    if (Object.keys(data).length === 0) {
-      return res.status(400).json({ message: "No valid fields to update" });
-    }
-
-    const recipe = await recipeModel.findByIdAndUpdate(id, { $set: data }, { new: true, runValidators: true });
-    if (!recipe) {
-      return res.status(404).json({ message: "Recipe not found" });
-    }
-    return res.status(200).json({ message: "Recipe updated successfully", recipe });
+    return res.status(200).json({
+      message: "Recipe updated successfully",
+      recipe: updatedRecipe,
+    });
   } catch (error) {
-    console.error("updateRecipeController error:", error);
-    return res.status(500).json({ message: "Internal server error" });
+    return handleServiceError(res, error, "updateRecipeController error:");
   }
 }
 
 
 export async function getMyRecipesController(req, res) {
   try {
-    //  console.log(req.body);
-    //  const {userId}=req.body;
-    const params=req.params;
-    const userId=params.id;
-    //  console.log(params.id)
-     const myRecipe=await recipeModel.find({createdBy:userId}).sort({createdAt:-1}).lean();
-     res.status(200).json({myRecipe})
-
-     
+    const myRecipe = await getMyRecipes({ userId: req.params.id });
+    res.status(200).json({ myRecipe });
   } catch (error) {
-    console.error("getRecipesController error:", error);
-    return res.status(500).json({ message: "Internal server error" });
+    return handleServiceError(res, error, "getMyRecipesController error:");
+  }
+}
+
+export async function setFavoriteController(req, res) {
+  try {
+    const result = await setFavorite({
+      recipeId: req.params.id,
+      userId: req.userId || req.body?.userId,
+      favorite: req.body?.favorite,
+      fav: req.body?.fav,
+    });
+    return res.status(200).json({ favorite: result.favorite });
+  } catch (error) {
+    return handleServiceError(res, error, "setFavoriteController error:");
   }
 }

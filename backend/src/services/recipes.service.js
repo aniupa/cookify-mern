@@ -1,0 +1,226 @@
+import mongoose from "mongoose";
+import { recipeModel } from "../models/recipe.model.js";
+import { userModel } from "../models/user.model.js";
+import {
+  assertObjectId,
+  createHttpError,
+  normalizeDifficulty,
+  parseBoolean,
+  parseNumber,
+} from "../utils/validation.js";
+
+const buildFavoriteSet = async (userId) => {
+  if (!userId) return null;
+  assertObjectId(userId, "Invalid user id");
+  const user = await userModel.findById(userId).select("favorites").lean();
+  if (!user) {
+    throw createHttpError(404, "User not found");
+  }
+  return new Set((user.favorites || []).map((id) => String(id)));
+};
+
+const applyFavoriteFlag = (items, favoriteSet) => {
+  if (!favoriteSet) return items;
+  return items.map((item) => ({
+    ...item,
+    fav: favoriteSet.has(String(item._id)),
+  }));
+};
+
+export const getRecipes = async ({ limit, after, userId }) => {
+  const parsedLimit = Math.max(1, parseInt(limit, 10) || 6);
+  const favoriteSet = await buildFavoriteSet(userId);
+
+  const query = {};
+  if (after) {
+    assertObjectId(after, "Invalid cursor (after)");
+    query._id = { $lt: new mongoose.Types.ObjectId(after) };
+  }
+
+  const docs = await recipeModel
+    .find(query)
+    .populate("createdBy", "username avatar")
+    .sort({ _id: -1 })
+    .limit(parsedLimit + 1)
+    .lean();
+
+  const hasMore = docs.length > parsedLimit;
+  const items = hasMore ? docs.slice(0, parsedLimit) : docs;
+  const withFavorites = applyFavoriteFlag(items, favoriteSet);
+
+  return {
+    recipes: withFavorites,
+    hasMore,
+    nextCursor: items.length ? String(items[items.length - 1]._id) : null,
+  };
+};
+
+export const createRecipe = async ({ userId, recipe }) => {
+  assertObjectId(userId, "Invalid user id");
+  const recipePayload = recipe || {};
+  const {
+    title,
+    imageUrl,
+    description,
+    ingredients,
+    instructions,
+    videoUrl,
+    time,
+    difficulty,
+    isVeg,
+    isTrending,
+  } = recipePayload;
+
+  const newRecipe = await recipeModel.create({
+    title,
+    imageUrl,
+    description,
+    ingredients,
+    instructions,
+    videoUrl,
+    time: parseNumber(time),
+    difficulty: normalizeDifficulty(difficulty),
+    isVeg: parseBoolean(isVeg),
+    isTrending: parseBoolean(isTrending),
+    createdBy: userId,
+  });
+
+  return newRecipe;
+};
+
+export const deleteRecipe = async ({ recipeId, userId }) => {
+  assertObjectId(recipeId, "Invalid id");
+  assertObjectId(userId, "Invalid user id");
+
+  const recipe = await recipeModel.findById(recipeId);
+  if (!recipe) {
+    throw createHttpError(404, "Recipe not found");
+  }
+  if (String(recipe.createdBy) !== String(userId)) {
+    throw createHttpError(403, "Not allowed to delete this recipe");
+  }
+
+  await recipe.deleteOne();
+};
+
+export const updateRecipe = async ({ id, userId, data }) => {
+  assertObjectId(id, "Invalid id");
+  assertObjectId(userId, "Invalid user id");
+
+  const recipe = await recipeModel.findById(id);
+  if (!recipe) {
+    throw createHttpError(404, "Recipe not found");
+  }
+  if (String(recipe.createdBy) !== String(userId)) {
+    throw createHttpError(403, "Not allowed to update this recipe");
+  }
+
+  const allowedFields = [
+    "title",
+    "imageUrl",
+    "description",
+    "ingredients",
+    "instructions",
+    "videoUrl",
+    "time",
+    "difficulty",
+    "isVeg",
+    "isTrending",
+  ];
+
+  const updates = {};
+  for (const field of allowedFields) {
+    const value = data?.[field];
+    if (value !== "" && value !== null && value !== undefined) {
+      updates[field] = value;
+    }
+  }
+
+  if (updates.time !== undefined) {
+    const parsedTime = parseNumber(updates.time);
+    if (parsedTime === undefined) {
+      delete updates.time;
+    } else {
+      updates.time = parsedTime;
+    }
+  }
+
+  if (updates.difficulty !== undefined) {
+    const normalizedDifficulty = normalizeDifficulty(updates.difficulty);
+    if (!normalizedDifficulty) {
+      delete updates.difficulty;
+    } else {
+      updates.difficulty = normalizedDifficulty;
+    }
+  }
+
+  if (updates.isVeg !== undefined) {
+    const parsedIsVeg = parseBoolean(updates.isVeg);
+    if (parsedIsVeg === undefined) {
+      delete updates.isVeg;
+    } else {
+      updates.isVeg = parsedIsVeg;
+    }
+  }
+
+  if (updates.isTrending !== undefined) {
+    const parsedIsTrending = parseBoolean(updates.isTrending);
+    if (parsedIsTrending === undefined) {
+      delete updates.isTrending;
+    } else {
+      updates.isTrending = parsedIsTrending;
+    }
+  }
+
+  if (Object.keys(updates).length === 0) {
+    throw createHttpError(400, "No valid fields to update");
+  }
+
+  return recipeModel.findByIdAndUpdate(
+    id,
+    { $set: updates },
+    { new: true, runValidators: true }
+  );
+};
+
+export const getMyRecipes = async ({ userId }) => {
+  const favoriteSet = await buildFavoriteSet(userId);
+  const myRecipe = await recipeModel
+    .find({ createdBy: userId })
+    .sort({ createdAt: -1 })
+    .lean();
+  return applyFavoriteFlag(myRecipe, favoriteSet);
+};
+
+export const setFavorite = async ({ recipeId, userId, favorite, fav }) => {
+  assertObjectId(recipeId, "Invalid recipe id");
+  assertObjectId(userId, "Invalid user id");
+
+  const favoriteValue =
+    typeof favorite === "boolean"
+      ? favorite
+      : typeof fav === "boolean"
+        ? fav
+        : undefined;
+  if (favoriteValue === undefined) {
+    throw createHttpError(400, "Favorite flag is required");
+  }
+
+  const [user, recipe] = await Promise.all([
+    userModel.findById(userId).select("_id favorites"),
+    recipeModel.findById(recipeId).select("_id"),
+  ]);
+  if (!user) {
+    throw createHttpError(404, "User not found");
+  }
+  if (!recipe) {
+    throw createHttpError(404, "Recipe not found");
+  }
+
+  const update = favoriteValue
+    ? { $addToSet: { favorites: recipe._id } }
+    : { $pull: { favorites: recipe._id } };
+  await userModel.updateOne({ _id: userId }, update);
+
+  return { favorite: favoriteValue };
+};
