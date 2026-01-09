@@ -21,8 +21,21 @@ const RecipeSlice = createSlice({
       localStorage.setItem("recipes", JSON.stringify(state.data));
     },
     deleteRecipe: (state, action) => {
-      state.data = state.data.filter(f, (index) => index !== action.payload); //ye mujhe id pe witch karna hai
-      localStorage.setItem("recipes", JSON.stringify(state.data));
+      const id = action.payload;
+      if (Array.isArray(state.data)) {
+        state.data = state.data.filter((item) => (item._id ?? item.id) !== id);
+        localStorage.setItem("recipes", JSON.stringify(state.data));
+      }
+      if (Array.isArray(state.MyRecipes)) {
+        state.MyRecipes = state.MyRecipes.filter(
+          (item) => (item._id ?? item.id) !== id
+        );
+      }
+      if (Array.isArray(state.Videos)) {
+        state.Videos = state.Videos.filter(
+          (item) => (item._id ?? item.id) !== id
+        );
+      }
     },
     loadRecipe: (state, action) => {
       state.data = action.payload ?? [];
@@ -47,13 +60,24 @@ const RecipeSlice = createSlice({
     },
     toggleFavoriteLocal: (state, action) => {
       const { id, fav } = action.payload;
-      const recipe = state.data.find((r) => r._id === id);
-      if (recipe) {
-        recipe.fav = fav;
+      const updateFav = (list) => {
+        const recipe = list?.find((r) => (r._id ?? r.id) === id);
+        if (recipe) {
+          recipe.fav = fav;
+        }
+      };
+      if (Array.isArray(state.data)) {
+        updateFav(state.data);
+      }
+      if (Array.isArray(state.MyRecipes)) {
+        updateFav(state.MyRecipes);
+      }
+      if (Array.isArray(state.Videos)) {
+        updateFav(state.Videos);
       }
     },
     LoadVideos:(state,action)=>{
-      state.Videos=action.payload;
+      state.Videos=action.payload ?? [];
     }
   },
 });

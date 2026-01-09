@@ -46,7 +46,8 @@ label {
 }
 
 input,
-textarea {
+textarea,
+select {
   width: 100%;
   padding: 0.7rem 0.9rem;
   margin-top: 0.4rem;
@@ -57,7 +58,8 @@ textarea {
 }
 
 input:focus,
-textarea:focus {
+textarea:focus,
+select:focus {
   outline: none;
   border-color: var(--pri);
 }

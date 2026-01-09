@@ -116,7 +116,9 @@ const SingleRecipe = () => {
                 </div>
               </div>
 
-              <button className={styles.favBtn} onClick={favorite}>{filteredData.fav ? 'add to fav':'remove from fav'}</button>
+              <button className={styles.favBtn} onClick={favorite}>
+                {filteredData.fav ? "Remove from favorites" : "Add to favorites"}
+              </button>
             </div>
           </div>
         </div>

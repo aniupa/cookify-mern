@@ -10,6 +10,7 @@ const useRegister = (initialCursor = null) => {
   const dispatch = useDispatch();
 
   const recipe = useSelector((state) => state.recipes.data) || [];
+  const userId = useSelector((state) => state?.users?.data?.data?.user?._id);
 
   const [cursor, setCursor] = useState(initialCursor);
   const abortRef = useRef(null);
@@ -28,6 +29,7 @@ const useRegister = (initialCursor = null) => {
     try {
       const params = { limit: 6 };
       if (cursor) params.after = cursor;
+      if (userId) params.userId = userId;
 
       const res = await axios.get("/recipes", { params, signal });
       const newItems = res.data?.recipes ?? [];

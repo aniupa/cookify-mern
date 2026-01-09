@@ -123,6 +123,14 @@
 }
 
 /* BUTTON */
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
 .viewBtn {
   margin-top: 0.7rem;
   background: var(--primary);
@@ -139,6 +147,38 @@
     filter: brightness(0.92);
     transform: translateY(-2px);
   }
+}
+
+.ownerActions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.7rem;
+}
+
+.editBtn,
+.deleteBtn {
+  border-radius: 999px;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--primary);
+}
+
+.editBtn:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.deleteBtn {
+  border-color: #e28d8d;
+  color: #b94a4a;
+}
+
+.deleteBtn:hover {
+  background: rgba(226, 141, 141, 0.15);
 }
 
 /* RESPONSIVE */

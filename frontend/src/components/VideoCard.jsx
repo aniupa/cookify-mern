@@ -16,7 +16,8 @@ const VideoCard = ({ video }) => {
   const navigate = useNavigate();
   const [isHover, setIsHover] = useState(false);
 
-  const duration = "20 mins";
+  const parsedTime = Number(video?.time);
+  const duration = Number.isFinite(parsedTime) ? `${parsedTime} min` : "20 min";
 
   const getYoutubeId = (url) => {
     const match = url.match(

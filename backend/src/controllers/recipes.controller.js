@@ -1,11 +1,60 @@
 
 import { recipeModel } from "../models/recipe.model.js";
+import { userModel } from "../models/user.model.js";
 import mongoose from "mongoose";
+
+const parseBoolean = (value) => {
+  if (typeof value === "boolean") return value;
+  if (typeof value === "string") {
+    const normalized = value.trim().toLowerCase();
+    if (normalized === "true") return true;
+    if (normalized === "false") return false;
+  }
+  return undefined;
+};
+
+const parseNumber = (value) => {
+  if (value === "" || value === null || value === undefined) return undefined;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : undefined;
+};
+
+const normalizeDifficulty = (value) => {
+  if (typeof value !== "string") return undefined;
+  const normalized = value.trim().toLowerCase();
+  return normalized ? normalized : undefined;
+};
+
+const buildFavoriteSet = async (userId) => {
+  if (!userId) return null;
+  if (!mongoose.isValidObjectId(userId)) {
+    const error = new Error("Invalid user id");
+    error.status = 400;
+    throw error;
+  }
+  const user = await userModel.findById(userId).select("favorites").lean();
+  if (!user) {
+    const error = new Error("User not found");
+    error.status = 404;
+    throw error;
+  }
+  return new Set((user.favorites || []).map((id) => String(id)));
+};
+
+const applyFavoriteFlag = (items, favoriteSet) => {
+  if (!favoriteSet) return items;
+  return items.map((item) => ({
+    ...item,
+    fav: favoriteSet.has(String(item._id)),
+  }));
+};
 
 export async function getRecipesController(req, res) {
   try {
     const limit = Math.max(1, parseInt(req.query.limit, 10) || 6);
     const after = req.query.after || null; // last-seen _id (string) or null
+    const userId = req.query.userId || null;
+    const favoriteSet = await buildFavoriteSet(userId);
 
     // build query
     const query = {};
@@ -20,20 +69,25 @@ export async function getRecipesController(req, res) {
 
     // fetch limit+1 to determine hasMore
     const docs = await recipeModel
-      .find(query).populate('createdBy','username')
+      .find(query)
+      .populate("createdBy", "username avatar")
       .sort({ _id: -1 }) // newest first (stable)
       .limit(limit + 1)
       .lean();
 
     const hasMore = docs.length > limit;
     const items = hasMore ? docs.slice(0, limit) : docs;
+    const withFavorites = applyFavoriteFlag(items, favoriteSet);
 
     return res.json({
-      recipes: items,
+      recipes: withFavorites,
       hasMore,
       nextCursor: items.length ? String(items[items.length - 1]._id) : null,
     });
   } catch (error) {
+    if (error?.status) {
+      return res.status(error.status).json({ message: error.message });
+    }
     console.error("getRecipesController error:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
@@ -44,10 +98,24 @@ export async function getRecipesController(req, res) {
  */
 export async function createRecipeController(req, res) {
   try {
-    const userId=req.body.userId;
-    const { title, imageUrl, description, ingredients, instructions ,videoUrl} = req.body.recipe;
+    const userId = req.body.userId;
+    if (!mongoose.isValidObjectId(userId)) {
+      return res.status(400).json({ message: "Invalid user id" });
+    }
+    const recipePayload = req.body.recipe || {};
+    const {
+      title,
+      imageUrl,
+      description,
+      ingredients,
+      instructions,
+      videoUrl,
+      time,
+      difficulty,
+      isVeg,
+      isTrending,
+    } = recipePayload;
 
-   
     const newRecipe = await recipeModel.create({
       title,
       imageUrl,
@@ -55,7 +123,11 @@ export async function createRecipeController(req, res) {
       ingredients,
       instructions,
       videoUrl,
-      createdBy:userId
+      time: parseNumber(time),
+      difficulty: normalizeDifficulty(difficulty),
+      isVeg: parseBoolean(isVeg),
+      isTrending: parseBoolean(isTrending),
+      createdBy: userId,
     });
 
     return res.status(201).json({ recipe: newRecipe, userId });
@@ -75,8 +147,20 @@ export async function deleteRecipeController(req, res) {
       return res.status(400).json({ message: "Invalid id" });
     }
 
-    const recipe = await recipeModel.findByIdAndDelete(id);
-    if (!recipe) return res.status(404).json({ message: "Recipe not found" });
+    const userId = req.body?.userId || req.query?.userId;
+    if (!mongoose.isValidObjectId(userId)) {
+      return res.status(400).json({ message: "Invalid user id" });
+    }
+
+    const recipe = await recipeModel.findById(id);
+    if (!recipe) {
+      return res.status(404).json({ message: "Recipe not found" });
+    }
+    if (String(recipe.createdBy) !== String(userId)) {
+      return res.status(403).json({ message: "Not allowed to delete this recipe" });
+    }
+
+    await recipe.deleteOne();
     return res.status(200).json({ message: "Recipe deleted successfully" });
   } catch (error) {
     console.error("deleteRecipeController error:", error);
@@ -91,23 +175,88 @@ export async function updateRecipeController(req, res) {
       return res.status(400).json({ message: "Invalid id" });
     }
 
-    const data = { ...req.body };
-
-    Object.keys(data).forEach((key) => {
-      if (data[key] === "" || data[key] === null || data[key] === undefined) {
-        delete data[key];
-      }
-    });
-
-    if (Object.keys(data).length === 0) {
-      return res.status(400).json({ message: "No valid fields to update" });
+    const userId = req.body?.userId;
+    if (!mongoose.isValidObjectId(userId)) {
+      return res.status(400).json({ message: "Invalid user id" });
     }
 
-    const recipe = await recipeModel.findByIdAndUpdate(id, { $set: data }, { new: true, runValidators: true });
+    const recipe = await recipeModel.findById(id);
     if (!recipe) {
       return res.status(404).json({ message: "Recipe not found" });
     }
-    return res.status(200).json({ message: "Recipe updated successfully", recipe });
+    if (String(recipe.createdBy) !== String(userId)) {
+      return res.status(403).json({ message: "Not allowed to update this recipe" });
+    }
+
+    const allowedFields = [
+      "title",
+      "imageUrl",
+      "description",
+      "ingredients",
+      "instructions",
+      "videoUrl",
+      "time",
+      "difficulty",
+      "isVeg",
+      "isTrending",
+    ];
+
+    const updates = {};
+    for (const field of allowedFields) {
+      const value = req.body?.[field];
+      if (value !== "" && value !== null && value !== undefined) {
+        updates[field] = value;
+      }
+    }
+
+    if (updates.time !== undefined) {
+      const parsedTime = parseNumber(updates.time);
+      if (parsedTime === undefined) {
+        delete updates.time;
+      } else {
+        updates.time = parsedTime;
+      }
+    }
+
+    if (updates.difficulty !== undefined) {
+      const normalizedDifficulty = normalizeDifficulty(updates.difficulty);
+      if (!normalizedDifficulty) {
+        delete updates.difficulty;
+      } else {
+        updates.difficulty = normalizedDifficulty;
+      }
+    }
+
+    if (updates.isVeg !== undefined) {
+      const parsedIsVeg = parseBoolean(updates.isVeg);
+      if (parsedIsVeg === undefined) {
+        delete updates.isVeg;
+      } else {
+        updates.isVeg = parsedIsVeg;
+      }
+    }
+
+    if (updates.isTrending !== undefined) {
+      const parsedIsTrending = parseBoolean(updates.isTrending);
+      if (parsedIsTrending === undefined) {
+        delete updates.isTrending;
+      } else {
+        updates.isTrending = parsedIsTrending;
+      }
+    }
+
+    if (Object.keys(updates).length === 0) {
+      return res.status(400).json({ message: "No valid fields to update" });
+    }
+
+    const updatedRecipe = await recipeModel.findByIdAndUpdate(
+      id,
+      { $set: updates },
+      { new: true, runValidators: true }
+    );
+    return res
+      .status(200)
+      .json({ message: "Recipe updated successfully", recipe: updatedRecipe });
   } catch (error) {
     console.error("updateRecipeController error:", error);
     return res.status(500).json({ message: "Internal server error" });
@@ -117,17 +266,65 @@ export async function updateRecipeController(req, res) {
 
 export async function getMyRecipesController(req, res) {
   try {
-    //  console.log(req.body);
-    //  const {userId}=req.body;
-    const params=req.params;
-    const userId=params.id;
-    //  console.log(params.id)
-     const myRecipe=await recipeModel.find({createdBy:userId}).sort({createdAt:-1}).lean();
-     res.status(200).json({myRecipe})
+    const userId = req.params.id;
+    const favoriteSet = await buildFavoriteSet(userId);
+    const myRecipe = await recipeModel
+      .find({ createdBy: userId })
+      .sort({ createdAt: -1 })
+      .lean();
+    const withFavorites = applyFavoriteFlag(myRecipe, favoriteSet);
+    res.status(200).json({ myRecipe: withFavorites });
 
      
   } catch (error) {
+    if (error?.status) {
+      return res.status(error.status).json({ message: error.message });
+    }
     console.error("getRecipesController error:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
+
+export async function setFavoriteController(req, res) {
+  try {
+    const recipeId = req.params.id;
+    const userId = req.body?.userId;
+    const favorite =
+      typeof req.body?.favorite === "boolean"
+        ? req.body.favorite
+        : typeof req.body?.fav === "boolean"
+          ? req.body.fav
+          : undefined;
+
+    if (!mongoose.isValidObjectId(recipeId)) {
+      return res.status(400).json({ message: "Invalid recipe id" });
+    }
+    if (!mongoose.isValidObjectId(userId)) {
+      return res.status(400).json({ message: "Invalid user id" });
+    }
+    if (favorite === undefined) {
+      return res.status(400).json({ message: "Favorite flag is required" });
+    }
+
+    const [user, recipe] = await Promise.all([
+      userModel.findById(userId).select("_id favorites"),
+      recipeModel.findById(recipeId).select("_id"),
+    ]);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    if (!recipe) {
+      return res.status(404).json({ message: "Recipe not found" });
+    }
+
+    const update = favorite
+      ? { $addToSet: { favorites: recipe._id } }
+      : { $pull: { favorites: recipe._id } };
+    await userModel.updateOne({ _id: userId }, update);
+
+    return res.status(200).json({ favorite });
+  } catch (error) {
+    console.error("setFavoriteController error:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 }

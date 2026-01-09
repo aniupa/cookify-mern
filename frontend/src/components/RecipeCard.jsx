@@ -4,10 +4,10 @@ import styles from "../cssFiles/cards.module.css";
 import { useDispatch } from "react-redux";
 import { asyncAddToFavorite } from "../store/actions/recipeAction";
 import { toast } from "react-toastify";
-import { useEffect } from "react";
 import PixelTransition from '../utils/animations/PixelTransition/PixelTransition';
-const RecipeCard = ({ item }) => {
+const RecipeCard = ({ item, showOwnerActions = false, onEdit, onDelete }) => {
   const nav = useNavigate();
+  const currentUserId = useSelector((state) => state?.users?.data?.data?.user?._id);
 
   const {
     _id,
@@ -16,14 +16,23 @@ const RecipeCard = ({ item }) => {
     description,
     time = "30 min",
     difficulty = "Easy",
-    fav,
+    fav = false,
     onView,
     onToggleFavorite,
   } = item;
   const dispatch = useDispatch();
-  const recipe = useSelector((state) => state.recipes.data);
-  const filteredData = recipe?.find((f) => f._id == _id);
-
+  const ownerId = item?.createdBy?._id ?? item?.createdBy;
+  const isOwner = currentUserId && String(ownerId) === String(currentUserId);
+  const parsedTime = Number(time);
+  const displayTime = Number.isFinite(parsedTime)
+    ? `${parsedTime} min`
+    : time
+      ? time
+      : "5 min";
+  const displayDifficulty =
+    typeof difficulty === "string" && difficulty
+      ? difficulty[0].toUpperCase() + difficulty.slice(1)
+      : difficulty || "Easy";
   const favorite = () => {
     const favResult = !fav;
 
@@ -94,17 +103,30 @@ const RecipeCard = ({ item }) => {
 
         {/* Meta Info */}
         <div className={styles.meta}>
-          <span>⏱ {time ? time : "5min"}</span>
-          <span>⭐ {difficulty ? difficulty : 5}</span>
+          <span>⏱ {displayTime}</span>
+          <span>⭐ {displayDifficulty}</span>
         </div>
 
         {/* CTA */}
-        <button className={styles.viewBtn} onClick={viewRecipe}>
-          View Recipe
-        </button>
+        <div className={styles.actions}>
+          <button className={styles.viewBtn} onClick={viewRecipe}>
+            View Recipe
+          </button>
+          {showOwnerActions && isOwner ? (
+            <div className={styles.ownerActions}>
+              <button className={styles.editBtn} onClick={onEdit}>
+                Edit
+              </button>
+              <button className={styles.deleteBtn} onClick={onDelete}>
+                Delete
+              </button>
+            </div>
+          ) : null}
+        </div>
       </div>
     </div>
   );
 };
 
 export default RecipeCard;
+

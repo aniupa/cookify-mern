@@ -30,6 +30,15 @@ const recipeSchema = new mongoose.Schema(
       type: String,
       required: [true, "instructions are required"],
     },
+    time: { type: Number, min: 1 },
+    difficulty: {
+      type: String,
+      trim: true,
+      lowercase: true,
+      enum: ["easy", "medium", "hard"],
+    },
+    isVeg: { type: Boolean },
+    isTrending: { type: Boolean },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",

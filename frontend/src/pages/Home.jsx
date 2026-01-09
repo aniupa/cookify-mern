@@ -25,8 +25,10 @@ const Home = () => {
   const containerRef = useRef(null);
   const userId = useSelector((state) => state?.users?.data?.data?.user?._id);
   useEffect(() => {
-    dispatch(asyncGetLimitRecipies(6));
-  }, [dispatch]);
+    if (userId) {
+      dispatch(asyncGetLimitRecipies(6));
+    }
+  }, [dispatch, userId]);
   // const { recipe, fetchRecipes, isLoading } = useInfiniteRecipe();
   const recipe = useSelector((state) => state.recipes.data);
   const recipeList = Array.isArray(recipe) ? recipe.slice(0, 6) : [];
