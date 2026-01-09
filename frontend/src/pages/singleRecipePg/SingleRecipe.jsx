@@ -129,7 +129,7 @@ const SingleRecipe = () => {
           <div className={styles.box}>
             <h3>Ingredients</h3>
             <ul>
-              {filteredData.ingredients.split("\n").map((item, i) => (
+              {filteredData.ingredients.map((item, i) => (
                 <li key={i}>{item}</li>
               ))}
             </ul>
@@ -139,7 +139,7 @@ const SingleRecipe = () => {
           <div className={styles.box}>
             <h3>Instructions</h3>
             <ol>
-              {filteredData.instructions.split("\n").map((step, i) => (
+              {filteredData.instructions.map((step, i) => (
                 <li key={i}>{step}</li>
               ))}
             </ol>
