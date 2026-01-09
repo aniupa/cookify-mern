@@ -4,18 +4,20 @@ import styles from "../cssFiles/cards.module.css";
 import { useDispatch } from "react-redux";
 import { asyncAddToFavorite } from "../store/actions/recipeAction";
 import { toast } from "react-toastify";
-import PixelTransition from '../utils/animations/PixelTransition/PixelTransition';
+import PixelTransition from "../utils/animations/PixelTransition/PixelTransition";
 const RecipeCard = ({ item, showOwnerActions = false, onEdit, onDelete }) => {
   const nav = useNavigate();
-  const currentUserId = useSelector((state) => state?.users?.data?.data?.user?._id);
+  const currentUserId = useSelector(
+    (state) => state?.users?.data?.data?.user?._id
+  );
 
   const {
     _id,
     imageUrl,
     title,
     description,
-    time = "30 min",
-    difficulty = "Easy",
+    time = 30,
+    difficulty = "easy",
     fav = false,
     onView,
     onToggleFavorite,
@@ -24,15 +26,27 @@ const RecipeCard = ({ item, showOwnerActions = false, onEdit, onDelete }) => {
   const ownerId = item?.createdBy?._id ?? item?.createdBy;
   const isOwner = currentUserId && String(ownerId) === String(currentUserId);
   const parsedTime = Number(time);
-  const displayTime = Number.isFinite(parsedTime)
-    ? `${parsedTime} min`
-    : time
-      ? time
-      : "5 min";
-  const displayDifficulty =
-    typeof difficulty === "string" && difficulty
-      ? difficulty[0].toUpperCase() + difficulty.slice(1)
-      : difficulty || "Easy";
+  const displayTime = Number.isFinite(parsedTime);
+  const displayDifficulty = () => {
+    if (parsedTime < 30) {
+      return 'Easy';
+    }
+    if (parsedTime >= 30 && parsedTime < 60) {
+      return "Medium";
+    } else {
+      return `Hard`;
+    }
+  };
+  const stars = () => {
+    if (parsedTime < 30) {
+      return "⭐";
+    }
+    if (parsedTime >= 30 && parsedTime < 60) {
+      return "⭐⭐";
+    } else {
+      return `⭐⭐⭐`;
+    }
+  };
   const favorite = () => {
     const favResult = !fav;
 
@@ -50,38 +64,40 @@ const RecipeCard = ({ item, showOwnerActions = false, onEdit, onDelete }) => {
   return (
     <div className={styles.card}>
       {/* Image Section */}
-      
+
       <div className={styles.imageWrapper}>
-      
         <PixelTransition
-  firstContent={
-    <img
-      src={imageUrl}
-      alt={title}
-      style={{ width: "100%", height: "100%", objectFit: "cover" }}
-    />
-  }
-  secondContent={
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        display: "grid",
-        placeItems: "center",
-        backgroundColor: "#111"
-      }}
-    >
-      <p style={{ fontWeight: 900, fontSize: "3rem", color: "#ffffff" }}>{title}</p>
-    </div>
-  }
-  
-  gridSize={12}
-  pixelColor='#ffffff'
-  once={false}
-  animationStepDuration={0.4}
-  className="custom-pixel-card"
-/>
-<button
+          firstContent={
+            <img
+              src={imageUrl}
+              alt={title}
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            />
+          }
+          secondContent={
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                display: "grid",
+                placeItems: "center",
+                backgroundColor: "#111",
+              }}
+            >
+              <p
+                style={{ fontWeight: 900, fontSize: "3rem", color: "#ffffff" }}
+              >
+                {title}
+              </p>
+            </div>
+          }
+          gridSize={12}
+          pixelColor="#ffffff"
+          once={false}
+          animationStepDuration={0.4}
+          className="custom-pixel-card"
+        />
+        <button
           className={`${styles.favoriteBtn} ${
             fav ? styles.active : styles.unActive
           }`}
@@ -91,8 +107,6 @@ const RecipeCard = ({ item, showOwnerActions = false, onEdit, onDelete }) => {
           ♥
         </button>
         {/* <img src={imageUrl} alt={title} /> */}
-
-        
       </div>
 
       {/* Content */}
@@ -103,8 +117,12 @@ const RecipeCard = ({ item, showOwnerActions = false, onEdit, onDelete }) => {
 
         {/* Meta Info */}
         <div className={styles.meta}>
-          <span>⏱ {displayTime}</span>
-          <span>⭐ {displayDifficulty}</span>
+          <span>⏱ {parsedTime} mins </span>
+          <span>
+            {" "}
+            {stars()}
+            {displayDifficulty()}
+          </span>
         </div>
 
         {/* CTA */}
@@ -129,4 +147,3 @@ const RecipeCard = ({ item, showOwnerActions = false, onEdit, onDelete }) => {
 };
 
 export default RecipeCard;
-
