@@ -2,9 +2,27 @@ import useRecipeForm from "../../components/useRecipeForm";
 import React, { useState } from "react";
 import styles from "./CreateRecipe.module.css";
 
-import { useForm } from "react-hook-form";
+import { useForm,useFieldArray } from "react-hook-form";
 const CreateRecipe = () => {
- const { register, handleSubmit, formState: { errors } } = useForm();
+ const { register, handleSubmit,control, formState: { errors } } = useForm({ingredients:[''],instructions:['']});
+ const {
+    fields: ingredientFields,
+    append: addIngredient,
+    remove: removeIngredient,
+  } = useFieldArray({
+    control,
+    name: "ingredients",
+  });
+
+  const {
+    fields: instructionFields,
+    append: addStep,
+    remove: removeStep,
+  } = useFieldArray({
+    control,
+    name: "instructions",
+  });
+
  const [loading, setLoading] = useState(false);
   const {createRecipeHandler}=useRecipeForm();
   
@@ -62,25 +80,32 @@ const CreateRecipe = () => {
 
         {/* Ingredients */}
         <label>Ingredients</label>
-        <textarea
-          name="ingredients"
-          placeholder={`• Lasagna sheets\n• Cheese\n• Tomato sauce`}
-          rows={4}
-          {...register('ingredients')}
-          // onChange={handleChange}
-          required
-        />
+       
+         {ingredientFields.map((item, index) => (
+        <div key={item.id}>
+          <input
+            {...register(`ingredients.${index}`)}
+            placeholder={`Ingredient ${index + 1}`}
+          />
+          <button type="button" onClick={() => removeIngredient(index)}>❌</button>
+        </div>
+      ))}
+      <button type="button" onClick={() => addIngredient("")}>+ Add Ingredient</button>
+
 
         {/* Instructions */}
         <label>Cooking Instructions</label>
-        <textarea
-          name="instructions"
-          placeholder={`1. Preheat oven to 180°C\n2. Prepare the sauce\n3. Layer ingredients`}
-          rows={5}
-          {...register('instructions')}
-          // onChange={handleChange}
-          required
-        />
+       
+        {instructionFields.map((item, index) => (
+        <div key={item.id}>
+          <input
+            {...register(`instructions.${index}`)}
+            placeholder={`Step ${index + 1}`}
+          />
+          <button type="button" onClick={() => removeStep(index)}>❌</button>
+        </div>
+      ))}
+      <button type="button" onClick={() => addStep("")}>+ Add Step</button>
 
         <label>Time (minutes)</label>
         <input
@@ -91,14 +116,7 @@ const CreateRecipe = () => {
           {...register("time")}
         />
 
-        <label>Difficulty</label>
-        <select name="difficulty" {...register("difficulty")}>
-          <option value="">Select difficulty</option>
-          <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hard">Hard</option>
-        </select>
-
+        
         <label>Veg Option</label>
         <select name="isVeg" {...register("isVeg")}>
           <option value="">Select</option>
@@ -106,15 +124,10 @@ const CreateRecipe = () => {
           <option value="false">Non-Veg</option>
         </select>
 
-        <label>Trending</label>
-        <select name="isTrending" {...register("isTrending")}>
-          <option value="">Select</option>
-          <option value="true">Trending</option>
-          <option value="false">Not Trending</option>
-        </select>
+        
 
         <button type="submit" onClick={()=>{setLoading(true);}} >
-          {/* <button type="submit" disabled={loading} ? dont knoow its meaning></button> */}
+        
           {loading ? "Creating..." : "Create Recipe"}
         </button>
       </form>

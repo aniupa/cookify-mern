@@ -23,6 +23,8 @@ export default function useRecipeForm() {
       if (!userId) return;
       dispatch(asyncAddRecipeActions(data, userId));
       navigate(`/user/${userId}/recipes/`);
+      // console.log(data);
+      
     },
     [dispatch, navigate, userId]
   );
