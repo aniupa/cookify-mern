@@ -66,7 +66,7 @@ export const createRecipe = async ({ userId, recipe }) => {
     instructions,
     videoUrl,
     time,
-    difficulty,
+    // difficulty,
     isVeg,
     isTrending,
   } = recipePayload;
@@ -79,9 +79,9 @@ export const createRecipe = async ({ userId, recipe }) => {
     instructions,
     videoUrl,
     time: parseNumber(time),
-    difficulty: normalizeDifficulty(difficulty),
+    difficulty: normalizeDifficulty(time),
     isVeg: parseBoolean(isVeg),
-    isTrending: parseBoolean(isTrending),
+    // isTrending: parseBoolean(isTrending),
     createdBy: userId,
   });
 

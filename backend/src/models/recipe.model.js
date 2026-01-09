@@ -35,10 +35,10 @@ const recipeSchema = new mongoose.Schema(
       type: String,
       trim: true,
       lowercase: true,
-      enum: ["easy", "medium", "hard"],
+      // enum: ["easy", "medium", "hard"],
     },
     isVeg: { type: Boolean },
-    isTrending: { type: Boolean },
+    // isTrending: { type: Boolean },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
