@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "../utils/axios";
 import { asyncUpdateUser } from "../store/actions/userAction";
 import formStyles from "../styles/formStyles.module.css";
-import { asyncGetFavoritesActions } from "../store/actions/recipeAction";
+import { asyncGetFavoritesActions ,asyncGetMyRecipeActions} from "../store/actions/recipeAction";
 
 const Profile = () => {
   // const [activeTab, setActiveTab] = useState("recipes");
@@ -46,12 +46,13 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    dispatch(asyncGetMyRecipeActions(currentUser._id));
     reset({
       username: currentUser?.username || "",
       email: currentUser?.email || "",
       password: "",
     });
-  }, [currentUser, reset]);
+  }, [currentUser,userRecipes, reset]);
 
   useEffect(() => {
     if (currentUser?._id) {
