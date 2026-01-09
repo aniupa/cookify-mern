@@ -1,43 +1,20 @@
 import { recipeModel } from "../models/recipe.model.js";
 import { userModel } from "../models/user.model.js";
-import mongoose from "mongoose";
-
-const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-
-const parseBoolean = (value) => {
-  if (typeof value === "boolean") return value;
-  if (typeof value === "string") {
-    const normalized = value.trim().toLowerCase();
-    if (normalized === "true") return true;
-    if (normalized === "false") return false;
-  }
-  return undefined;
-};
-
-const parseNumber = (value) => {
-  if (value === "" || value === null || value === undefined) return undefined;
-  const parsed = Number(value);
-  return Number.isFinite(parsed) ? parsed : undefined;
-};
-
-const normalizeDifficulty = (value) => {
-  if (typeof value !== "string") return undefined;
-  const normalized = value.trim().toLowerCase();
-  return normalized ? normalized : undefined;
-};
+import {
+  assertObjectId,
+  createHttpError,
+  escapeRegex,
+  normalizeDifficulty,
+  parseBoolean,
+  parseNumber,
+} from "../utils/validation.js";
 
 const buildFavoriteSet = async (userId) => {
   if (!userId) return null;
-  if (!mongoose.isValidObjectId(userId)) {
-    const error = new Error("Invalid user id");
-    error.status = 400;
-    throw error;
-  }
+  assertObjectId(userId, "Invalid user id");
   const user = await userModel.findById(userId).select("favorites").lean();
   if (!user) {
-    const error = new Error("User not found");
-    error.status = 404;
-    throw error;
+    throw createHttpError(404, "User not found");
   }
   return new Set((user.favorites || []).map((id) => String(id)));
 };
