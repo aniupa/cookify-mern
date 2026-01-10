@@ -119,8 +119,6 @@ const Home = () => {
             falloff="linear"
           />
         </div>
-        {/* <VariableProximity label={""}/> */}
-        {/* <p></p> */}
       </div>
 
       <section className={styles.recipesSection}>

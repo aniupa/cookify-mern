@@ -119,7 +119,7 @@ const RecipeCard = ({ item, showOwnerActions = false, onEdit, onDelete }) => {
 
         {/* Meta Info */}
         <div className={styles.meta}>
-          <span>Time {displayTime} mins</span>
+          <span>⏱️ {displayTime} mins</span>
           <span>
             {" "}
             {stars()}
