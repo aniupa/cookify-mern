@@ -1,4 +1,4 @@
-@import '../../styles/mixins';
+@use "../../styles/mixins" as mixins;
 .videosPage {
   padding: 2.5rem 1.25rem 3rem;
   background: var(--tertiary);
@@ -191,7 +191,7 @@
   }
 
   .meta {
-    @include flex(space-between);
+    @include mixins.flex(space-between);
     font-size: 0.82rem;
     color: var(--muted);
   }
@@ -257,7 +257,7 @@
     position: absolute;
     inset: 0;
     // display: grid;
-    @include flex();
+    @include mixins.flex();
     // place-items: center;
     font-size: 2rem;
     color: var(--white);
@@ -294,7 +294,7 @@
 }
 
 /* RESPONSIVE */
-@include responsive(tablet){
+@include mixins.responsive(tablet){
      .videoGrid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -310,7 +310,7 @@
     position: static;
   }
 }
-@include responsive(mobile){
+@include mixins.responsive(mobile){
      .videoGrid {
     grid-template-columns: 1fr;
     gap: 1rem;
