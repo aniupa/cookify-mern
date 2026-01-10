@@ -125,7 +125,7 @@ const RecipeCard = ({ item, showOwnerActions = false, onEdit, onDelete }) => {
             {stars()}
             {displayDifficulty()}
           </span>
-          <span className={styles.views}>Views {viewCount}</span>
+          <span className={styles.views}>👁️ {viewCount}</span>
         </div>
 
         {/* CTA */}

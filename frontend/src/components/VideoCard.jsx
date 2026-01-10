@@ -66,13 +66,13 @@ const VideoCard = ({ video }) => {
         )}
 
         <span className={styles.duration}>{duration}</span>
-        <span className={styles.playIcon}>Play</span>
+        <span className={styles.playIcon}>▶</span>
       </div>
 
       <h3>{title}</h3>
 
       <div className={styles.meta}>
-        <span>Views {viewCount}</span>
+        <span>👁️ {viewCount}</span>
       </div>
 
       <div className={styles.actions}>
