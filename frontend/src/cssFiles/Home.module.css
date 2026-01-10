@@ -169,8 +169,8 @@
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
-  gap: 0;
-  flex-wrap: nowrap;
+  gap: 0.6rem;
+  flex-wrap: wrap;
   font-size: 0.75rem;
   color: var(--primary);
   font-weight: 600;

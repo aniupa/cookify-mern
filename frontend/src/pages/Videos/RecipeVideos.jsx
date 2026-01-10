@@ -20,6 +20,10 @@ const RecipeVideos = () => {
   const maxTime = searchParams.get("maxTime");
   const difficulty = searchParams.get("difficulty");
   const trending = searchParams.get("trending");
+  const isUnderTen = maxTime === "10";
+  const isVeg = veg === "true";
+  const isNonVeg = veg === "false";
+  const isTrending = trending === "true";
 
   const renderVideo = videos?.map((video, i) => {
     return <VideoCard key={video?._id || i} video={video} />;
@@ -40,6 +44,7 @@ const RecipeVideos = () => {
     else params[key] = value;
     setSearchParams(params);
   };
+  const clearFilters = () => setSearchParams({});
 
   // const viewRecipe = () => {
   //   // navigate(`/recipes/${videos.recipeId}`);
@@ -78,29 +83,47 @@ const RecipeVideos = () => {
         <input
           type="text"
           placeholder="Search video..."
+          value={search ?? ""}
           onChange={(e) => updateFilter("search", e.target.value)}
         />
 
-        <button onClick={() => updateFilter("maxTime", "10")}>
-          ⏱ Under 10 min
+        <button
+          className={isUnderTen ? styles.activeFilter : ""}
+          onClick={() => updateFilter("maxTime", isUnderTen ? "" : "10")}
+        >
+          Under 10 min
         </button>
 
-        <button onClick={() => updateFilter("veg", "true")}>🌱 Veg</button>
-        <button onClick={() => updateFilter("veg", "false")}>🍗 Non-Veg</button>
+        <button
+          className={isVeg ? styles.activeFilter : ""}
+          onClick={() => updateFilter("veg", isVeg ? "" : "true")}
+        >
+          Veg
+        </button>
+        <button
+          className={isNonVeg ? styles.activeFilter : ""}
+          onClick={() => updateFilter("veg", isNonVeg ? "" : "false")}
+        >
+          Non-Veg
+        </button>
 
-        <button onClick={() => updateFilter("trending", "true")}>
-          🔥 Trending
+        <button
+          className={isTrending ? styles.activeFilter : ""}
+          onClick={() => updateFilter("trending", isTrending ? "" : "true")}
+        >
+          Trending
         </button>
 
         <select
           onChange={(e) => updateFilter("difficulty", e.target.value)}
-          defaultValue=""
+          value={difficulty ?? ""}
         >
           <option value="">Difficulty</option>
           <option value="easy">Easy</option>
           <option value="medium">Medium</option>
           <option value="hard">Hard</option>
         </select>
+        <button onClick={clearFilters}>Clear</button>
       </div>
       {/* videoSkeleton */}
       {/* VIDEO GRID */}

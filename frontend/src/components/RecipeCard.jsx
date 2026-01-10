@@ -19,6 +19,7 @@ const RecipeCard = ({ item, showOwnerActions = false, onEdit, onDelete }) => {
     time = 30,
     difficulty = "easy",
     fav = false,
+    views,
     onView,
     onToggleFavorite,
   } = item;
@@ -26,22 +27,22 @@ const RecipeCard = ({ item, showOwnerActions = false, onEdit, onDelete }) => {
   const ownerId = item?.createdBy?._id ?? item?.createdBy;
   const isOwner = currentUserId && String(ownerId) === String(currentUserId);
   const parsedTime = Number(time);
-  const displayTime = Number.isFinite(parsedTime);
+  const displayTime = Number.isFinite(parsedTime) ? parsedTime : 0;
   const displayDifficulty = () => {
-    if (parsedTime < 30) {
+    if (displayTime < 30) {
       return 'Easy';
     }
-    if (parsedTime >= 30 && parsedTime < 60) {
+    if (displayTime >= 30 && displayTime < 60) {
       return "Medium";
     } else {
       return `Hard`;
     }
   };
   const stars = () => {
-    if (parsedTime < 30) {
+    if (displayTime < 30) {
       return "⭐";
     }
-    if (parsedTime >= 30 && parsedTime < 60) {
+    if (displayTime >= 30 && displayTime < 60) {
       return "⭐⭐";
     } else {
       return `⭐⭐⭐`;
@@ -61,6 +62,7 @@ const RecipeCard = ({ item, showOwnerActions = false, onEdit, onDelete }) => {
   const viewRecipe = () => {
     nav(`/recipes/details/${_id}`);
   };
+  const viewCount = Number.isFinite(Number(views)) ? Number(views) : 0;
   return (
     <div className={styles.card}>
       {/* Image Section */}
@@ -117,12 +119,13 @@ const RecipeCard = ({ item, showOwnerActions = false, onEdit, onDelete }) => {
 
         {/* Meta Info */}
         <div className={styles.meta}>
-          <span>⏱ {parsedTime} mins </span>
+          <span>Time {displayTime} mins</span>
           <span>
             {" "}
             {stars()}
             {displayDifficulty()}
           </span>
+          <span className={styles.views}>Views {viewCount}</span>
         </div>
 
         {/* CTA */}

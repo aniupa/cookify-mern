@@ -5,6 +5,7 @@ import {
   loadRecipe,
   toggleFavoriteLocal,
   deleteRecipe,
+  updateRecipeViewsLocal,
 } from "../reducers/recipeSlice";
 import { loadFavorites } from "../reducers/FavoriteSlice";
 export const asyncGetRecipeActions = (userId) => async (dispatch, getState) => {
@@ -130,5 +131,16 @@ export const asyncDeleteRecipeAction = (id) => async (dispatch, getState) => {
   } catch (error) {
     console.log(error);
     toast.error("error while deleting recipe");
+  }
+};
+
+export const asyncIncrementRecipeViews = (id) => async (dispatch) => {
+  try {
+    if (!id) return;
+    const res = await axios.post(`/recipes/${id}/views`);
+    const nextViews = res?.data?.views;
+    dispatch(updateRecipeViewsLocal({ id, views: nextViews }));
+  } catch (error) {
+    console.log(error);
   }
 };

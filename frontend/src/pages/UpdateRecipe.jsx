@@ -1,6 +1,6 @@
 import useRecipeForm from "../components/useRecipeForm";
-import { useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { useFieldArray, useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -16,7 +16,7 @@ const UpdateRecipe = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    control,
     reset,
   } = useForm({
     defaultValues: {
@@ -24,110 +24,163 @@ const UpdateRecipe = () => {
       title: "",
       videoUrl: "",
       description: "",
-      ingredients: "",
-      instructions: "",
+      ingredients: [""],
+      instructions: [""],
       time: "",
-      difficulty: "",
       isVeg: "",
-      isTrending: "",
     },
   });
 
+  const {
+    fields: ingredientFields,
+    append: addIngredient,
+    remove: removeIngredient,
+  } = useFieldArray({
+    control,
+    name: "ingredients",
+  });
+
+  const {
+    fields: instructionFields,
+    append: addStep,
+    remove: removeStep,
+  } = useFieldArray({
+    control,
+    name: "instructions",
+  });
+
   const { updateRecipeHandler } = useRecipeForm();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!currentRecipe) return;
+    const normalizeList = (value) => {
+      if (Array.isArray(value)) {
+        return value.length ? value : [""];
+      }
+      if (typeof value === "string") {
+        const items = value
+          .split("\n")
+          .map((item) => item.trim())
+          .filter(Boolean);
+        return items.length ? items : [""];
+      }
+      return [""];
+    };
+
     reset({
       imageUrl: currentRecipe.imageUrl || "",
       title: currentRecipe.title || "",
       videoUrl: currentRecipe.videoUrl || "",
       description: currentRecipe.description || "",
-      ingredients: currentRecipe.ingredients || "",
-      instructions: currentRecipe.instructions || "",
+      ingredients: normalizeList(currentRecipe.ingredients),
+      instructions: normalizeList(currentRecipe.instructions),
       time: currentRecipe.time ?? "",
-      difficulty: currentRecipe.difficulty ?? "",
       isVeg:
         typeof currentRecipe.isVeg === "boolean"
           ? String(currentRecipe.isVeg)
-          : "",
-      isTrending:
-        typeof currentRecipe.isTrending === "boolean"
-          ? String(currentRecipe.isTrending)
           : "",
     });
   }, [currentRecipe, reset]);
 
   return (
     <section className={styles.page}>
-      <form className={styles.card} onSubmit={handleSubmit(updateRecipeHandler)}>
+      <form
+        className={styles.card}
+        onSubmit={handleSubmit((data) => {
+          setLoading(true);
+          updateRecipeHandler(data);
+        })}
+      >
         <h1>Update Recipe</h1>
+        <p className={styles.subtitle}>
+          Refresh your recipe details for the Cookify community
+        </p>
 
         <label>Recipe Image URL</label>
         <input
           type="text"
+          name="imageUrl"
           {...register("imageUrl")}
           placeholder="https://example.com/recipe.jpg"
+          required
         />
 
         <label>Recipe Title</label>
         <input
           type="text"
-          {...register("title", { required: true })}
-          placeholder="recipe title"
+          name="title"
+          {...register("title")}
+          placeholder="Cheesy Veg Lasagna"
+          required
         />
-        {errors.title && <p style={{ color: "red" }}>Title is required</p>}
 
         <label>Video URL (optional)</label>
         <input
           type="text"
+          name="videoUrl"
           {...register("videoUrl")}
           placeholder="https://youtube.com/..."
         />
 
         <label>Short Description</label>
         <textarea
+          name="description"
           {...register("description")}
-          placeholder="enter the description"
+          placeholder="A rich and creamy vegetarian lasagna..."
+          rows={3}
+          required
         ></textarea>
 
         <label>Ingredients</label>
-        <textarea
-          {...register("ingredients")}
-          placeholder="enter the ingredients"
-        ></textarea>
+        {ingredientFields.map((item, index) => (
+          <div key={item.id}>
+            <input
+              {...register(`ingredients.${index}`)}
+              placeholder={`Ingredient ${index + 1}`}
+            />
+            <button type="button" onClick={() => removeIngredient(index)}>
+              Remove
+            </button>
+          </div>
+        ))}
+        <button type="button" onClick={() => addIngredient("")}>
+          + Add Ingredient
+        </button>
 
         <label>Cooking Instructions</label>
-        <textarea
-          {...register("instructions")}
-          placeholder="enter the instructions to make the recipe"
-        ></textarea>
+        {instructionFields.map((item, index) => (
+          <div key={item.id}>
+            <input
+              {...register(`instructions.${index}`)}
+              placeholder={`Step ${index + 1}`}
+            />
+            <button type="button" onClick={() => removeStep(index)}>
+              Remove
+            </button>
+          </div>
+        ))}
+        <button type="button" onClick={() => addStep("")}>
+          + Add Step
+        </button>
 
         <label>Time (minutes)</label>
-        <input type="number" {...register("time")} placeholder="30" min="1" />
-
-        <label>Difficulty</label>
-        <select {...register("difficulty")}>
-          <option value="">Select difficulty</option>
-          <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hard">Hard</option>
-        </select>
+        <input
+          type="number"
+          name="time"
+          placeholder="30"
+          min="1"
+          {...register("time")}
+        />
 
         <label>Veg Option</label>
-        <select {...register("isVeg")}>
+        <select name="isVeg" {...register("isVeg")}>
           <option value="">Select</option>
           <option value="true">Veg</option>
           <option value="false">Non-Veg</option>
         </select>
 
-        <label>Trending</label>
-        <select {...register("isTrending")}>
-          <option value="">Select</option>
-          <option value="true">Trending</option>
-          <option value="false">Not Trending</option>
-        </select>
-
-        <button type="submit">Update Recipe</button>
+        <button type="submit">{loading ? "Updating..." : "Update Recipe"}</button>
       </form>
     </section>
   );

@@ -9,6 +9,30 @@ import {
   parseNumber,
 } from "../utils/validation.js";
 
+const normalizeStringList = (value) => {
+  if (Array.isArray(value)) {
+    const items = value
+      .map((item) => String(item ?? "").trim())
+      .filter(Boolean);
+    return items;
+  }
+  if (typeof value === "string") {
+    const items = value
+      .split("\n")
+      .map((item) => item.trim())
+      .filter(Boolean);
+    return items;
+  }
+  return [];
+};
+
+const normalizeRecipeForClient = (recipe) => ({
+  ...recipe,
+  ingredients: normalizeStringList(recipe?.ingredients),
+  instructions: normalizeStringList(recipe?.instructions),
+  views: Number.isFinite(Number(recipe?.views)) ? Number(recipe.views) : 0,
+});
+
 const buildFavoriteSet = async (userId) => {
   if (!userId) return null;
   assertObjectId(userId, "Invalid user id");
@@ -47,9 +71,10 @@ export const getRecipes = async ({ limit, after, userId }) => {
   const hasMore = docs.length > parsedLimit;
   const items = hasMore ? docs.slice(0, parsedLimit) : docs;
   const withFavorites = applyFavoriteFlag(items, favoriteSet);
+  const normalized = withFavorites.map(normalizeRecipeForClient);
 
   return {
-    recipes: withFavorites,
+    recipes: normalized,
     hasMore,
     nextCursor: items.length ? String(items[items.length - 1]._id) : null,
   };
@@ -66,22 +91,19 @@ export const createRecipe = async ({ userId, recipe }) => {
     instructions,
     videoUrl,
     time,
-    // difficulty,
     isVeg,
-    isTrending,
   } = recipePayload;
 
   const newRecipe = await recipeModel.create({
     title,
     imageUrl,
     description,
-    ingredients,
-    instructions,
+    ingredients: normalizeStringList(ingredients),
+    instructions: normalizeStringList(instructions),
     videoUrl,
     time: parseNumber(time),
     difficulty: normalizeDifficulty(time),
     isVeg: parseBoolean(isVeg),
-    // isTrending: parseBoolean(isTrending),
     createdBy: userId,
   });
 
@@ -125,7 +147,6 @@ export const updateRecipe = async ({ id, userId, data }) => {
     "time",
     "difficulty",
     "isVeg",
-    "isTrending",
   ];
 
   const updates = {};
@@ -142,6 +163,24 @@ export const updateRecipe = async ({ id, userId, data }) => {
       delete updates.time;
     } else {
       updates.time = parsedTime;
+    }
+  }
+
+  if (updates.ingredients !== undefined) {
+    const normalizedIngredients = normalizeStringList(updates.ingredients);
+    if (normalizedIngredients.length === 0) {
+      delete updates.ingredients;
+    } else {
+      updates.ingredients = normalizedIngredients;
+    }
+  }
+
+  if (updates.instructions !== undefined) {
+    const normalizedInstructions = normalizeStringList(updates.instructions);
+    if (normalizedInstructions.length === 0) {
+      delete updates.instructions;
+    } else {
+      updates.instructions = normalizedInstructions;
     }
   }
 
@@ -163,15 +202,6 @@ export const updateRecipe = async ({ id, userId, data }) => {
     }
   }
 
-  if (updates.isTrending !== undefined) {
-    const parsedIsTrending = parseBoolean(updates.isTrending);
-    if (parsedIsTrending === undefined) {
-      delete updates.isTrending;
-    } else {
-      updates.isTrending = parsedIsTrending;
-    }
-  }
-
   if (Object.keys(updates).length === 0) {
     throw createHttpError(400, "No valid fields to update");
   }
@@ -189,7 +219,19 @@ export const getMyRecipes = async ({ userId }) => {
     .find({ createdBy: userId })
     .sort({ createdAt: -1 })
     .lean();
-  return applyFavoriteFlag(myRecipe, favoriteSet);
+  const withFavorites = applyFavoriteFlag(myRecipe, favoriteSet);
+  return withFavorites.map(normalizeRecipeForClient);
+};
+
+export const incrementRecipeViews = async ({ id }) => {
+  assertObjectId(id, "Invalid id");
+  const recipe = await recipeModel
+    .findByIdAndUpdate(id, { $inc: { views: 1 } }, { new: true })
+    .lean();
+  if (!recipe) {
+    throw createHttpError(404, "Recipe not found");
+  }
+  return normalizeRecipeForClient(recipe);
 };
 
 export const setFavorite = async ({ recipeId, userId, favorite, fav }) => {

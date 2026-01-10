@@ -121,9 +121,16 @@
 /* META */
 .meta {
   @include flex(space-between);
+  gap: 0.6rem;
+  flex-wrap: wrap;
   font-size: 0.8rem;
   color: var(--muted);
   margin-top: 0.2rem;
+}
+
+.views {
+  font-weight: 600;
+  color: var(--primary);
 }
 
 /* BUTTON */

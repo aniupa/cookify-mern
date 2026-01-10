@@ -3,6 +3,7 @@ import {
   deleteRecipe,
   getMyRecipes,
   getRecipes,
+  incrementRecipeViews,
   setFavorite,
   updateRecipe,
 } from "../services/recipes.service.js";
@@ -93,5 +94,14 @@ export async function setFavoriteController(req, res) {
     return res.status(200).json({ favorite: result.favorite });
   } catch (error) {
     return handleServiceError(res, error, "setFavoriteController error:");
+  }
+}
+
+export async function incrementRecipeViewsController(req, res) {
+  try {
+    const recipe = await incrementRecipeViews({ id: req.params.id });
+    return res.status(200).json({ id: recipe._id, views: recipe.views });
+  } catch (error) {
+    return handleServiceError(res, error, "incrementRecipeViewsController error:");
   }
 }

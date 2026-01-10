@@ -9,6 +9,28 @@ import {
   parseNumber,
 } from "../utils/validation.js";
 
+const normalizeStringList = (value) => {
+  if (Array.isArray(value)) {
+    return value
+      .map((item) => String(item ?? "").trim())
+      .filter(Boolean);
+  }
+  if (typeof value === "string") {
+    return value
+      .split("\n")
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+  return [];
+};
+
+const normalizeVideoForClient = (video) => ({
+  ...video,
+  ingredients: normalizeStringList(video?.ingredients),
+  instructions: normalizeStringList(video?.instructions),
+  views: Number.isFinite(Number(video?.views)) ? Number(video.views) : 0,
+});
+
 const buildFavoriteSet = async (userId) => {
   if (!userId) return null;
   assertObjectId(userId, "Invalid user id");
@@ -54,14 +76,12 @@ export async function getVideosController(req, res) {
     }
 
     const parsedTrending = parseBoolean(trending);
-    if (parsedTrending !== undefined) {
-      query.isTrending = parsedTrending;
-    }
+    const sort = parsedTrending ? { views: -1, createdAt: -1 } : { createdAt: -1 };
 
     const favoriteSet = await buildFavoriteSet(userId);
     const videos = await recipeModel
       .find(query)
-      .sort({ createdAt: -1 })
+      .sort(sort)
       .lean();
     const withFavorites = favoriteSet
       ? videos.map((video) => ({
@@ -69,8 +89,9 @@ export async function getVideosController(req, res) {
           fav: favoriteSet.has(String(video._id)),
         }))
       : videos;
+    const normalized = withFavorites.map(normalizeVideoForClient);
 
-    return res.status(200).json({ videos: withFavorites });
+    return res.status(200).json({ videos: normalized });
   } catch (error) {
     if (error?.status) {
       return res.status(error.status).json({ message: error.message });

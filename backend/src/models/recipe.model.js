@@ -25,6 +25,7 @@ const recipeSchema = new mongoose.Schema(
       required: [true, "description is required"],
       maxlength: 500,
     },
+    views: { type: Number, default: 0, min: 0 },
     ingredients: { type: [String], required: [true, "Ingredients is required"] },
     instructions: {
       type: [String],

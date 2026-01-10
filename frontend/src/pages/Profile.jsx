@@ -120,17 +120,29 @@ const Profile = () => {
 
       {/* UPDATE PROFILE */}
       <div className={styles.updateCard}>
-        <h3>Update Profile</h3>
+        <div className={styles.updateHeader}>
+          <h3>Update Profile</h3>
+          <p>Keep your details fresh for the Cookify community.</p>
+        </div>
 
         <form className={styles.form} onSubmit={handleSubmit(submitHandler)}>
-          <input type="text" placeholder="Username" {...register("username")} />
-          <input type="email" placeholder="Email" {...register("email")} />
-          <input
-            type="password"
-            placeholder="New Password"
-            autoComplete="new-password"
-            {...register("password")}
-          />
+          <label className={styles.field}>
+            <span>Username</span>
+            <input type="text" placeholder="Username" {...register("username")} />
+          </label>
+          <label className={styles.field}>
+            <span>Email</span>
+            <input type="email" placeholder="Email" {...register("email")} />
+          </label>
+          <label className={styles.field}>
+            <span>New Password</span>
+            <input
+              type="password"
+              placeholder="New Password"
+              autoComplete="new-password"
+              {...register("password")}
+            />
+          </label>
 
           <button type="submit">Save Changes</button>
         </form>

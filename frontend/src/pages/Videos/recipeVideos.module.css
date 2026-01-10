@@ -36,6 +36,7 @@
   top: 80px;
   z-index: 5;
   display: flex;
+  flex-wrap: wrap;
   gap: 0.8rem;
   padding: 1rem;
   background: var(--white);
@@ -56,6 +57,11 @@
 .filterBar button:hover {
   background: var(--pri);
   color: var(--white);
+}
+.activeFilter {
+  background: var(--pri);
+  color: var(--white);
+  border-color: var(--pri);
 }
 
 /* VIDEO GRID */

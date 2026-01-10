@@ -1,20 +1,15 @@
 
-import { href, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import styles from "../pages/Videos/recipeVideos.module.css";
+import { asyncIncrementRecipeViews } from "../store/actions/recipeAction";
 
 const VideoCard = ({ video }) => {
-  const {
-    _id,
-    imageUrl,
-    videoUrl,
-    title,
-    rating = 4,
-    views = 164,
-  } = video;
+  const { _id, imageUrl, videoUrl, title, views } = video;
 
   const navigate = useNavigate();
-  const [isHover, setIsHover] = useState(false);
+  const dispatch = useDispatch();
 
   const parsedTime = Number(video?.time);
   const duration = Number.isFinite(parsedTime) ? `${parsedTime} min` : "20 min";
@@ -28,10 +23,33 @@ const VideoCard = ({ video }) => {
 
   const videoId = getYoutubeId(videoUrl);
   const [play, setPlay] = useState(false);
+  const viewCount = Number.isFinite(Number(views)) ? Number(views) : 0;
+
+  const handleView = () => {
+    if (_id) {
+      dispatch(asyncIncrementRecipeViews(_id));
+    }
+  };
+
+  const handlePlay = () => {
+    handleView();
+    setPlay(true);
+  };
+
+  const handleWatch = (event) => {
+    event.stopPropagation();
+    handleView();
+    window.open(videoUrl, "_blank");
+  };
+
+  const handleViewRecipe = (event) => {
+    event.stopPropagation();
+    navigate(`/recipes/details/${_id}`);
+  };
   return (
     <div
       className={styles.videoCard}
-      onClick={() => setPlay(true)}
+      onClick={handlePlay}
       // onMouseEnter={() => setIsHover(true)}
       // onMouseLeave={() => setIsHover(false)}
     >
@@ -48,24 +66,19 @@ const VideoCard = ({ video }) => {
         )}
 
         <span className={styles.duration}>{duration}</span>
-        <span className={styles.playIcon}>▶</span>
+        <span className={styles.playIcon}>Play</span>
       </div>
 
       <h3>{title}</h3>
 
       <div className={styles.meta}>
-        {/* <span>⭐ {rating}</span> */}
-        <span>👁 {views}</span>
+        <span>Views {viewCount}</span>
       </div>
 
       <div className={styles.actions}>
-        <button onClick={()=>window.open(videoUrl, "_blank")} >
-          Watch
-        </button>
+        <button onClick={handleWatch}>Watch</button>
 
-        <button onClick={() => navigate(`/recipes/details/${_id}`)}>
-          View Recipe
-        </button>
+        <button onClick={handleViewRecipe}>View Recipe</button>
       </div>
     </div>
   );

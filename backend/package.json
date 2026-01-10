@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "backfill:users": "node scripts/backfill-users.js"
+    "backfill:users": "node scripts/backfill-users.js",
+    "normalize:recipes": "node scripts/normalize-recipes.js"
   },
   "keywords": [],
   "author": "",

@@ -76,6 +76,28 @@ const RecipeSlice = createSlice({
         updateFav(state.Videos);
       }
     },
+    updateRecipeViewsLocal: (state, action) => {
+      const { id, views } = action.payload;
+      const applyViews = (list) => {
+        const recipe = list?.find((r) => (r._id ?? r.id) === id);
+        if (!recipe) return;
+        if (Number.isFinite(Number(views))) {
+          recipe.views = Number(views);
+        } else {
+          const current = Number(recipe.views) || 0;
+          recipe.views = current + 1;
+        }
+      };
+      if (Array.isArray(state.data)) {
+        applyViews(state.data);
+      }
+      if (Array.isArray(state.MyRecipes)) {
+        applyViews(state.MyRecipes);
+      }
+      if (Array.isArray(state.Videos)) {
+        applyViews(state.Videos);
+      }
+    },
     LoadVideos:(state,action)=>{
       state.Videos=action.payload ?? [];
     }
@@ -90,6 +112,7 @@ export const {
   loadLazyRecipe,
   deleteRecipe,
   toggleFavoriteLocal,
+  updateRecipeViewsLocal,
   LoadMyRecipe,
   resetRecipes,LoadVideos
 } = RecipeSlice.actions;

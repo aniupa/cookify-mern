@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 // import unlikeImg from "../assets/unlike-removebg-preview.png";
 import { useDispatch, useSelector } from "react-redux";
 
-import { asyncAddToFavorite } from "../../store/actions/recipeAction";
+import { asyncAddToFavorite, asyncIncrementRecipeViews } from "../../store/actions/recipeAction";
 import { useEffect } from "react";
 
 const SingleRecipe = () => {
@@ -18,6 +18,27 @@ const SingleRecipe = () => {
   const recipe = useSelector((state) => state.recipes.data);
   const user = useSelector((state) => state.users.data);
   const filteredData = recipe?.find((f) => f._id == _id);
+  const normalizeList = (value) => {
+    if (Array.isArray(value)) {
+      return value;
+    }
+    if (typeof value === "string") {
+      const items = value
+        .split("\n")
+        .map((item) => item.trim())
+        .filter(Boolean);
+      return items;
+    }
+    return [];
+  };
+  const ingredients = normalizeList(filteredData?.ingredients);
+  const instructions = normalizeList(filteredData?.instructions);
+
+  useEffect(() => {
+    if (id) {
+      dispatch(asyncIncrementRecipeViews(id));
+    }
+  }, [dispatch, id]);
 
   const favorite = (title) => {
     //testing logic
@@ -129,7 +150,7 @@ const SingleRecipe = () => {
           <div className={styles.box}>
             <h3>Ingredients</h3>
             <ul>
-              {filteredData.ingredients.map((item, i) => (
+              {ingredients.map((item, i) => (
                 <li key={i}>{item}</li>
               ))}
             </ul>
@@ -139,7 +160,7 @@ const SingleRecipe = () => {
           <div className={styles.box}>
             <h3>Instructions</h3>
             <ol>
-              {filteredData.instructions.map((step, i) => (
+              {instructions.map((step, i) => (
                 <li key={i}>{step}</li>
               ))}
             </ol>

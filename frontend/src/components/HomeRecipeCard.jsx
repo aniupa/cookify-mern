@@ -13,7 +13,7 @@ const nav = useNavigate();
     imageUrl,
     title,
     description,
-    time = "30 min",
+    time = 30,
     difficulty = "Easy",
     fav = false,
     onView,
@@ -38,6 +38,16 @@ const nav = useNavigate();
     nav(`/recipes/details/${_id}`);
     
   };
+  const parsedTime = Number(time);
+  const displayTime = Number.isFinite(parsedTime) ? `${parsedTime} mins` : "N/A";
+  const difficultyLabel = Number.isFinite(parsedTime)
+    ? parsedTime < 30
+      ? "Easy"
+      : parsedTime < 60
+        ? "Medium"
+        : "Hard"
+    : difficulty || "Easy";
+  const viewCount = Number.isFinite(Number(item?.views)) ? Number(item.views) : 0;
   return (
     // <div></div>
      <div className={styles.categorySlider}> 
@@ -51,11 +61,10 @@ const nav = useNavigate();
             <h4 className={styles.title}>{title? title:""}</h4>
             <p className={styles.description}>{description? description:""}</p>
               <div className={styles.meta}>
-         <div className={styles.meta}>
-          <span>⏱ 30 mins</span>
-          <span>🍽 Easy</span>
-        </div>
-        </div>
+                <span>Time {displayTime}</span>
+                <span>{difficultyLabel}</span>
+                <span>Views {viewCount}</span>
+              </div>
           </div>
           </div>
           

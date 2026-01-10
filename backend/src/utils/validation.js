@@ -29,17 +29,27 @@ export const parseNumber = (value) => {
 };
 
 export const normalizeDifficulty = (value) => {
-  
-  // if (typeof value !== "string") return undefined;
-  if (value <30) {
-    return 'Easy'
-  } else if (value >=30 && value <60) {
-    return 'Medium'
-  } else {
-    return 'Hard'
+  if (value === "" || value === null || value === undefined) {
+    return undefined;
   }
-  // const normalized = value.trim().toLowerCase();
-  // return normalized ? normalized : undefined;
+  if (typeof value === "string") {
+    const normalized = value.trim().toLowerCase();
+    if (normalized === "easy" || normalized === "medium" || normalized === "hard") {
+      return normalized;
+    }
+  }
+
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) {
+    return undefined;
+  }
+  if (parsed < 30) {
+    return "easy";
+  }
+  if (parsed < 60) {
+    return "medium";
+  }
+  return "hard";
 };
 
 export const escapeRegex = (value) =>

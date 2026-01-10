@@ -167,6 +167,8 @@
   }
   .meta {
     @include flex(space-between);
+    gap: 0.6rem;
+    flex-wrap: wrap;
     font-size: 0.75rem;
     color: var(--primary);
     font-weight: 600;
