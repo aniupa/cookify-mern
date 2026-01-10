@@ -46,13 +46,18 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    dispatch(asyncGetMyRecipeActions(currentUser._id));
+    if (currentUser?._id) {
+      dispatch(asyncGetMyRecipeActions(currentUser._id));
+    }
+  }, [dispatch, currentUser?._id]);
+
+  useEffect(() => {
     reset({
       username: currentUser?.username || "",
       email: currentUser?.email || "",
       password: "",
     });
-  }, [currentUser,userRecipes, reset]);
+  }, [currentUser?.username, currentUser?.email, reset]);
 
   useEffect(() => {
     if (currentUser?._id) {

@@ -93,6 +93,7 @@ export const createRecipe = async ({ userId, recipe }) => {
     time,
     isVeg,
   } = recipePayload;
+  const parsedTime = parseNumber(time);
 
   const newRecipe = await recipeModel.create({
     title,
@@ -101,8 +102,8 @@ export const createRecipe = async ({ userId, recipe }) => {
     ingredients: normalizeStringList(ingredients),
     instructions: normalizeStringList(instructions),
     videoUrl,
-    time: parseNumber(time),
-    difficulty: normalizeDifficulty(time),
+    time: parsedTime,
+    difficulty: normalizeDifficulty(parsedTime),
     isVeg: parseBoolean(isVeg),
     createdBy: userId,
   });
@@ -157,12 +158,14 @@ export const updateRecipe = async ({ id, userId, data }) => {
     }
   }
 
+  let normalizedTime;
   if (updates.time !== undefined) {
     const parsedTime = parseNumber(updates.time);
     if (parsedTime === undefined) {
       delete updates.time;
     } else {
       updates.time = parsedTime;
+      normalizedTime = parsedTime;
     }
   }
 
@@ -191,6 +194,9 @@ export const updateRecipe = async ({ id, userId, data }) => {
     } else {
       updates.difficulty = normalizedDifficulty;
     }
+  }
+  if (normalizedTime !== undefined && updates.difficulty === undefined) {
+    updates.difficulty = normalizeDifficulty(normalizedTime);
   }
 
   if (updates.isVeg !== undefined) {

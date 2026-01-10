@@ -45,6 +45,26 @@ const RecipeVideos = () => {
     setSearchParams(params);
   };
   const clearFilters = () => setSearchParams({});
+  const topVideo = videos.reduce((top, current) => {
+    const topViews = Number.isFinite(Number(top?.views)) ? Number(top.views) : -1;
+    const currentViews = Number.isFinite(Number(current?.views))
+      ? Number(current.views)
+      : 0;
+    return currentViews > topViews ? current : top;
+  }, null);
+  const topVideoTitle =
+    typeof topVideo?.title === "string" && topVideo.title.trim()
+      ? topVideo.title.trim()
+      : "N/A";
+  const topVideoTime = Number.isFinite(Number(topVideo?.time))
+    ? Number(topVideo.time)
+    : null;
+  const topVideoText =
+    topVideoTitle === "N/A"
+      ? "N/A"
+      : topVideoTime !== null
+        ? `${topVideoTitle} (${topVideoTime} min)`
+        : topVideoTitle;
 
   // const viewRecipe = () => {
   //   // navigate(`/recipes/${videos.recipeId}`);
@@ -73,8 +93,8 @@ const RecipeVideos = () => {
         </div>
 
         <div className={styles.heroStats}>
-          <span>🔥 Trending today</span>
-          <span>⏱ Avg video: 8 min</span>
+          <span>Trending today</span>
+          <span>Most viewed: {topVideoText}</span>
         </div>
       </div>
 

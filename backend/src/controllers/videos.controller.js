@@ -67,7 +67,13 @@ export async function getVideosController(req, res) {
 
     const normalizedDifficulty = normalizeDifficulty(difficulty);
     if (normalizedDifficulty) {
-      query.difficulty = normalizedDifficulty;
+      const timeRange =
+        normalizedDifficulty === "easy"
+          ? { $lt: 30 }
+          : normalizedDifficulty === "medium"
+            ? { $gte: 30, $lt: 60 }
+            : { $gte: 60 };
+      query.time = { ...(query.time || {}), ...timeRange };
     }
 
     const parsedVeg = parseBoolean(veg);
