@@ -70,6 +70,10 @@ const RecipeVideos = () => {
   //   // navigate(`/recipes/${videos.recipeId}`);
   //   navigate('')
   // };
+  const logger=()=>{
+    console.log(topVideo);
+    
+  }
 
   return (
     <section className={styles.videosPage}>
@@ -93,8 +97,8 @@ const RecipeVideos = () => {
         </div>
 
         <div className={styles.heroStats}>
-          <span>Trending today</span>
-          <span>Most viewed: {topVideoText}</span>
+          <span >🔥 Trending today</span>
+          <span><img className={styles.trendingImg} src={topVideo.imageUrl} alt={topVideo.title} />{logger()} {topVideoText}</span>
         </div>
       </div>
 
@@ -107,12 +111,12 @@ const RecipeVideos = () => {
           onChange={(e) => updateFilter("search", e.target.value)}
         />
 
-        <button
+        {/* <button
           className={isUnderTen ? styles.activeFilter : ""}
           onClick={() => updateFilter("maxTime", isUnderTen ? "" : "10")}
         >
-          Under 10 min
-        </button>
+          {/* Under 10 min */}
+        {/* </button> */} 
 
         <button
           className={isVeg ? styles.activeFilter : ""}
@@ -143,7 +147,7 @@ const RecipeVideos = () => {
           <option value="medium">Medium</option>
           <option value="hard">Hard</option>
         </select>
-        <button onClick={clearFilters}>Clear</button>
+        <button className={styles.clear} onClick={clearFilters}>Clear</button>
       </div>
       {/* videoSkeleton */}
       {/* VIDEO GRID */}
