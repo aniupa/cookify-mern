@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import like from "../assets/like-removebg-preview.png";
+import React, { useEffect, useState,useRef } from "react";
 import styles from "../cssFiles/userUi.module.css";
-// import HomeRecipeCard from "../components/HomeRecipeCard";
 import RecipeCard from "../components/RecipeCard";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,9 +8,12 @@ import { asyncUpdateUser } from "../store/actions/userAction";
 import formStyles from "../styles/formStyles.module.css";
 import { asyncGetFavoritesActions ,asyncGetMyRecipeActions} from "../store/actions/recipeAction";
 
+import VariableProximity from "../utils/animations/VariableProximity/VariableProximity.jsx";
+
 const Profile = () => {
   // const [activeTab, setActiveTab] = useState("recipes");
   const dispatch = useDispatch();
+  const containerRef = useRef(null);
 
   const currentUser = useSelector((state) => state?.users?.data?.data?.user);
 
@@ -89,6 +90,7 @@ const Profile = () => {
       {/* PROFILE CARD */}
       <div className={styles.profileCard}>
         <div className={styles.avatar}>
+          
            <img
             src={
               currentUser?.avatar ||
@@ -102,9 +104,19 @@ const Profile = () => {
 
         <div className={styles.info}>
           <h2>{currentUser?.username || "Anonymous"}</h2>
-          <p className={styles.bio}>
-            {bioText}
-          </p>
+          
+           <div ref={containerRef} style={{ position: "relative" }}>
+                   <span className={styles.bio}>  <VariableProximity
+                       label={bioText}
+                       className={"variable-proximity-demo"}
+                       fromFontVariationSettings="'wght' 400, 'opsz' 9"
+                       toFontVariationSettings="'wght' 1000, 'opsz' 40"
+                       containerRef={containerRef}
+                       radius={100}
+                       falloff="linear"
+                     /> </span>
+                     </div>
+         
 
           <div className={styles.stats}>
             <div>
