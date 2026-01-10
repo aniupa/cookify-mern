@@ -23,7 +23,7 @@ const Profile = () => {
   const favoritesCount = Array.isArray(favorites) ? favorites.length : 0;
   const joinedYear = currentUser?.createdAt
     ? new Date(currentUser.createdAt).getFullYear()
-    : "N/A";
+    : 2026;
   const [randomBio, setRandomBio] = useState("");
   const bioText =
     currentUser?.bio ||
