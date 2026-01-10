@@ -2,7 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import styles from "../pages/Videos/recipeVideos.module.css";
+import styles from "../pages/Videos/recipeVideos.module.scss";
 import { asyncIncrementRecipeViews } from "../store/actions/recipeAction";
 
 const VideoCard = ({ video }) => {
