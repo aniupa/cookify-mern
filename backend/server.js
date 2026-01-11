@@ -1,5 +1,5 @@
-import { connectToDb } from "./db/db.js";
-import app from "./app.js";
+import { connectToDb } from "./src/db/db.js";
+import app from "./src/app.js";
 
 // app.use(cors());
 connectToDb();

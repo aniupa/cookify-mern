@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "backfill:users": "node scripts/backfill-users.js",
-    "normalize:recipes": "node scripts/normalize-recipes.js"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -20,3 +19,5 @@
     "nanoid": "^5.1.6"
   }
 }
+
+   
